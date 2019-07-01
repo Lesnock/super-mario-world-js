@@ -1,0 +1,62 @@
+{
+    "sprites": {
+        "run-1": [43, 32, 134, 181],
+        "run-2": [191, 50, 147, 178],
+        "run-3": [367, 62, 150, 173],
+        "run-4": [575, 51, 126, 189],
+        "run-5": [739, 61, 131,186],
+        "run-6": [30, 270, 132, 178],
+        "run-7": [190, 271, 151, 182],
+        "run-8": [363, 280, 156, 170],
+        "run-9": [554, 275, 138, 188],
+        "run-10": [737, 271, 134, 184]
+    },
+
+    "animations": {
+        "run-right": {
+            "frames": [
+                {
+                    "sprite": "run-1",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-2",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-3",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-4",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-5",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-6",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-7",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-8",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-9",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-10",
+                    "speed": 50
+                }
+            ],
+            "loop": true
+        }
+    }
+}

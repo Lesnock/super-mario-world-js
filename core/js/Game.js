@@ -1,5 +1,7 @@
 import Display from './Display/Display'
-import {loadImage} from './Loaders/ImageLoader'
+import Player from './GameObjects/Player';
+
+var caio = 'caio'
 
 //Private Variables
 var graphics
@@ -10,6 +12,8 @@ export default class Game
     {
         this.display = new Display(title, width, height)
         graphics = this.display.graphics
+
+        this.player = new Player()
     }
 
     start ()
@@ -19,20 +23,25 @@ export default class Game
 
     update (deltaTime)
     {
-        
+        this.player.superUpdate(deltaTime)
+        this.player.update(deltaTime)
     }
 
-    render ()
+    render (g)
     {
-        graphics.clearRect(0, 0, this.display.width, this.display.height)
-        graphics.fillRect(0, 0, 60, 60)
+        g.clearRect(0, 0, this.display.width, this.display.height)
+        //graphics.fillRect(0, 0, 60, 60)
+        this.player.superRender(g)
+        this.player.render(g)
 
-        
-        graphics.drawImage(image, 64, 64)
+        // sheet.defineAnimation('running', [
+        //     'run1', 'run2', 'run3'
+        // ])
+
+        // sheet.drawAnimation(graphics, 'test', 200, 200)
 
         // BackgroundLayer.render()
         // SpriterLayer.render()
-
     }
 
     run ()
@@ -44,21 +53,21 @@ export default class Game
         let lastTime = Date.now()
         let timer = 0
 
-        function loop (game)
-        {
+        const loop = () => {
             now = Date.now()
             delta = now - lastTime
             timer += delta
             lastTime = now
 
             if (timer >= timePerMoment) {
-                game.update(delta / 1000)
-                game.render()
+                this.update(delta / 1000)
+                this.render(graphics)
                 timer = 0
             }
 
-            requestAnimationFrame(() => loop(game))
+            requestAnimationFrame(loop)
         }
-        loop(this)
+
+        loop()
     }
 }
