@@ -1,0 +1,21 @@
+{
+    "name": "level 1",
+    "time": 500,
+
+    "spritesheet": "tiles",
+
+    "columns": 5,
+
+    "layers": [
+        {
+            "tiles": [
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 1
+            ],
+
+            "gameObjects": [
+                
+            ]
+        }
+    ]
+}

@@ -1,7 +1,12 @@
 export default function loadImage (url)
 {
     const image = new Image()
-    image.src = url
 
-    return image
+    return new Promise(resolve => {
+        image.onload = () => {
+            resolve(image)
+        }
+
+        image.src = url
+    })
 }

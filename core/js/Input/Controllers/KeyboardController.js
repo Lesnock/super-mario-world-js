@@ -2,12 +2,17 @@ import Controller from "./Controller";
 
 export default class KeyboardController extends Controller
 {
+    constructor (input)
+    {
+        super(input)
+    }
+
     setKeys ()
     {
-        this.up     = this.keys['KeyW']
-        this.down   = this.keys['KeyS']
-        this.right  = this.keys['KeyD']
-        this.left   = this.keys['KeyA']
+        this.input.up       = this.keys['KeyW']
+        this.input.down     = this.keys['KeyS']
+        this.input.right    = this.keys['KeyD']
+        this.input.left     = this.keys['KeyA']
     }
 
     listen ()

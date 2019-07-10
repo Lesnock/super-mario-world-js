@@ -1,20 +1,49 @@
-//import SpriteLayer from '../Layers/SpriteLayer'
 import Tile from './Tile'
 import Sprite from './Sprite';
 import Animation from './Animation';
+import {createBuffer} from '../Display/Display'
 
 export default class SpriteSheet
 {
     constructor (image)
     {
         this.image = image
+        this.tiles = new Map()
         this.sprites = new Map()
         this.animations = new Map()
     }
 
+    defineTile (name, x, y, width, height)
+    {
+        const buffer = createBuffer(width, height)
+
+        buffer
+            .getContext('2d')
+            .drawImage(
+                this.image,
+                x, y, 
+                width, height,
+                0, 0, width, height
+            )
+        
+        const tile = new Tile(buffer, x, y, width, height)
+        this.tiles.set(name, tile)
+    }
+
     defineSprite (name, x, y, width, height)
     {
-        const sprite = new Sprite(x, y, width, height)
+        const buffer = createBuffer(width, height)
+
+        buffer
+            .getContext('2d')
+            .drawImage(
+                this.image,
+                x, y, 
+                width, height,
+                0, 0, width, height
+            )
+
+        const sprite = new Sprite(buffer, x, y, width, height)
         this.sprites.set(name, sprite)
     }
 
@@ -26,35 +55,55 @@ export default class SpriteSheet
 
     defineJSON (json)
     {
-        if (! json.sprites)
-            return
+        this.defineJSONTiles(json)
+        this.defineJSONSprites(json)
+        this.defineJSONAnimations(json)
+    }
 
-        const sprites = json.sprites
-        
-        Object.keys(sprites).forEach((key) => {
-            this.defineSprite(key, ...sprites[key])
-        })
+    defineJSONTiles (json)
+    {
+        if (json.tiles) {
+            const tiles = json.tiles
+            
+            Object.keys(tiles).forEach((key) => {
+                this.defineTile(key, ...tiles[key])
+            })
+        }
+    }
 
-        if (! json.animations)
-            return
+    defineJSONSprites (json)
+    {
+        if (json.sprites) {
+            const sprites = json.sprites
+            
+            Object.keys(sprites).forEach((key) => {
+                this.defineSprite(key, ...sprites[key])
+            })
+        }
+    }
 
-        const animations = json.animations
+    defineJSONAnimations (json)
+    {
+        if (json.animations) {
+            const animations = json.animations
+            
+            Object.keys(animations).forEach((key) => {
+                this.defineAnimation(key, animations[key].frames)
+            })
+        }
+    }
 
-        Object.keys(animations).forEach((key) => {
-            this.defineAnimation(key, animations[key].frames)
-        })
+    drawTile (g, name, x, y)
+    {
+        const tile = this.tiles.get(name)
+        g.drawImage(tile.buffer, x, y)
     }
 
     drawSprite (g, name, x, y)
     {
         const sprite = this.sprites.get(name)
         
-        g.drawImage(
-            this.image,
-            sprite.x, sprite.y, 
-            sprite.width, sprite.height,
-            x, y, sprite.width, sprite.height
-        )
+        g.drawImage(sprite.buffer, x, y)
     }
 
     drawAnimation (g, name, x, y)

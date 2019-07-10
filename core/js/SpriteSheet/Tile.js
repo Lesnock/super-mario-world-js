@@ -1,8 +1,14 @@
 export default class Tile
 {
-    constructor ()
+    constructor (buffer, x, y, width = Tile.defaultWidth, height = Tile.defaultHeight)
     {
-        this.defaultWidth = 64
-        this.defaultHeight = 64
+        this.buffer = buffer
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
     }
 }
+
+Tile.defaultWidth = 64
+Tile.defaultHeight = 64

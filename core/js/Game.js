@@ -1,44 +1,53 @@
+import State from './States/State';
 import Display from './Display/Display'
-import Player from './GameObjects/Player';
+import GameState from './States/GameState';
 
-var caio = 'caio'
+var display, 
+    g
 
-//Private Variables
-var graphics
+//States
+var gameState, 
+    menuState, 
+    settingsState
 
 export default class Game
 {
     constructor (title, width, height)
     {
-        this.display = new Display(title, width, height)
-        graphics = this.display.graphics
-
-        this.player = new Player()
+        display = new Display(title, width, height)
+        g = display.getGraphics()
     }
 
-    start ()
+    /**
+     * Start the game
+     */
+    async start ()
     {
         this.run()
+
+        this.loadInitialState()
+    }
+
+    async loadInitialState ()
+    {
+        gameState = new GameState()
+        await gameState.load()
+
+        State.setCurrentState(gameState)
     }
 
     update (deltaTime)
-    {
-        this.player.superUpdate(deltaTime)
-        this.player.update(deltaTime)
+    {        
+        if (State.getCurrentState() !== null) 
+            gameState.update(deltaTime)
     }
 
     render (g)
     {
-        g.clearRect(0, 0, this.display.width, this.display.height)
-        //graphics.fillRect(0, 0, 60, 60)
-        this.player.superRender(g)
-        this.player.render(g)
-
-        // sheet.defineAnimation('running', [
-        //     'run1', 'run2', 'run3'
-        // ])
-
-        // sheet.drawAnimation(graphics, 'test', 200, 200)
+        g.clearRect(0, 0, display.width, display.height)
+        
+        if (State.getCurrentState() !== null)
+            gameState.render(g)
 
         // BackgroundLayer.render()
         // SpriterLayer.render()
@@ -61,7 +70,7 @@ export default class Game
 
             if (timer >= timePerMoment) {
                 this.update(delta / 1000)
-                this.render(graphics)
+                this.render(g)
                 timer = 0
             }
 

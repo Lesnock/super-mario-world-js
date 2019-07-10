@@ -3,21 +3,28 @@ import Vector from "../Math/Vector";
 
 export default class GameObject
 {
+    components = []
+
     constructor ()
     {
         this.position = new Point(0, 0)
         this.velocity = new Vector(0, 0)
-        this.gravity = new Vector(0, 100)
+        this.acceleration = new Vector(0, 0)
     }
 
     superUpdate (dt)
     {
         this.position.addVector(this.velocity)
-        this.position.addVector(this.gravity)
+
+        this.components.forEach(component => {
+            component.update(dt)
+        });
     }
 
     superRender (g)
     {
-        
+        this.components.forEach(component => {
+            component.render(g)
+        });
     }
 }

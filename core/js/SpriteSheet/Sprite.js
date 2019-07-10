@@ -1,7 +1,8 @@
 export default class Sprite
 {
-    constructor (x, y, width, height)
+    constructor (buffer, x, y, width, height)
     {
+        this.buffer = buffer
         this.x = x
         this.y = y
         this.width = width

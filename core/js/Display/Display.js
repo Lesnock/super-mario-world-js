@@ -8,8 +8,6 @@ export default class Display
 
         this.setTitle(title)
         this.createCanvas(width, height)
-
-        this.graphics = this.getGraphics()
     }
 
     setTitle (title)
@@ -25,11 +23,20 @@ export default class Display
         canvas.width = width
         canvas.height = height
 
-        document.body.appendChild(canvas)
+        document.body.appendChild(canvas)        
     }
 
     getGraphics ()
     {
         return document.getElementById('display').getContext('2d')
     }
+}
+
+export function createBuffer (width, height)
+{
+    const buffer = document.createElement('canvas')
+    buffer.width = width
+    buffer.height = height
+
+    return buffer
 }

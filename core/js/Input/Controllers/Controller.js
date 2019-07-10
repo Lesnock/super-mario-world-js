@@ -1,7 +1,8 @@
 export default class Controller
 {
-    constructor ()
+    constructor (input)
     {
+        this.input = input
         this.keys = {}
         this.setKeys()
         this.listen()
@@ -10,5 +11,15 @@ export default class Controller
     update (dt)
     {
         this.setKeys()
+    }
+
+    listen ()
+    {
+        //
+    }
+
+    setKeys ()
+    {
+        //
     }
 }
