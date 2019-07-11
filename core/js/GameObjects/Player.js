@@ -43,7 +43,7 @@ export default class Player extends GameObject
     async loadSprites ()
     {
         //sprites and animations
-        const spriteJSON = await loadJSON('core/sprites/player.json')
+        const spriteJSON = await loadJSON('core/spritesheets/player.json')
 
         //spritesheet image
         this.image = await loadImage('./core/gfx/spritesheets/player.png')

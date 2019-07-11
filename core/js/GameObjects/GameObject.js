@@ -12,13 +12,14 @@ export default class GameObject
         this.acceleration = new Vector(0, 0)
     }
 
+    addComponent (component)
+    {
+        this.components.push(component)
+    }
+
     superUpdate (dt)
     {
         this.position.addVector(this.velocity)
-
-        this.components.forEach(component => {
-            component.update(dt)
-        });
     }
 
     superRender (g)

@@ -27,7 +27,5 @@ export default class RigidBody extends Component
         if (this.gameObject.position.y < 300) {
             this.gameObject.velocity.addVector(this.gravity)
         }
-
-        console.log(this.gameObject.velocity)
     }
 }

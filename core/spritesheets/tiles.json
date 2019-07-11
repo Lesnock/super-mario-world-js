@@ -1,14 +1,14 @@
 {
     "image": "tile.png",
 
-    "tiles": [
-        {
+    "tiles": {
+        "0": {
             "name": "ground",
             "index": [32, 0, 32, 32]
         },
-        {
+        "1": {
             "name": "ground2",
             "index": [0, 0, 95, 31]
         }
-    ]
+    }
 }

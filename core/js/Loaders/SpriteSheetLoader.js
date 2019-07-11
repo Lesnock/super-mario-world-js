@@ -2,27 +2,36 @@ import loadJSON from "./JsonLoader";
 import loadImage from "./ImageLoader";
 import SpriteSheet from "../SpriteSheet/SpriteSheet";
 
-var spriteSheetPath = 'core/sprites/'
-var imagePath = 'core/gfx/spritesheets/'
-
 export default async function loadSpriteSheet (name)
 {
-    const spriteSheetSpec = await loadJSON(spriteSheetPath + name + '.json')
-    
-    const image = await loadImage(imagePath + spriteSheetSpec.image)
+    const spriteSheetSpec   = await loadJSON(`core/spritesheets/${name}.json`)
+    const image             = await loadImage(`core/gfx/spritesheets/${spriteSheetSpec.image}`)
 
-    const spritesheet = new SpriteSheet(image)
+    const spriteSheet = new SpriteSheet(image)
 
-    defineTiles(spriteSheetSpec, spritesheet)
+    defineTiles(spriteSheetSpec, spriteSheet)
+    defineSprites(spriteSheetSpec, spriteSheet)
 
-    return spritesheet
+    return spriteSheet
 }
 
+//Tiles
 function defineTiles (spriteSheetSpec, spritesheet)
 {
     if (spriteSheetSpec.tiles) {
-        spriteSheetSpec.tiles.forEach(tile => {
-            spritesheet.defineTile(tile.name, tile.index[0], tile.index[1], tile.index[2], tile.index[3])
-        });
+
+        const tiles = spriteSheetSpec.tiles
+
+        //Define tiles
+        for (const id in tiles) {
+            const [x, y, width, height] = tiles[id].index
+            spritesheet.defineTile(tiles[id].name, x, y, width, height)
+        }
     }
+}
+
+//Sprites
+function defineSprites (spriteSheetSpec, spritesheet)
+{
+
 }

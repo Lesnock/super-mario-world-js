@@ -1,28 +1,13 @@
 import loadJson from '../Loaders/JsonLoader'
-import SpriteSheet from '../SpriteSheet/SpriteSheet'
+import LayerManager from '../Layers/LayerManager';
 import loadSpriteSheet from '../Loaders/SpriteSheetLoader';
 
 export default class Level
 {
-    constructor (src)
+    constructor (levelSpec)
     {
-        this.src = src
-    }
+        this.spec = levelSpec
 
-    async load ()
-    {
-        const levelSpec = await loadJson('core/levels/1.json')
-
-        this.name = levelSpec.name
-        this.time = levelSpec.time
-        this.columns = levelSpec.columns
-
-        this.spritesheet = await loadSpriteSheet(levelSpec.spritesheet)
-
-        return this
-
-        // levelSpec.layers.forEach(layer => {
-            
-        // });
+        this.layers = new LayerManager()
     }
 }

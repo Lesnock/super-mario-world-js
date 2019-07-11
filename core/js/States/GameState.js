@@ -2,6 +2,7 @@ import State from "./State"
 import Level from '../Level/Level'
 import Input from "../Input/Input"
 import Player from "../GameObjects/Player"
+import loadLevel from "../Loaders/LevelLoader";
 
 export default class GameState extends State
 {
@@ -41,14 +42,20 @@ export default class GameState extends State
     {
         this.input.update(dt)
         this.player.superUpdate(dt)
+
+        this.player.components.forEach(component => {
+            component.update(dt)
+        });
+
         this.player.update(dt)
     }
 
     render (g)
     {
-        for (let index = 0; index < 100; index++) {
-            this.level.spritesheet.drawTile(g, 'ground', index * 16, 480)            
-        }
+        console.log(this.level)
+        // for (let index = 0; index < 100; index++) {
+        //     this.level.spritesheet.drawTile(g, 'ground', index * 16, 480)
+        // }
 
         this.player.superRender(g)
         this.player.render(g)
@@ -61,8 +68,7 @@ export default class GameState extends State
 
     loadLevel (name)
     {
-        this.level = new Level(name)
-        return this.level.load()
+        return loadLevel(name)
     }
 
     loadPlayer ()

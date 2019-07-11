@@ -1,17 +1,17 @@
 export default class SpriteLayer
 {
-    constructor ()
+    constructor (objects)
     {
-        
+        this.objects = objects
     }
 
-    createCanvas ()
+    update ()
     {
-        
+
     }
 
     render ()
     {
-
+        console.log(this.objects)
     }
 }
