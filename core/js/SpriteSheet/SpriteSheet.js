@@ -13,7 +13,7 @@ export default class SpriteSheet
         this.animations = new Map()
     }
 
-    defineTile (name, x, y, width, height)
+    defineTile (id, x, y, width, height)
     {
         const buffer = createBuffer(width, height)
 
@@ -27,7 +27,7 @@ export default class SpriteSheet
             )
         
         const tile = new Tile(buffer, x, y, width, height)
-        this.tiles.set(name, tile)
+        this.tiles.set(id, tile)
     }
 
     defineSprite (name, x, y, width, height)
@@ -47,50 +47,10 @@ export default class SpriteSheet
         this.sprites.set(name, sprite)
     }
 
-    defineAnimation (name, frames, velocity)
+    defineAnimation (name, frames, loop)
     {
-        const animation = new Animation(frames, velocity)
+        const animation = new Animation(frames, loop)
         this.animations.set(name, animation)
-    }
-
-    defineJSON (json)
-    {
-        this.defineJSONTiles(json)
-        this.defineJSONSprites(json)
-        this.defineJSONAnimations(json)
-    }
-
-    defineJSONTiles (json)
-    {
-        if (json.tiles) {
-            const tiles = json.tiles
-            
-            Object.keys(tiles).forEach((key) => {
-                this.defineTile(key, ...tiles[key])
-            })
-        }
-    }
-
-    defineJSONSprites (json)
-    {
-        if (json.sprites) {
-            const sprites = json.sprites
-            
-            Object.keys(sprites).forEach((key) => {
-                this.defineSprite(key, ...sprites[key])
-            })
-        }
-    }
-
-    defineJSONAnimations (json)
-    {
-        if (json.animations) {
-            const animations = json.animations
-            
-            Object.keys(animations).forEach((key) => {
-                this.defineAnimation(key, animations[key].frames)
-            })
-        }
     }
 
     drawTile (g, name, x, y)

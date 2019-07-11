@@ -4,8 +4,6 @@ export default class Component
     {
         this.gameObject = gameObject
 
-        console.log(this)
-
         this.gameObject[this.name] = this
     }
 

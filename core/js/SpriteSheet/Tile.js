@@ -8,7 +8,16 @@ export default class Tile
         this.width = width
         this.height = height
     }
+
+    render (g, indexX, indexY)
+    {
+        g.drawImage(this.buffer, 
+            this.x, this.y, this.width, this.height,
+            indexX * this.width, indexY * this.height, this.width, this.height
+        )
+    }
 }
 
-Tile.defaultWidth = 64
-Tile.defaultHeight = 64
+Tile.defaultWidth = 16
+Tile.defaultHeight = 16
+Tile.scale = 1

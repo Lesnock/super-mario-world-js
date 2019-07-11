@@ -13,7 +13,7 @@ export default class RigidBody extends Component
         this.name = 'rigidbody'
 
         if (this.hasGravity)
-            this.gravity = new Vector(0, 100)
+            this.gravity = new Vector(0, 0)
     }
 
     update (dt)

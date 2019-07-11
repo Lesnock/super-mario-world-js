@@ -1,4 +1,6 @@
 {
+    "image": "player.png",
+    
     "sprites": {
         "run-right-1": [43, 32, 134, 181],
         "run-right-2": [191, 50, 147, 178],

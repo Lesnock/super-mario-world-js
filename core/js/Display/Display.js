@@ -23,6 +23,8 @@ export default class Display
         canvas.width = width
         canvas.height = height
 
+        canvas.style["image-rendering"] = "pixelated";
+
         document.body.appendChild(canvas)        
     }
 

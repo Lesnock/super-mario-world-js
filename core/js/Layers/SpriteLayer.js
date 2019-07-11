@@ -5,13 +5,17 @@ export default class SpriteLayer
         this.objects = objects
     }
 
-    update ()
+    update (dt)
     {
-
+        this.objects.forEach(object => {
+            object.update(dt)
+        })
     }
 
-    render ()
+    render (g)
     {
-        console.log(this.objects)
+        this.objects.forEach(object => {
+            object.render(g)
+        })
     }
 }

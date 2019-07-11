@@ -8,66 +8,48 @@ export default class Run extends Component
     constructor (gameObject)
     {
         super(gameObject)
-        //this.input = new Input(new KeyboardController())
     }
 
     update ()
     {
-        this.setCurrentAnimation()
-
         //Left and Right
-        if (Input.left) {
-
-            //No dash on flip
-            if (this.gameObject.velocity.x > 0)
-                this.gameObject.velocity.x = 0
-
-            this.gameObject.velocity.x -= this.gameObject.acceleration.x
-
-            //Max Velocity
-            if (this.gameObject.velocity.x < -30)
-                this.gameObject.velocity.x = -this.gameObject.maxVelocityX
-        }
-        else if (Input.right) {
-            //No dash on flip
-            if (this.gameObject.velocity.x < 0)
-                this.gameObject.velocity.x = 0
-
-            this.gameObject.velocity.x += this.gameObject.acceleration.x
-
-            //Max Velocity
-            if (this.gameObject.velocity.x > 30)
-                this.gameObject.velocity.x = this.gameObject.maxVelocityX
-        }
-        else {
+        if (Input.left)
+            this.runLeft()
+        
+        else if (Input.right) 
+            this.runRight()
+            
+        else
             this.gameObject.velocity.x = 0
-        }
     }
 
-    setCurrentAnimation ()
+    runLeft ()
     {
-        if (this.isRunningRight())
-            this.gameObject.currentAnimation = 'run-right'
+        this.gameObject.direction = -1
 
-        else if (this.isRunningLeft())
-            this.gameObject.currentAnimation = 'run-left'
+        //No dash on flip
+        if (this.gameObject.velocity.x > 0)
+            this.gameObject.velocity.x = 0
 
-        else if (this.isIdle())
-            this.gameObject.currentAnimation = 'run-right'
+        this.gameObject.velocity.x -= this.gameObject.acceleration.x
+
+        //Max Velocity
+        if (this.gameObject.velocity.x < -30)
+            this.gameObject.velocity.x = -this.gameObject.maxVelocityX
     }
 
-    isRunningRight ()
+    runRight ()
     {
-        return this.gameObject.velocity.x > 0
-    }
+        this.gameObject.direction = 1
 
-    isRunningLeft ()
-    {
-        return this.gameObject.velocity.x < 0
-    }
+        //No dash on flip
+        if (this.gameObject.velocity.x < 0)
+            this.gameObject.velocity.x = 0
 
-    isIdle ()
-    {
-        return this.gameObject.velocity.x == 0
+        this.gameObject.velocity.x += this.gameObject.acceleration.x
+
+        //Max Velocity
+        if (this.gameObject.velocity.x > 30)
+            this.gameObject.velocity.x = this.gameObject.maxVelocityX
     }
 }

@@ -14,13 +14,14 @@ export default class Jump extends Component
     {
         //Up and Down
         if (Input.up) {
-            this.gameObject.velocity.y = -150
+            
+            this.gameObject.velocity.y = -40
         }
         else if (Input.down) {
             this.gameObject.velocity.y = 40
         }
         else {
-            //this.gameObject.velocity.y = 0
+            this.gameObject.velocity.y = 0
         }
 
         // if (this.gameObject.position.y > 300)

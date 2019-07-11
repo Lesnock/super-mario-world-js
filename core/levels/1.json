@@ -4,17 +4,26 @@
     "spriteSheet": "tiles",
 
     "columns": 5,
+    "rows": 2,
 
     "layers": [
         {
             "tiles": [
-                0, 0, 0, 0, 0,
+                0, 1, 0, 0, 0,
                 0, 0, 0, 0, 1
             ]
         }
     ],
 
-    "gameObjects": [
-        "Player"
-    ]
+    "gameObjects": {
+        "Enemy": [
+            [100, 300],
+            [100, 200]
+        ],
+
+        "Player": [
+            [30, 300],
+            [410, 0]
+        ]        
+    }
 }
