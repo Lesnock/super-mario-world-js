@@ -2,16 +2,23 @@
     "image": "mario2.png",
 
     "sprites": {
-        "idle": [207, 75, 17, 30],
+        "idle-right": [207, 75, 17, 30],
         "run-right-1": [327, 75, 18, 30],
-        "run-right-2": [367, 75, 18, 30]
+        "run-right-2": [367, 75, 18, 30],
+
+        "idle-left": [168, 75, 17, 30],
+        "run-left-1": [47, 75, 18, 30],
+        "run-left-2": [7, 75, 18, 30],
+
+        "dash-left": [7, 114, 18, 30],
+        "dash-right": [366, 114, 19, 31]
     },
 
     "animations": {
         "run-right": {
             "frames": [
                 {
-                    "sprite": "idle",
+                    "sprite": "idle-right",
                     "speed": 50
                 },
                 {
@@ -22,7 +29,45 @@
                     "sprite": "run-right-2",
                     "speed": 50
                 }
+            ],
+            "loop": true
+        },
+
+        "run-left": {
+            "frames": [
+                {
+                    "sprite": "idle-left",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-left-1",
+                    "speed": 100
+                },
+                {
+                    "sprite": "run-left-2",
+                    "speed": 50
+                }
             ]
+        },
+
+        "dash-right": {
+            "frames": [
+                {
+                    "sprite": "dash-right",
+                    "speed": 100
+                }
+            ],
+            "loop": false
+        },
+
+        "dash-left": {
+            "frames": [
+                {
+                    "sprite": "dash-left",
+                    "speed": 100
+                }
+            ],
+            "loop": false
         }
     }
 }

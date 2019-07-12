@@ -17,11 +17,10 @@ export default class Mario extends GameObject
         super()
 
         this.acceleration.x = 15
-        this.maxVelocityX = 40
-
+        this.friction = 0.9
         this.direction = 1
 
-        this.position.y = 2
+        this.position.y = 115
 
         this.loadSprites()
     }
@@ -30,20 +29,14 @@ export default class Mario extends GameObject
     {        
         this.setCurrentAnimation()
 
-        //this.position.x += 
-
-        if (this.position.x > 200)
-            this.position.x = 0
-
-        this.position.x += 4
-
         if (this.sheet) {
-            if (this.sheet.animations.get('run-right').getCurrentSprite() == 'run-right-1')
-                this.position.y = 1
+            if (this.sheet.animations.get(this.currentAnimation).getCurrentSprite() == 'run-right-1')
+                this.position.y = 114
             else 
-                this.position.y = 2
+                this.position.y = 115
             
-            this.sheet.animations.get('run-right').update()
+            //Animation
+            this.sheet.animations.get(this.currentAnimation).update()
         }
     }
 
@@ -51,7 +44,7 @@ export default class Mario extends GameObject
     {
         //wait for async json load
         if (this.sheet) {
-            this.sheet.drawAnimation(g, 'run-right', this.position.x, this.position.y)
+            this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.position.y)
         }
     }
 
@@ -62,6 +55,26 @@ export default class Mario extends GameObject
 
     setCurrentAnimation ()
     {
-        this.currentAnimation = 'run-right'
+        if (this.direction > 0) {
+            //Dash
+            if (this.velocity.x < 0)
+                this.currentAnimation = 'dash-right'
+            else if (this.velocity.x > 0)
+                this.currentAnimation = 'run-right'
+            else
+                this.currentAnimation = 'run-right'
+        }
+
+        else if (this.direction < 0) {
+            //Dash
+            if (this.velocity.x > 0)
+                this.currentAnimation = 'dash-left'
+            else
+                this.currentAnimation = 'run-left'
+        }
+
+        else {
+            this.currentAnimation = 'run-right'
+        }
     }
 }

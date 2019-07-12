@@ -20,6 +20,10 @@ export default class GameObject
     superUpdate (dt)
     {
         this.position.addVector(this.velocity)
+
+        this.components.forEach(component => {
+            component.update(dt)
+        });
     }
 
     superRender (g)

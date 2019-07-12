@@ -10,46 +10,78 @@ export default class Run extends Component
         super(gameObject)
     }
 
-    update ()
+    update (dt)
     {
-        //Left and Right
-        if (Input.left)
-            this.runLeft()
-        
-        else if (Input.right) 
-            this.runRight()
-            
-        else
-            this.gameObject.velocity.x = 0
+        this.setDirection()
+        this.run(dt)
     }
 
-    runLeft ()
+    setDirection ()
     {
-        this.gameObject.direction = -1
+        //Just left
+        if (Input.left && !Input.right)
+            this.gameObject.direction = -1
+        
+        //Just right
+        else if (Input.right && !Input.left) 
+            this.gameObject.direction = 1
 
-        //No dash on flip
-        if (this.gameObject.velocity.x > 0)
-            this.gameObject.velocity.x = 0
+        //Both or none
+        else {
+            this.gameObject.direction = 0
+        }
+    }
 
-        this.gameObject.velocity.x -= this.gameObject.acceleration.x
+    run (dt)
+    {
+        const acceleration = this.gameObject.acceleration.x * dt * this.gameObject.direction
+
+        console.log(acceleration)
+
+        //Accelerate
+        if (this.gameObject.direction !== 0) {
+            this.gameObject.velocity.x += acceleration
+        }
+
+        //Decelerate
+        else if (this.gameObject.velocity.x !== 0) {
+            this.gameObject.velocity.x *= this.gameObject.friction
+        }
+
+        else {
+            
+        }
+    }
+
+    runLeft (dt)
+    {
+        let acceleration = Math.ceil(this.gameObject.acceleration.x * dt)
+
+        if (this.gameObject.velocity.x > 0) {
+            acceleration *= 2
+        }
+
+        this.gameObject.position.x -= acceleration
 
         //Max Velocity
-        if (this.gameObject.velocity.x < -30)
+        if (this.gameObject.velocity.x < -this.gameObject.maxVelocityX)
             this.gameObject.velocity.x = -this.gameObject.maxVelocityX
     }
 
-    runRight ()
+    runRight (dt)
     {
         this.gameObject.direction = 1
 
-        //No dash on flip
-        if (this.gameObject.velocity.x < 0)
-            this.gameObject.velocity.x = 0
+        let acceleration = Math.ceil(this.gameObject.acceleration.x * dt)
 
-        this.gameObject.velocity.x += this.gameObject.acceleration.x
+        if (this.gameObject.velocity.x < 0) {
+            acceleration *= 2
+        }
+
+        this.gameObject.velocity.x += acceleration
 
         //Max Velocity
-        if (this.gameObject.velocity.x > 30)
+        if (this.gameObject.velocity.x > this.gameObject.maxVelocityX)
             this.gameObject.velocity.x = this.gameObject.maxVelocityX
     }
 }

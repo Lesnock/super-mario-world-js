@@ -19,12 +19,17 @@ export default class Animation
         const frameSpeed = this.frames[this.index].speed
 
         if (this.timer >= frameSpeed) {
-            this.index++
-            this.timer = 0
 
-            //Loops amimation
-            if (this.index >= this.size && this.loop)
+            if (this.loop) {
+                this.index++
+                this.timer = 0
+
+                if (this.index >= this.size)
+                    this.index = 0
+            }
+            else {
                 this.index = 0
+            }
         }
     }
 

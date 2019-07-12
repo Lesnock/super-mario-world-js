@@ -8,6 +8,7 @@ export default class SpriteLayer
     update (dt)
     {
         this.objects.forEach(object => {
+            object.superUpdate(dt)
             object.update(dt)
         })
     }
@@ -15,6 +16,7 @@ export default class SpriteLayer
     render (g)
     {
         this.objects.forEach(object => {
+            object.superRender(g)
             object.render(g)
         })
     }
