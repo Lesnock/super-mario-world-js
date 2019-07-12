@@ -25,7 +25,7 @@ export default class Display
 
         canvas.style["image-rendering"] = "pixelated";
 
-        document.body.appendChild(canvas)        
+        document.body.appendChild(canvas)
     }
 
     getGraphics ()

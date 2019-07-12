@@ -1,3 +1,5 @@
+import Tile from "../SpriteSheet/Tile";
+
 export default class BackgroundLayer
 {
     constructor (tilesGrid, columns, rows)
@@ -22,10 +24,10 @@ export default class BackgroundLayer
 
             for (let y = 0; y < this.rows; y++) {
                 
-                if (x == 1 && y == 0)
-                    //this.grid.get(x, y).render(g, x, y)
-                    console.log(this.grid.get(x, y).render(g, 2, 2))
-                
+                const tile = this.grid.get(x, y)
+
+                if (tile instanceof Tile)
+                    this.grid.get(x, y).render(g, x, y)                
             }
         }
     }

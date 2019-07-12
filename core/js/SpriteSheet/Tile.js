@@ -11,10 +11,7 @@ export default class Tile
 
     render (g, indexX, indexY)
     {
-        g.drawImage(this.buffer, 
-            this.x, this.y, this.width, this.height,
-            indexX * this.width, indexY * this.height, this.width, this.height
-        )
+        g.drawImage(this.buffer, indexX * this.width, indexY * this.height)
     }
 }
 

@@ -1,0 +1,28 @@
+{
+    "image": "mario2.png",
+
+    "sprites": {
+        "idle": [207, 75, 17, 30],
+        "run-right-1": [327, 75, 18, 30],
+        "run-right-2": [367, 75, 18, 30]
+    },
+
+    "animations": {
+        "run-right": {
+            "frames": [
+                {
+                    "sprite": "idle",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-right-1",
+                    "speed": 100
+                },
+                {
+                    "sprite": "run-right-2",
+                    "speed": 50
+                }
+            ]
+        }
+    }
+}
