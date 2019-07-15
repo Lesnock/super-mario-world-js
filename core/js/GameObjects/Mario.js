@@ -8,19 +8,18 @@ export default class Mario extends GameObject
 {
     components = [
         new Run(this),
-        new Jump(this),
-        //new RigidBody(this)
+        new RigidBody(this)
+        //new Jump(this),
     ]
 
     constructor ()
     {
         super()
 
-        this.accelerationSpeed = 20
-        this.runningFastSpeed = 9
-        this.maxSpeed = 10
-
         this.friction = 0.65
+        this.thrust = 20
+        this.fastSpeed = 100
+        this.maxSpeed = 200
 
         this.direction = 1
         this.heading = 1
@@ -32,10 +31,15 @@ export default class Mario extends GameObject
 
     update (dt)
     {
+        if (this.isIdle())
+            return
+
         this.setCurrentAnimation()
 
         if (this.sheet) {
-            if (this.sheet.animations.get(this.currentAnimation).getCurrentSprite() == 'run-right-1')
+            const sprite = this.sheet.animations.get(this.currentAnimation).getCurrentSprite()
+
+            if (sprite == 'run-right-1' || sprite == 'run-left-1' || sprite == 'run-fast-right-1' || sprite == 'run-fast-left-1')
                 this.position.y = 114
             else 
                 this.position.y = 115
@@ -51,6 +55,15 @@ export default class Mario extends GameObject
     {
         //wait for async json load
         if (this.sheet) {
+
+            if (this.isIdle()) {
+                const sprite = (this.heading > 0) ? 'idle-right' : 'idle-left'
+
+                this.sheet.drawSprite(g, sprite, this.position.x, this.position.y)
+
+                return
+            }
+
             this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.position.y)
         }
     }
@@ -62,53 +75,41 @@ export default class Mario extends GameObject
 
     setCurrentAnimation ()
     {
+        if (this.isIdle())
+            return
+
         //Pressing right
         if (this.isPressingRight()) {
+
             //Turning around
-            if (this.velocity.x < 0)
-                this.currentAnimation = 'dash-right'
+            if (this.velocity.x < 0) this.currentAnimation = 'dash-right'
 
             //Running Moderate
-            else if (this.isRunningModerate())
-                this.currentAnimation = 'run-right'
+            else if (this.isRunningModerate()) this.currentAnimation = 'run-right'
 
             //Running fast
-            else if (this.isRunningFast())
-                this.currentAnimation = 'run-fast-right'
+            else if (this.isRunningFast()) this.currentAnimation = 'run-fast-right'
         }
 
         //Pressing left
         else if (this.isPressingLeft()) {
 
             //Turning around
-            if (this.velocity.x > 0)
-                this.currentAnimation = 'dash-left'
+            if (this.velocity.x > 0) this.currentAnimation = 'dash-left'
 
             //Running Moderate
-            else if (this.isRunningModerate())
-                this.currentAnimation = 'run-left'
+            else if (this.isRunningModerate()) this.currentAnimation = 'run-left'
 
             //Running fast
-            else if (this.isRunningFast())
-                this.currentAnimation = 'run-fast-left'
+            else if (this.isRunningFast()) this.currentAnimation = 'run-fast-left'
         }
 
         //Pressing none or both
         else {
             //Desacelerating
-            if (this.velocity.x > 0)
-                this.currentAnimation = 'run-right'
+            if (this.velocity.x > 0) this.currentAnimation = 'run-right'
             
-            if (this.velocity.x < 0)
-                this.currentAnimation = 'run-left'
-        }
-
-        //Idle
-        if (this.isIdle()) {
-            if (this.heading > 0)
-                this.currentAnimation = 'idle-right'
-            else
-                this.currentAnimation = 'idle-left'
+            else if (this.velocity.x < 0) this.currentAnimation = 'run-left'
         }
     }
 
@@ -132,7 +133,7 @@ export default class Mario extends GameObject
         const absoluteVelocityX = Math.abs(this.velocity.x)
         return (
             absoluteVelocityX > 0 & 
-            absoluteVelocityX < this.runningFastSpeed
+            absoluteVelocityX < this.fastSpeed
         )
     }
 
@@ -141,6 +142,6 @@ export default class Mario extends GameObject
         const absoluteVelocityX = Math.abs(this.velocity.x)
         return (
             absoluteVelocityX > 0 & 
-            absoluteVelocityX > this.runningFastSpeed)
+            absoluteVelocityX > this.fastSpeed)
     }
 }

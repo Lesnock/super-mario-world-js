@@ -52,7 +52,7 @@ export default class Game
 
     run ()
     {
-        const fps = 30
+        const fps = 30 
         const timePerMoment = 1000 / fps
         let delta = 0
         let now
@@ -67,8 +67,7 @@ export default class Game
 
             if (timer >= timePerMoment) {
 
-                const dt = timer / 1000
-                this.update(dt)
+                this.update(timer / 1000)
                 this.render(g)
                 timer = 0
 

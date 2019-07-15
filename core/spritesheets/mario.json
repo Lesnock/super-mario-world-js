@@ -6,16 +6,16 @@
         "run-right-1": [327, 75, 18, 30],
         "run-right-2": [367, 75, 18, 30],
 
-        "run-fast-right-1": [207, 155, 20, 29],
-        "run-fast-right-2": [246, 155, 20, 29],
+        "run-fast-right-1": [246, 155, 20, 29],
+        "run-fast-right-2": [207, 155, 20, 29],
         "run-fast-right-3": [286, 155, 20, 30],
 
         "idle-left": [168, 75, 17, 30],
         "run-left-1": [47, 75, 18, 30],
         "run-left-2": [7, 75, 18, 30],
 
-        "run-fast-left-1": [166, 155, 20, 30],
-        "run-fast-left-2": [126, 155, 20, 29],
+        "run-fast-left-1": [126, 155, 20, 29],
+        "run-fast-left-2": [166, 155, 20, 30],
         "run-fast-left-3": [86, 155, 20, 30],
 
         "dash-left": [7, 114, 18, 30],
@@ -23,26 +23,6 @@
     },
 
     "animations": {
-        "idle-left": {
-            "frames": [
-                {
-                    "sprite": "idle-left",
-                    "speed": 100
-                }
-            ],
-            "loop": false
-        },
-
-        "idle-right": {
-            "frames": [
-                {
-                    "sprite": "idle-right",
-                    "speed": 100
-                }
-            ],
-            "loop": false
-        },
-
         "run-right": {
             "frames": [
                 {

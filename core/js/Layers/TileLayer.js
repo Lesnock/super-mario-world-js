@@ -1,12 +1,14 @@
 import Tile from "../SpriteSheet/Tile";
+import TileCollider from "../Collision/TileCollider";
 
-export default class BackgroundLayer
+export default class TileLayer
 {
     constructor (tilesGrid, columns, rows)
     {
         this.grid = tilesGrid
         this.columns = columns
         this.rows = rows
+        this.tileCollider = new TileCollider(tilesGrid)
     }
 
     update (dt)

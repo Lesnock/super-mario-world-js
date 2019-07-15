@@ -2,24 +2,38 @@ export default class LayerManager
 {
     constructor ()
     {
-        this.layers = []
+        this.tiles = []
+        this.sprites = []
     }
 
-    addLayer (layer)
+    addTileLayer (layer)
     {
-        this.layers.push(layer)
+        this.tiles.push(layer)
+    }
+
+    addSpriteLayer (layer)
+    {
+        this.sprites.push(layer)
     }
 
     update (dt)
     {
-        this.layers.forEach(layer => {
+        this.tiles.forEach(layer => {
+            layer.update(dt)
+        })
+
+        this.sprites.forEach(layer => {
             layer.update(dt)
         })
     }
 
     render (g)
     {
-        this.layers.forEach(layer => {
+        this.tiles.forEach(layer => {
+            layer.render(g)
+        })
+
+        this.sprites.forEach(layer => {
             layer.render(g)
         })
     }

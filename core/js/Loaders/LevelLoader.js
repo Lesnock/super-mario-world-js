@@ -3,7 +3,7 @@ import loadJSON from "./JsonLoader";
 import Matrix from "../Math/Matrix";
 import SpriteLayer from "../Layers/SpriteLayer";
 import loadSpriteSheet from "./SpriteSheetLoader";
-import BackgroundLayer from "../Layers/BackgroundLayer";
+import TileLayer from "../Layers/TileLayer";
 
 //Load a level
 //Load spritesheet, create the layers (background and sprite)
@@ -17,17 +17,17 @@ export default async function loadLevel (name)
 
     //Create and add layers
     levelSpec.layers.forEach(layerSpec => {
-        const layer = createBackgroundLayer(layerSpec.tiles, levelSpec.columns, levelSpec.rows, spriteSheet)
-        level.layers.addLayer(layer)
+        const layer = createTileLayer(layerSpec.tiles, levelSpec.columns, levelSpec.rows, spriteSheet)
+        level.layers.addTileLayer(layer)
     })
 
     const spriteLayer = await createSpriteLayer(levelSpec.gameObjects)
-    level.layers.addLayer(spriteLayer)
+    level.layers.addSpriteLayer(spriteLayer)
 
     return level
 }
 
-function createBackgroundLayer (tiles, columns, rows, spriteSheet)
+function createTileLayer (tiles, columns, rows, spriteSheet)
 {
     const grid = new Matrix()
 
@@ -42,7 +42,7 @@ function createBackgroundLayer (tiles, columns, rows, spriteSheet)
         }
     }
 
-    return new BackgroundLayer(grid, columns, rows)
+    return new TileLayer(grid, columns, rows)
 }
 
 function createSpriteLayer (gameObjects)
@@ -64,6 +64,8 @@ function createSpriteLayer (gameObjects)
             instance.components.forEach(component => {
                 instance[component.name] = component
             })
+
+            instance.config()
 
             objects.push(instance)
         })

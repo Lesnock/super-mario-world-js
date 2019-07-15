@@ -11,4 +11,10 @@ export default class Vector
         this.x += vector.x
         this.y += vector.y
     }
+
+    multiplyBy (number)
+    {
+        this.x *= number
+        this.y *= number
+    }
 }

@@ -14,6 +14,11 @@ export default class GameObject
         this.friction = 1
     }
 
+    config ()
+    {
+        //
+    }
+
     accelerate ()
     {
         this.velocity.addVector(this.acceleration)
@@ -30,7 +35,8 @@ export default class GameObject
             component.update(dt)
         });
 
-        this.position.addVector(this.velocity)
+        this.position.x += this.velocity.x * dt
+        this.position.y += this.velocity.y * dt
     }
 
     superRender (g)
