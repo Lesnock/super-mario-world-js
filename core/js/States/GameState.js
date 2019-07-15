@@ -2,7 +2,6 @@ import State from "./State"
 import Assets from '../Assets'
 import Level from '../Level/Level'
 import Input from "../Input/Input"
-import Player from "../GameObjects/Player"
 import loadLevel from "../Loaders/LevelLoader"
 
 export default class GameState extends State

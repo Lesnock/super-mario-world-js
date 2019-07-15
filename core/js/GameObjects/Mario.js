@@ -16,9 +16,14 @@ export default class Mario extends GameObject
     {
         super()
 
-        this.acceleration.x = 15
-        this.friction = 0.9
+        this.accelerationSpeed = 20
+        this.runningFastSpeed = 9
+        this.maxSpeed = 10
+
+        this.friction = 0.65
+
         this.direction = 1
+        this.heading = 1
 
         this.position.y = 115
 
@@ -26,7 +31,7 @@ export default class Mario extends GameObject
     }
 
     update (dt)
-    {        
+    {
         this.setCurrentAnimation()
 
         if (this.sheet) {
@@ -38,6 +43,8 @@ export default class Mario extends GameObject
             //Animation
             this.sheet.animations.get(this.currentAnimation).update()
         }
+
+        this.position.x = Math.ceil(this.position.x)
     }
 
     render (g)
@@ -55,26 +62,85 @@ export default class Mario extends GameObject
 
     setCurrentAnimation ()
     {
-        if (this.direction > 0) {
-            //Dash
+        //Pressing right
+        if (this.isPressingRight()) {
+            //Turning around
             if (this.velocity.x < 0)
                 this.currentAnimation = 'dash-right'
-            else if (this.velocity.x > 0)
+
+            //Running Moderate
+            else if (this.isRunningModerate())
                 this.currentAnimation = 'run-right'
-            else
-                this.currentAnimation = 'run-right'
+
+            //Running fast
+            else if (this.isRunningFast())
+                this.currentAnimation = 'run-fast-right'
         }
 
-        else if (this.direction < 0) {
-            //Dash
+        //Pressing left
+        else if (this.isPressingLeft()) {
+
+            //Turning around
             if (this.velocity.x > 0)
                 this.currentAnimation = 'dash-left'
-            else
+
+            //Running Moderate
+            else if (this.isRunningModerate())
+                this.currentAnimation = 'run-left'
+
+            //Running fast
+            else if (this.isRunningFast())
+                this.currentAnimation = 'run-fast-left'
+        }
+
+        //Pressing none or both
+        else {
+            //Desacelerating
+            if (this.velocity.x > 0)
+                this.currentAnimation = 'run-right'
+            
+            if (this.velocity.x < 0)
                 this.currentAnimation = 'run-left'
         }
 
-        else {
-            this.currentAnimation = 'run-right'
+        //Idle
+        if (this.isIdle()) {
+            if (this.heading > 0)
+                this.currentAnimation = 'idle-right'
+            else
+                this.currentAnimation = 'idle-left'
         }
+    }
+
+    isIdle ()
+    {
+        return (this.velocity.x == 0)
+    }
+
+    isPressingRight ()
+    {
+        return !!(this.direction > 0)
+    }
+
+    isPressingLeft ()
+    {
+        return (this.direction < 0)
+    }
+
+    isRunningModerate ()
+    {
+        const absoluteVelocityX = Math.abs(this.velocity.x)
+        return (
+            absoluteVelocityX > 0 & 
+            absoluteVelocityX < this.runningFastSpeed
+        )
+    }
+
+    isRunningFast ()
+    {
+        const absoluteVelocityX = Math.abs(this.velocity.x)
+        return (
+            absoluteVelocityX > 0 & 
+            absoluteVelocityX > this.runningFastSpeed)
     }
 }

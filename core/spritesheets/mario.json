@@ -6,27 +6,73 @@
         "run-right-1": [327, 75, 18, 30],
         "run-right-2": [367, 75, 18, 30],
 
+        "run-fast-right-1": [207, 155, 20, 29],
+        "run-fast-right-2": [246, 155, 20, 29],
+        "run-fast-right-3": [286, 155, 20, 30],
+
         "idle-left": [168, 75, 17, 30],
         "run-left-1": [47, 75, 18, 30],
         "run-left-2": [7, 75, 18, 30],
+
+        "run-fast-left-1": [166, 155, 20, 30],
+        "run-fast-left-2": [126, 155, 20, 29],
+        "run-fast-left-3": [86, 155, 20, 30],
 
         "dash-left": [7, 114, 18, 30],
         "dash-right": [366, 114, 19, 31]
     },
 
     "animations": {
-        "run-right": {
+        "idle-left": {
+            "frames": [
+                {
+                    "sprite": "idle-left",
+                    "speed": 100
+                }
+            ],
+            "loop": false
+        },
+
+        "idle-right": {
             "frames": [
                 {
                     "sprite": "idle-right",
-                    "speed": 50
-                },
+                    "speed": 100
+                }
+            ],
+            "loop": false
+        },
+
+        "run-right": {
+            "frames": [
                 {
                     "sprite": "run-right-1",
                     "speed": 100
                 },
                 {
                     "sprite": "run-right-2",
+                    "speed": 50
+                },
+                {
+                    "sprite": "idle-right",
+                    "speed": 50
+                }
+            ],
+            "loop": true
+        },
+
+        "run-fast-right": {
+            "frames": [
+                {
+                    "sprite": "run-fast-right-1",
+                    "speed": 100
+                },
+                {
+                    "sprite": "run-fast-right-2",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-fast-right-3",
                     "speed": 50
                 }
             ],
@@ -36,18 +82,36 @@
         "run-left": {
             "frames": [
                 {
-                    "sprite": "idle-left",
-                    "speed": 50
-                },
-                {
                     "sprite": "run-left-1",
                     "speed": 100
                 },
                 {
                     "sprite": "run-left-2",
                     "speed": 50
+                },
+                {
+                    "sprite": "idle-left",
+                    "speed": 50
                 }
             ]
+        },
+
+        "run-fast-left": {
+            "frames": [
+                {
+                    "sprite": "run-fast-left-1",
+                    "speed": 100
+                },
+                {
+                    "sprite": "run-fast-left-2",
+                    "speed": 50
+                },
+                {
+                    "sprite": "run-fast-left-3",
+                    "speed": 50
+                }
+            ],
+            "loop": true
         },
 
         "dash-right": {

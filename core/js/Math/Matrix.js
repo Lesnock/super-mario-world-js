@@ -25,4 +25,15 @@ export default class Matrix
 
         this.grid[x][y] = value
     }
+
+    has (x, y)
+    {
+        if (! this.grid[x])
+            return false
+        
+        if (this.grid[x][y] == undefined)
+            return false
+        
+        return true
+    }
 }

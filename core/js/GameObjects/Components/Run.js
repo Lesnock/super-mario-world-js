@@ -1,5 +1,6 @@
 import Input from '../../Input/Input'
 import Component from "./Component"
+import Vector from '../../Math/Vector';
 
 export default class Run extends Component
 {
@@ -19,12 +20,16 @@ export default class Run extends Component
     setDirection ()
     {
         //Just left
-        if (Input.left && !Input.right)
+        if (Input.left && !Input.right) {
             this.gameObject.direction = -1
+            this.gameObject.heading = -1
+        }
         
         //Just right
-        else if (Input.right && !Input.left) 
+        else if (Input.right && !Input.left) {
             this.gameObject.direction = 1
+            this.gameObject.heading = 1
+        }
 
         //Both or none
         else {
@@ -34,22 +39,21 @@ export default class Run extends Component
 
     run (dt)
     {
-        const acceleration = this.gameObject.acceleration.x * dt * this.gameObject.direction
+        this.gameObject.acceleration.x = this.gameObject.accelerationSpeed * this.gameObject.direction * dt
 
-        console.log(acceleration)
-
-        //Accelerate
+        //if its key down left or right //accelerate
         if (this.gameObject.direction !== 0) {
-            this.gameObject.velocity.x += acceleration
+            this.gameObject.accelerate()
         }
 
-        //Decelerate
+        //if none key is pressed but the object is still moving
         else if (this.gameObject.velocity.x !== 0) {
-            this.gameObject.velocity.x *= this.gameObject.friction
+            this.gameObject.decelerate()
         }
 
-        else {
-            
+        //Set max speed
+        if (Math.abs(this.gameObject.velocity.x) > this.gameObject.maxSpeed) {
+            this.gameObject.velocity.x = this.gameObject.maxSpeed * this.gameObject.heading
         }
     }
 

@@ -16,10 +16,6 @@ export default class BackgroundLayer
 
     render (g)
     {
-        // this.grid.forEach((tile, x, y) => {
-        //     tile.render(g, x, y)
-        // })
-
         for (let x = 0; x < this.columns; x++) {
 
             for (let y = 0; y < this.rows; y++) {

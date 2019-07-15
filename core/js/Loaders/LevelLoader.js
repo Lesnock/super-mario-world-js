@@ -61,6 +61,10 @@ function createSpriteLayer (gameObjects)
             instance.position.x = x
             instance.position.y = y
 
+            instance.components.forEach(component => {
+                instance[component.name] = component
+            })
+
             objects.push(instance)
         })
     }

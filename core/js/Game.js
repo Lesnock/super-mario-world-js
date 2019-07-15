@@ -48,9 +48,6 @@ export default class Game
         
         if (State.getCurrentState() !== null)
             gameState.render(g)
-
-        // BackgroundLayer.render()
-        // SpriterLayer.render()
     }
 
     run ()
@@ -69,9 +66,12 @@ export default class Game
             lastTime = now
 
             if (timer >= timePerMoment) {
-                this.update(delta / 1000)
+
+                const dt = timer / 1000
+                this.update(dt)
                 this.render(g)
                 timer = 0
+
             }
 
             requestAnimationFrame(loop)
