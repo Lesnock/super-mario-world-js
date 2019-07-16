@@ -14,7 +14,7 @@ export default async function loadSpriteSheet (name)
     const spriteSheet = new SpriteSheet(image)
 
     if (spriteSheetSpec.tiles)
-        defineTiles(spriteSheetSpec.tiles, spriteSheet)
+        await defineTiles(spriteSheetSpec.tiles, spriteSheet)
 
     if (spriteSheetSpec.sprites)
         defineSprites(spriteSheetSpec.sprites, spriteSheet)
@@ -28,12 +28,16 @@ export default async function loadSpriteSheet (name)
 }
 
 //Tiles
-function defineTiles (tiles, spriteSheet)
+async function defineTiles (tiles, spriteSheet)
 {
-    tiles.forEach(tile => {
+    for (const tileIndex in tiles) {
+
+        const tile = tiles[tileIndex]
         const [x, y, width, height] = tile.index
-        spriteSheet.defineTile(tile.id, x, y, width, height)
-    });
+        const collider = tile.collider
+        await spriteSheet.defineTile(tile.id, x, y, width, height, collider)
+        
+    }
 
     return spriteSheet
 }

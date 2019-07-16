@@ -7,11 +7,21 @@ export default class Tile
         this.y = y
         this.width = width
         this.height = height
+        this.collider = null
     }
 
     render (g, indexX, indexY)
     {
         g.drawImage(this.buffer, indexX * this.width, indexY * this.height)
+    }
+
+    async setCollider (name)
+    {
+        if (name === 'none')
+            return null
+
+        const module = await import (`../Collision/Colliders/${name}.js`)
+        this.collider = new module.default()
     }
 }
 

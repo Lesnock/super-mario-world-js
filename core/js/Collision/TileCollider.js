@@ -5,6 +5,7 @@ export default class TileCollider
     constructor (tileGrid)
     {
         this.resolver = new TileResolver(tileGrid)
+        TileCollider.instance = this
     }
 
     check (gameObject)

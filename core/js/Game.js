@@ -52,7 +52,7 @@ export default class Game
 
     run ()
     {
-        const fps = 30 
+        const fps = 60 
         const timePerMoment = 1000 / fps
         let delta = 0
         let now

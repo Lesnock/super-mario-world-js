@@ -13,7 +13,7 @@ export default class SpriteSheet
         this.animations = new Map()
     }
 
-    defineTile (id, x, y, width, height)
+    async defineTile (id, x, y, width, height, collider)
     {
         const buffer = createBuffer(width, height)
 
@@ -26,7 +26,9 @@ export default class SpriteSheet
                 0, 0, width, height
             )
         
-        const tile = new Tile(buffer, x, y, width, height)
+        const tile = new Tile(buffer, x, y, width, height, collider)
+        await tile.setCollider(collider)
+        
         this.tiles.set(id, tile)
     }
 

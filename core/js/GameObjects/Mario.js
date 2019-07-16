@@ -16,10 +16,12 @@ export default class Mario extends GameObject
     {
         super()
 
-        this.friction = 0.65
-        this.thrust = 20
+        this.friction = 0.5
+        this.speed = 300
+        this.break = 300
+
         this.fastSpeed = 100
-        this.maxSpeed = 200
+        this.maxVelocity = 300
 
         this.direction = 1
         this.heading = 1

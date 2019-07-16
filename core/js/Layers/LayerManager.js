@@ -4,6 +4,7 @@ export default class LayerManager
     {
         this.tiles = []
         this.sprites = []
+        this.collisions = []
     }
 
     addTileLayer (layer)
@@ -14,6 +15,11 @@ export default class LayerManager
     addSpriteLayer (layer)
     {
         this.sprites.push(layer)
+    }
+
+    addCollisionLayer (layer)
+    {
+        this.collisions.push(layer)
     }
 
     update (dt)

@@ -4,12 +4,18 @@
     "tiles": [
         {
             "id": 0,
-            "coliision": "",
+            "collider": "none",
             "index": [0, 0, 16, 16]
         },
         {
             "id": 1,
+            "collider": "solid",
             "index": [16, 0, 16, 16]
+        },
+        {
+            "id": 2,
+            "collider": "solid",
+            "index": [32, 0, 16, 16]
         }
     ]
 }

@@ -22,12 +22,13 @@ export default class TileResolver
         const tile = this.grid.get(indexX, indexY)
 
         if (tile) {
-            return {tile}
+            return tile
         }
     }
 
     getByPosition (posX, posY)
     {
-        return this.getByIndex(this.toIndex(posX), this.toIndex(posY))
+        const index = this.toIndex(posX, posY)
+        return this.getByIndex(index.x, index.y)
     }
 }

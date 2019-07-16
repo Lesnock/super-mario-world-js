@@ -39,21 +39,28 @@ export default class Run extends Component
 
     run (dt)
     {
-        this.gameObject.acceleration.x = this.gameObject.thrust * this.gameObject.direction
-
-        //if its key down left or right //accelerate
-        if (this.gameObject.direction !== 0) {
-            this.gameObject.accelerate()
+        if (this.gameObject.direction > 0) {
+            this.gameObject.acceleration.x = this.gameObject.speed
         }
 
-        //if none key is pressed but the object is still moving
-        else if (this.gameObject.velocity.x !== 0) {
-            this.gameObject.decelerate()
+        else if (this.gameObject.direction < 0) {
+            this.gameObject.acceleration.x = -this.gameObject.speed
+        }
+
+        else {
+            this.gameObject.decelerate(dt)            
+        }
+
+        const absoluteVelocityX = Math.abs(this.gameObject.velocity.x)
+
+        if (absoluteVelocityX > this.gameObject.maxVelocity) {
+            console.log('maior', this.gameObject.heading)
+            this.gameObject.velocity.x = this.gameObject.maxVelocity * this.gameObject.heading
         }
 
         //Set max speed
-        if (Math.abs(this.gameObject.velocity.x) > this.gameObject.maxSpeed) {
-            this.gameObject.velocity.x = this.gameObject.maxSpeed * this.gameObject.heading
-        }
+        // if (Math.abs(this.gameObject.velocity.x) > this.gameObject.maxVelocity) {
+        //     this.gameObject.velocity.x = this.gameObject.maxVelocity * this.gameObject.heading
+        // }
     }
 }

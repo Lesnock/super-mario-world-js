@@ -25,7 +25,7 @@ export default class TileLayer
                 const tile = this.grid.get(x, y)
 
                 if (tile instanceof Tile)
-                    this.grid.get(x, y).render(g, x, y)                
+                    this.grid.get(x, y).render(g, x, y)
             }
         }
     }
