@@ -32,7 +32,7 @@ export default class SpriteSheet
         this.tiles.set(id, tile)
     }
 
-    defineSprite (name, x, y, width, height)
+    async defineSprite (name, x, y, width, height)
     {
         const buffer = createBuffer(width, height)
 
@@ -49,7 +49,7 @@ export default class SpriteSheet
         this.sprites.set(name, sprite)
     }
 
-    defineAnimation (name, frames, loop)
+    async defineAnimation (name, frames, loop)
     {
         const animation = new Animation(frames, loop)
         this.animations.set(name, animation)
@@ -72,6 +72,6 @@ export default class SpriteSheet
     {
         const animation = this.animations.get(name)
 
-        this.drawSprite(g, animation.getCurrentSprite(), x, y)
+        this.drawSprite(g, animation.currentSprite, x, y)
     }
 }

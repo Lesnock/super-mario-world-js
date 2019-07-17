@@ -4,6 +4,10 @@
     "tiles": [
         {
             "id": 0,
+            "bounds" : {
+                "square": [0, 0, 16, 16],
+                "circle": [0, 0, 20]
+            },
             "collider": "none",
             "index": [0, 0, 16, 16]
         },

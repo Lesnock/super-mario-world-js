@@ -85,4 +85,38 @@ export default class Run extends Component
         const deceleration = Math.min(absoluteVelocityX, this.break * dt)
         this.gameObject.velocity.x += (this.gameObject.velocity.x > 0) ? -deceleration : deceleration
     }
+
+    isIdle ()
+    {
+        return (this.gameObject.velocity.x == 0)
+    }
+
+    isPressingRight ()
+    {
+        return !!(this.gameObject.direction > 0)
+    }
+
+    isPressingLeft ()
+    {
+        return (this.gameObject.direction < 0)
+    }
+
+    isRunningModerate ()
+    {
+        const absoluteVelocityX = Math.abs(this.gameObject.velocity.x)
+
+        return (
+            absoluteVelocityX > 0 & 
+            absoluteVelocityX < this.fastSpeed
+        )
+    }
+
+    isRunningFast ()
+    {
+        const absoluteVelocityX = Math.abs(this.gameObject.velocity.x)
+        
+        return (
+            absoluteVelocityX > 0 & 
+            absoluteVelocityX > this.fastSpeed)
+    }
 }

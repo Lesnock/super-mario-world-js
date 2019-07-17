@@ -12,6 +12,8 @@ export default class GameObject
         this.acceleration = new Vector(0, 0)
 
         this.friction = 1
+        this.direction = 0
+        this.heading = 1
     }
 
     async init () 

@@ -15,12 +15,6 @@ export default class Mario extends GameObject
     constructor ()
     {
         super()
-
-        this.friction = 1/50
-
-        this.position.y = 115
-
-        this.loadSprites()
     }
 
     async init ()
@@ -30,45 +24,13 @@ export default class Mario extends GameObject
 
         this.run.fastSpeed = 200
         this.run.maxVelocity = 300
-    }
 
-    update (dt)
-    {
-        if (this.isIdle())
-            return
+        this.position.y = 115
 
-        this.setCurrentAnimation()
+        this.friction = 1/50
 
-        if (this.sheet) {
-            const sprite = this.sheet.animations.get(this.currentAnimation).getCurrentSprite()
-
-            if (sprite == 'run-right-1' || sprite == 'run-left-1' || sprite == 'run-fast-right-1' || sprite == 'run-fast-left-1')
-                this.position.y = 114
-            else 
-                this.position.y = 115
-            
-            //Animation
-            this.sheet.animations.get(this.currentAnimation).update()
-        }
-
-        this.position.x = (this.velocity.x > 0) ? Math.ceil(this.position.x) : Math.floor(this.position.x)
-    }
-
-    render (g)
-    {
-        //wait for async json load
-        if (this.sheet) {
-
-            if (this.isIdle()) {
-                const sprite = (this.heading > 0) ? 'idle-right' : 'idle-left'
-
-                this.sheet.drawSprite(g, sprite, this.position.x, this.position.y)
-
-                return
-            }
-
-            this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.position.y)
-        }
+        await this.loadSprites()
+        this.setRunAnimationScript()
     }
 
     async loadSprites ()
@@ -76,35 +38,59 @@ export default class Mario extends GameObject
         this.sheet = await loadSpriteSheet('mario')
     }
 
+    update (dt)
+    {
+
+        if (this.run.isIdle())
+            return
+
+        this.setCurrentAnimation()
+        
+        //Animation
+        this.sheet.animations.get(this.currentAnimation).update()
+
+        this.position.x = (this.velocity.x > 0) ? Math.ceil(this.position.x) : Math.floor(this.position.x)
+    }
+
+    render (g)
+    {
+        if (this.run.isIdle()) {
+            const sprite = (this.heading > 0) ? 'idle-right' : 'idle-left'
+
+            this.sheet.drawSprite(g, sprite, this.position.x, this.position.y)
+
+            return
+        }
+
+        this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.position.y)
+    }
+
     setCurrentAnimation ()
     {
-        if (this.isIdle())
-            this.currentAnimation = null
-
         //Pressing right
-        if (this.isPressingRight()) {
+        if (this.run.isPressingRight()) {
 
             //Turning around
             if (this.velocity.x < 0) this.currentAnimation = 'dash-right'
 
             //Running Moderate
-            else if (this.isRunningModerate()) this.currentAnimation = 'run-right'
+            else if (this.run.isRunningModerate()) this.currentAnimation = 'run-right'
 
             //Running fast
-            else if (this.isRunningFast()) this.currentAnimation = 'run-fast-right'
+            else if (this.run.isRunningFast()) this.currentAnimation = 'run-fast-right'
         }
 
         //Pressing left
-        else if (this.isPressingLeft()) {
+        else if (this.run.isPressingLeft()) {
 
             //Turning around
             if (this.velocity.x > 0) this.currentAnimation = 'dash-left'
 
             //Running Moderate
-            else if (this.isRunningModerate()) this.currentAnimation = 'run-left'
+            else if (this.run.isRunningModerate()) this.currentAnimation = 'run-left'
 
             //Running fast
-            else if (this.isRunningFast()) this.currentAnimation = 'run-fast-left'
+            else if (this.run.isRunningFast()) this.currentAnimation = 'run-fast-left'
         }
 
         //Pressing none or both
@@ -116,35 +102,34 @@ export default class Mario extends GameObject
         }
     }
 
-    isIdle ()
+    /**
+     * Script for Mario go up 1 px while running in some frames
+     */
+    setRunAnimationScript ()
     {
-        return (this.velocity.x == 0)
-    }
+        // const doMiniJump = (upSprite, downSprite, animation) => {
 
-    isPressingRight ()
-    {
-        return !!(this.direction > 0)
-    }
+        //     const currentSprite = animation.currentSprite
 
-    isPressingLeft ()
-    {
-        return (this.direction < 0)
-    }
+        //     if (currentSprite == upSprite) this.position.y -= 10
+        //     else if (currentSprite == downSprite) this.position.y += 10
+            
+        // }
 
-    isRunningModerate ()
-    {
-        const absoluteVelocityX = Math.abs(this.velocity.x)
-        return (
-            absoluteVelocityX > 0 & 
-            absoluteVelocityX < this.run.fastSpeed
-        )
-    }
+        // this.sheet.animations.get('run-right').addScript((animation) => {
+        //     doMiniJump('run-right-1', 'run-right-2', animation)
+        // })
 
-    isRunningFast ()
-    {
-        const absoluteVelocityX = Math.abs(this.velocity.x)
-        return (
-            absoluteVelocityX > 0 & 
-            absoluteVelocityX > this.run.fastSpeed)
+        // this.sheet.animations.get('run-left').addScript((animation) => {
+        //     doMiniJump('run-left-1', 'run-left-2', animation)
+        // })
+
+        // this.sheet.animations.get('run-fast-right').addScript((animation) => {
+        //     doMiniJump('run-fast-right-1', 'run-right-fast-2', animation)
+        // })
+
+        // this.sheet.animations.get('run-fast-left').addScript((animation) => {
+        //     doMiniJump('run-fast-left-1', 'run-fast-left-2', animation)
+        // })
     }
 }

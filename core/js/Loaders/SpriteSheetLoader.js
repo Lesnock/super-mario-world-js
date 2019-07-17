@@ -17,10 +17,10 @@ export default async function loadSpriteSheet (name)
         await defineTiles(spriteSheetSpec.tiles, spriteSheet)
 
     if (spriteSheetSpec.sprites)
-        defineSprites(spriteSheetSpec.sprites, spriteSheet)
+        await defineSprites(spriteSheetSpec.sprites, spriteSheet)
 
     if (spriteSheetSpec.animations)
-        defineAnimations(spriteSheetSpec.animations, spriteSheet)
+        await defineAnimations(spriteSheetSpec.animations, spriteSheet)
 
     Assets.sheets.set(name, spriteSheet)
 
@@ -30,9 +30,9 @@ export default async function loadSpriteSheet (name)
 //Tiles
 async function defineTiles (tiles, spriteSheet)
 {
-    for (const tileIndex in tiles) {
+    for (const tileID in tiles) {
 
-        const tile = tiles[tileIndex]
+        const tile = tiles[tileID]
         const [x, y, width, height] = tile.index
         const collider = tile.collider
         await spriteSheet.defineTile(tile.id, x, y, width, height, collider)
