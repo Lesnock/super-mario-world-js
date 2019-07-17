@@ -16,19 +16,20 @@ export default class Mario extends GameObject
     {
         super()
 
-        this.friction = 0.5
-        this.speed = 300
-        this.break = 300
-
-        this.fastSpeed = 100
-        this.maxVelocity = 300
-
-        this.direction = 1
-        this.heading = 1
+        this.friction = 1/50
 
         this.position.y = 115
 
         this.loadSprites()
+    }
+
+    async init ()
+    {
+        this.run.speed = 400
+        this.run.break = 300
+
+        this.run.fastSpeed = 200
+        this.run.maxVelocity = 300
     }
 
     update (dt)
@@ -50,7 +51,7 @@ export default class Mario extends GameObject
             this.sheet.animations.get(this.currentAnimation).update()
         }
 
-        this.position.x = Math.ceil(this.position.x)
+        this.position.x = (this.velocity.x > 0) ? Math.ceil(this.position.x) : Math.floor(this.position.x)
     }
 
     render (g)
@@ -78,7 +79,7 @@ export default class Mario extends GameObject
     setCurrentAnimation ()
     {
         if (this.isIdle())
-            return
+            this.currentAnimation = null
 
         //Pressing right
         if (this.isPressingRight()) {
@@ -135,7 +136,7 @@ export default class Mario extends GameObject
         const absoluteVelocityX = Math.abs(this.velocity.x)
         return (
             absoluteVelocityX > 0 & 
-            absoluteVelocityX < this.fastSpeed
+            absoluteVelocityX < this.run.fastSpeed
         )
     }
 
@@ -144,6 +145,6 @@ export default class Mario extends GameObject
         const absoluteVelocityX = Math.abs(this.velocity.x)
         return (
             absoluteVelocityX > 0 & 
-            absoluteVelocityX > this.fastSpeed)
+            absoluteVelocityX > this.run.fastSpeed)
     }
 }

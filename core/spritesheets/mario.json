@@ -73,7 +73,8 @@
                     "sprite": "idle-left",
                     "speed": 50
                 }
-            ]
+            ],
+            "loop": true
         },
 
         "run-fast-left": {

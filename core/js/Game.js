@@ -65,7 +65,7 @@ export default class Game
             timer += delta
             lastTime = now
 
-            if (timer >= timePerMoment) {
+            if (timePerMoment >= timePerMoment) {
 
                 this.update(timer / 1000)
                 this.render(g)

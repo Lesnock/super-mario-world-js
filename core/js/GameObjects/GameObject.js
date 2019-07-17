@@ -10,30 +10,13 @@ export default class GameObject
         this.position = new Point(0, 0)
         this.velocity = new Vector(0, 0)
         this.acceleration = new Vector(0, 0)
-        //this.deceleration = new Vector(0, 0)
 
         this.friction = 1
     }
 
-    config ()
+    async init () 
     {
         //
-    }
-
-    // accelerate (dt)
-    // {
-    //     this.velocity.x += this.acceleration.x * dt
-    //     this.velocity.y += this.acceleration.y * dt
-    // }
-
-    decelerate (dt)
-    {
-        this.acceleration.x = 0
-        
-        const absoluteVelocityX = Math.abs(this.velocity.x)
-
-        const deceleration = Math.min(absoluteVelocityX, this.break * dt)
-        this.velocity.x += (this.velocity.x > 0) ? -deceleration : deceleration
     }
 
     superUpdate (dt)
@@ -42,9 +25,15 @@ export default class GameObject
             component.update(dt)
         });
 
+        //Add acceleration to velocity
         this.velocity.x += this.acceleration.x * dt
         this.velocity.y += this.acceleration.y * dt
 
+        //Add friction to velocity
+        if (this.friction < 1)
+            this.velocity.x = this.velocity.x - this.velocity.x * this.friction
+
+        //Add velocity to position
         this.position.x += this.velocity.x * dt
         this.position.y += this.velocity.y * dt
     }
@@ -55,4 +44,18 @@ export default class GameObject
             component.render(g)
         });
     }
+}
+
+GameObject.create = async function () 
+{
+    const _class = this
+    const instance = new _class()
+
+    instance.components.forEach(component => {
+        instance[component.name] = component
+    })
+
+    await instance.init()
+
+    return instance
 }

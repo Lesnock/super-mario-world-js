@@ -1,6 +1,5 @@
-import Input from '../../Input/Input'
 import Component from "./Component"
-import Vector from '../../Math/Vector';
+import Input from '../../Input/Input'
 
 export default class Run extends Component
 {
@@ -9,6 +8,12 @@ export default class Run extends Component
     constructor (gameObject)
     {
         super(gameObject)
+
+        this.speed = 0
+        this.break = 0
+
+        this.maxVelocity = 10000
+        this.distance = 0
     }
 
     update (dt)
@@ -39,28 +44,45 @@ export default class Run extends Component
 
     run (dt)
     {
-        if (this.gameObject.direction > 0) {
-            this.gameObject.acceleration.x = this.gameObject.speed
-        }
+        if (this.gameObject.direction !== 0) {
+            this.accelerate(dt)
 
-        else if (this.gameObject.direction < 0) {
-            this.gameObject.acceleration.x = -this.gameObject.speed
+            const directionSign = Math.sign(this.gameObject.direction)
+            const velocitySign = Math.sign(this.gameObject.velocity.x)
+
+            //When dashing
+            if (directionSign !== velocitySign) {
+                this.distance = 0
+            }
         }
 
         else {
-            this.gameObject.decelerate(dt)            
+            this.decelerate(dt)            
         }
+    }
 
+    accelerate (dt)
+    {
         const absoluteVelocityX = Math.abs(this.gameObject.velocity.x)
 
-        if (absoluteVelocityX > this.gameObject.maxVelocity) {
-            console.log('maior', this.gameObject.heading)
-            this.gameObject.velocity.x = this.gameObject.maxVelocity * this.gameObject.heading
+        if (absoluteVelocityX >= this.maxVelocity) {
+            this.gameObject.acceleration.x = 0
+            return
         }
 
-        //Set max speed
-        // if (Math.abs(this.gameObject.velocity.x) > this.gameObject.maxVelocity) {
-        //     this.gameObject.velocity.x = this.gameObject.maxVelocity * this.gameObject.heading
-        // }
+        this.gameObject.acceleration.x = this.speed * this.gameObject.direction
+
+        this.distance += absoluteVelocityX * dt
+    }
+
+    decelerate (dt)
+    {
+        this.gameObject.acceleration.x = 0
+        
+        const absoluteVelocityX = Math.abs(this.gameObject.velocity.x)
+
+        //Evits the deceleration to turn around
+        const deceleration = Math.min(absoluteVelocityX, this.break * dt)
+        this.gameObject.velocity.x += (this.gameObject.velocity.x > 0) ? -deceleration : deceleration
     }
 }
