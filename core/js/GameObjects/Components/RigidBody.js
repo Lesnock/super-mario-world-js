@@ -23,8 +23,8 @@ export default class RigidBody extends Component
                 return
             }
 
-            if (this.gameObject.position.y + 28 > this.match.y1) {
-                this.gameObject.position.y = this.match.y1 - 28
+            if (this.gameObject.position.y + 26 > this.match.y1) {
+                this.gameObject.position.y = this.match.y1 - 26
                 this.gameObject.velocity.y = 0
             }
         }
@@ -32,6 +32,14 @@ export default class RigidBody extends Component
 
     render (g)
     {
+        g.strokeStyle = 'red'
+        g.beginPath()
+        g.rect(
+            this.gameObject.position.x,
+            this.gameObject.position.y,
+            16, 26)
+        g.stroke()
+
         g.strokeStyle = 'blue'
         g.beginPath()
         g.rect(

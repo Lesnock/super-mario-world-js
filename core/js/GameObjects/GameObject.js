@@ -23,14 +23,16 @@ export default class GameObject
     }
 
     async superUpdate (dt)
-    {        
+    {
+        //Add friction to velocity
+        if (this.friction < 1)
+            this.velocity.x = this.velocity.x - this.velocity.x * this.friction
+
         //Add acceleration to velocity
         this.velocity.x += this.acceleration.x * dt
         this.velocity.y += this.acceleration.y * dt
 
-        //Add friction to velocity
-        if (this.friction < 1)
-            this.velocity.x = this.velocity.x - this.velocity.x * this.friction
+        this.velocity.y += this.gravity.y * dt
 
         //Add velocity to position
         this.position.x += this.velocity.x * dt
@@ -39,8 +41,7 @@ export default class GameObject
         this.components.forEach(component => {
             component.update(dt)
         });
-
-        this.velocity.y += this.gravity.y * dt
+        
         //this.position.y = 0
     }
 

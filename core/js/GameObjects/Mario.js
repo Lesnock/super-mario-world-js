@@ -35,7 +35,7 @@ export default class Mario extends GameObject
         this.friction = 1/50
 
         await this.loadSprites()
-        //this.run.setAnimationScript()
+        this.run.setAnimationScript()
     }
 
     async loadSprites ()

@@ -120,6 +120,7 @@ export default class Run extends Component
             absoluteVelocityX > this.fastSpeed)
     }
 
+    //Makes Mario go up 1px on some frames
     setAnimationScript ()
     {
         this.gameObject.sheet.animations.get('run-right').addScript(animation => {
