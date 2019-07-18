@@ -21,8 +21,16 @@ export default class TileResolver
     {
         const tile = this.grid.get(indexX, indexY)
 
+        const x1 = indexX * this.tileWidth
+        const x2 = x1 + this.tileWidth
+
+        const y1 = indexY * this.tileHeight
+        const y2 = y1 + this.tileWidth
+
         if (tile) {
-            return tile
+            return {
+                tile, x1, x2, y1, y2
+            }
         }
     }
 

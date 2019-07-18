@@ -119,4 +119,39 @@ export default class Run extends Component
             absoluteVelocityX > 0 & 
             absoluteVelocityX > this.fastSpeed)
     }
+
+    setAnimationScript ()
+    {
+        this.gameObject.sheet.animations.get('run-right').addScript(animation => {
+            const currentSprite = animation.currentSprite
+
+            if (currentSprite == 'run-right-1') {
+                this.gameObject.position.y -= 1
+            }
+        })
+
+        this.gameObject.sheet.animations.get('run-fast-right').addScript(animation => {
+            const currentSprite = animation.currentSprite
+
+            if (currentSprite == 'run-fast-right-1') {
+                this.gameObject.position.y -= 1
+            }
+        })
+
+        this.gameObject.sheet.animations.get('run-left').addScript(animation => {
+            const currentSprite = animation.currentSprite
+
+            if (currentSprite == 'run-left-1') {
+                this.gameObject.position.y -= 1
+            }
+        })
+
+        this.gameObject.sheet.animations.get('run-fast-left').addScript(animation => {
+            const currentSprite = animation.currentSprite
+
+            if (currentSprite == 'run-fast-left-1') {
+                this.gameObject.position.y -= 1
+            }
+        })
+    }
 }

@@ -20,8 +20,8 @@ export default class Tile
         if (name === 'none')
             return null
 
-        const module = await import (`../Collision/Colliders/${name}.js`)
-        this.collider = new module.default()
+        const module = await import(`../Collision/Colliders/${name}.js`)
+        this.collider = new module.default(this)
     }
 }
 

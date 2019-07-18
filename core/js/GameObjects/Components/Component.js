@@ -7,12 +7,12 @@ export default class Component
         this.gameObject[this.name] = this
     }
 
-    update (dt)
+    async update (dt)
     {
         //
     }
 
-    render (g)
+    async render (g)
     {
         //
     }

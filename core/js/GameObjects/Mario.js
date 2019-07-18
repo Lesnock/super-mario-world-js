@@ -3,6 +3,7 @@ import Jump from './Components/Jump'
 import GameObject from "./GameObject"
 import RigidBody from './Components/RigidBody'
 import loadSpriteSheet from '../Loaders/SpriteSheetLoader';
+import Square from '../Collision/Shapes/Square';
 
 export default class Mario extends GameObject
 {
@@ -10,6 +11,10 @@ export default class Mario extends GameObject
         new Run(this),
         new RigidBody(this)
         //new Jump(this),
+    ]
+
+    shapes = [
+        new Square(this, 0, 0, 18, 30)
     ]
 
     constructor ()
@@ -30,7 +35,7 @@ export default class Mario extends GameObject
         this.friction = 1/50
 
         await this.loadSprites()
-        this.setRunAnimationScript()
+        //this.run.setAnimationScript()
     }
 
     async loadSprites ()
@@ -40,7 +45,6 @@ export default class Mario extends GameObject
 
     update (dt)
     {
-
         if (this.run.isIdle())
             return
 
@@ -50,10 +54,15 @@ export default class Mario extends GameObject
         this.sheet.animations.get(this.currentAnimation).update()
 
         this.position.x = (this.velocity.x > 0) ? Math.ceil(this.position.x) : Math.floor(this.position.x)
+        this.position.y = (this.velocity.y > 0) ? Math.ceil(this.position.y) : Math.floor(this.position.y)
     }
 
     render (g)
     {
+        this.shapes.forEach(shape => {
+            //shape.render(g)
+        })
+
         if (this.run.isIdle()) {
             const sprite = (this.heading > 0) ? 'idle-right' : 'idle-left'
 
@@ -100,36 +109,5 @@ export default class Mario extends GameObject
             
             else if (this.velocity.x < 0) this.currentAnimation = 'run-left'
         }
-    }
-
-    /**
-     * Script for Mario go up 1 px while running in some frames
-     */
-    setRunAnimationScript ()
-    {
-        // const doMiniJump = (upSprite, downSprite, animation) => {
-
-        //     const currentSprite = animation.currentSprite
-
-        //     if (currentSprite == upSprite) this.position.y -= 10
-        //     else if (currentSprite == downSprite) this.position.y += 10
-            
-        // }
-
-        // this.sheet.animations.get('run-right').addScript((animation) => {
-        //     doMiniJump('run-right-1', 'run-right-2', animation)
-        // })
-
-        // this.sheet.animations.get('run-left').addScript((animation) => {
-        //     doMiniJump('run-left-1', 'run-left-2', animation)
-        // })
-
-        // this.sheet.animations.get('run-fast-right').addScript((animation) => {
-        //     doMiniJump('run-fast-right-1', 'run-right-fast-2', animation)
-        // })
-
-        // this.sheet.animations.get('run-fast-left').addScript((animation) => {
-        //     doMiniJump('run-fast-left-1', 'run-fast-left-2', animation)
-        // })
     }
 }

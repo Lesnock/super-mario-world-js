@@ -1,12 +1,12 @@
 export default class Solid
 {
-    constructor ()
+    constructor (tile)
     {
-        
+        this.tile = tile
     }
 
     check (gameObject)
     {
-        return 'solid'
+        gameObject.velocity.x += 10
     }
 }

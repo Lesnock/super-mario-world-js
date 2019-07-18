@@ -19,16 +19,16 @@ export default class Animation
         if (! this.playing) 
             return
 
+        this.scripts.forEach(callback => {
+            callback(this)
+        })
+
         this.timer += Date.now() - this.lastTime
         this.lastTime = Date.now()
 
         const frameSpeed = this.frames[this.index].speed
 
         if (this.timer >= frameSpeed) {
-
-            this.scripts.forEach(callback => {
-                callback(this)
-            })
 
             this.index++
             this.timer = 0
