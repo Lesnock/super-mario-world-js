@@ -5,8 +5,16 @@ export default class Solid
         this.tile = tile
     }
 
-    check (gameObject)
+    checkY (gameObject)
     {
-        gameObject.velocity.x += 10
+        // if (gameObject.velocity.y > 0) {
+
+        //     if (gameObject.position.y + gameObject.height > match.y1) {
+        //         gameObject.position.y = match.y1 - marioHeight
+        //         gameObject.velocity.y = 0
+        //     }
+        // }
+
+        console.log(this.tile)
     }
 }

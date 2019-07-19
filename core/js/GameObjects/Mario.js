@@ -20,6 +20,8 @@ export default class Mario extends GameObject
     constructor ()
     {
         super()
+        this.width = 14
+        this.height = 29
     }
 
     async init ()

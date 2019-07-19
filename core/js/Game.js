@@ -56,9 +56,11 @@ export default class Game
         let delta = 1 / fps
         let lastTime = 0
         let timer = 0
+        let now
 
-        const loop = (time) => {
-            timer += (time - lastTime) / 1000
+        const loop = () => {
+            now = performance.now()
+            timer += (now - lastTime) / 1000
 
             while (timer > delta) {
                 this.update(delta)
@@ -67,7 +69,7 @@ export default class Game
                 timer -= delta
             }
 
-            lastTime = time
+            lastTime = now
 
             requestAnimationFrame(loop)
         }
