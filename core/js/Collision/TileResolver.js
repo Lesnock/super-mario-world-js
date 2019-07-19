@@ -9,12 +9,23 @@ export default class TileResolver
         this.tileHeight = tileHeight
     }
 
-    toIndex (posX, posY)
+    toIndex (pos, tileSize = this.tileWidth)
     {
-        const x = Math.floor(posX / this.tileWidth)
-        const y = Math.floor(posY / this.tileHeight)
+        return Math.floor(pos / tileSize)
+    }
 
-        return {x, y}
+    toIndexRange (pos1, pos2, tileSize = this.tileWidth)
+    {
+        const posMax = Math.ceil(pos2 / tileSize) * tileSize
+        const range = []
+        let position = pos1
+
+        do {
+            range.push(this.toIndex(position))
+            position += tileSize
+        } while (position < posMax)
+
+        return range
     }
 
     getByIndex (indexX, indexY)
@@ -36,7 +47,23 @@ export default class TileResolver
 
     getByPosition (posX, posY)
     {
-        const index = this.toIndex(posX, posY)
-        return this.getByIndex(index.x, index.y)
+        return this.getByIndex(this.toIndex(posX), this.toIndex(posY))
+    }
+
+    getByRange (x1, x2, y1, y2)
+    {
+        const index = []
+
+        this.toIndexRange(x1, x2).forEach(x => {
+            this.toIndexRange(y1, y2).forEach(y => {
+                const match = this.getByIndex(x, y)
+                
+                if (match) {
+                    index.push(match)
+                }
+            })
+        })
+
+        return index
     }
 }

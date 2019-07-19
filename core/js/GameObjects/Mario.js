@@ -9,8 +9,8 @@ export default class Mario extends GameObject
 {
     components = [
         new Run(this),
-        new RigidBody(this)
-        //new Jump(this),
+        new Jump(this),
+        new RigidBody(this),
     ]
 
     shapes = [
@@ -52,9 +52,6 @@ export default class Mario extends GameObject
         
         //Animation
         this.sheet.animations.get(this.currentAnimation).update()
-
-        this.position.x = (this.velocity.x > 0) ? Math.ceil(this.position.x) : Math.floor(this.position.x)
-        this.position.y = (this.velocity.y > 0) ? Math.ceil(this.position.y) : Math.floor(this.position.y)
     }
 
     render (g)

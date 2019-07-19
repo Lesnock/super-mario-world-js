@@ -34,16 +34,14 @@ export default class GameObject
 
         this.velocity.y += this.gravity.y * dt
 
-        //Add velocity to position
-        this.position.x += this.velocity.x * dt
-        this.position.y += this.velocity.y * dt
+        this.move(dt)
 
         this.components.forEach(component => {
             component.update(dt)
         });
 
-        // this.position.x = 0
-        // this.position.y = 0
+        this.position.x = (this.velocity.x > 0) ? Math.ceil(this.position.x) : Math.floor(this.position.x)
+        this.position.y = (this.velocity.y > 0) ? Math.ceil(this.position.y) : Math.floor(this.position.y)
     }
 
     superRender (g)
@@ -51,6 +49,34 @@ export default class GameObject
         this.components.forEach(component => {
             component.render(g)
         });
+    }
+
+    move (dt)
+    {
+        this.moveX(dt)
+        this.moveY(dt)
+    }
+
+    moveX (dt)
+    {
+        this.position.x += this.velocity.x * dt
+
+        this.components.forEach(component => {
+            if (typeof component.onMoveX === 'function') {
+                component.onMoveX()
+            }
+        })
+    }
+
+    moveY (dt)
+    {
+        this.position.y += this.velocity.y * dt
+
+        this.components.forEach(component => {
+            if (typeof component.onMoveY === 'function') {
+                component.onMoveY()
+            }
+        })
     }
 }
 

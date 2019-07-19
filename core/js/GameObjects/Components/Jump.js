@@ -12,17 +12,20 @@ export default class Jump extends Component
 
     update (dt)
     {
-        //Up and Down
         if (Input.up) {
-            
-            this.gameObject.velocity.y = -40
+            this.gameObject.velocity.y -= 1500 * dt
         }
-        else if (Input.down) {
-            this.gameObject.velocity.y = 40
-        }
-        else {
-            this.gameObject.velocity.y = 0
-        }
+
+        // //Up and Down
+        // if (Input.up) {            
+        //     this.gameObject.velocity.y -= 40
+        // }
+        // else if (Input.down) {
+        //     this.gameObject.velocity.y += 40
+        // }
+        // else {
+        //     this.gameObject.velocity.y = 0
+        // }
 
         // if (this.gameObject.position.y > 300)
         //     this.gameObject.position.y = 300
