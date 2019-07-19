@@ -10,7 +10,7 @@ export default class GameObject
         this.position = new Point(0, 0)
         this.velocity = new Vector(0, 0)
         this.acceleration = new Vector(0, 0)
-        this.gravity = new Vector(0, 2000)
+        this.gravity = new Vector(0, 1000)
 
         this.friction = 1
         this.direction = 0
@@ -41,8 +41,9 @@ export default class GameObject
         this.components.forEach(component => {
             component.update(dt)
         });
-        
-        //this.position.y = 0
+
+        // this.position.x = 0
+        // this.position.y = 0
     }
 
     superRender (g)

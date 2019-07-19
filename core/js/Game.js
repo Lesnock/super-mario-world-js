@@ -52,30 +52,26 @@ export default class Game
 
     run ()
     {
-        const fps = 60 
-        const timePerMoment = 1000 / fps
-        let delta = 0
-        let now
-        let lastTime = Date.now()
+        const fps = 60
+        let delta = 1 / fps
+        let lastTime = 0
         let timer = 0
 
-        const loop = () => {
-            now = Date.now()
-            delta = now - lastTime
-            timer += delta
-            lastTime = now
+        const loop = (time) => {
+            timer += (time - lastTime) / 1000
 
-            if (timePerMoment >= timePerMoment) {
-
-                this.update(timer / 1000)
+            while (timer > delta) {
+                this.update(delta)
                 this.render(g)
-                timer = 0
 
+                timer -= delta
             }
+
+            lastTime = time
 
             requestAnimationFrame(loop)
         }
 
-        loop()
+        loop(0)
     }
 }

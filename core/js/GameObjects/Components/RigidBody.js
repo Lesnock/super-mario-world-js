@@ -10,12 +10,18 @@ export default class RigidBody extends Component
         super(gameObject)
 
         this.tileCollider = TileCollider.instance
-        this.gravity = 10000
+        this.gravity = 0
     }
 
     update (dt)
     {
         this.match = this.tileCollider.resolver.getByPosition(this.gameObject.position.x, this.gameObject.position.y + 28)
+
+        // if (!this.match) {
+        //     this.gameObject.position.x = 0
+        //     this.gameObject.position.y = 0
+        //     return
+        // }
 
         if (this.gameObject.velocity.y > 0) {
 
@@ -40,12 +46,14 @@ export default class RigidBody extends Component
             16, 26)
         g.stroke()
 
-        g.strokeStyle = 'blue'
-        g.beginPath()
-        g.rect(
-            this.match.x1,
-            this.match.y1,
-            this.match.tile.width, this.match.tile.height)
-        g.stroke()
+        if (this.match) {
+            g.strokeStyle = 'blue'
+            g.beginPath()
+            g.rect(
+                this.match.x1,
+                this.match.y1,
+                this.match.tile.width, this.match.tile.height)
+                g.stroke()
+        }
     }
 }
