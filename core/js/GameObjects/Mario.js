@@ -4,13 +4,14 @@ import GameObject from "./GameObject"
 import RigidBody from './Components/RigidBody'
 import Square from '../Collision/Shapes/Square';
 import loadSpriteSheet from '../Loaders/SpriteSheetLoader';
+import Input from '../Input/Input';
 
 export default class Mario extends GameObject
 {
     components = [
         new Run(this),
-        new Jump(this),
         new RigidBody(this),
+        new Jump(this),
     ]
 
     shapes = [
@@ -42,6 +43,14 @@ export default class Mario extends GameObject
 
     update (dt)
     {
+        console.log(this.velocity.y)
+        if (Input.up) {
+            this.jump.start()
+        }
+        else {
+            this.jump.cancel()
+        }
+
         if (this.run.isIdle()) return
 
         this.setCurrentAnimation()

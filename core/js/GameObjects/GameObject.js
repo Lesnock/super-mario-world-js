@@ -35,11 +35,11 @@ export default class GameObject
 
         this.velocity.y += this.gravity.y * dt
 
-        this.move(dt)
-
         this.components.forEach(component => {
             component.update(dt)
         });
+
+        this.move(dt)
 
         this.position.x = (this.velocity.x > 0) ? Math.ceil(this.position.x) : Math.floor(this.position.x)
         this.position.y = (this.velocity.y > 0) ? Math.ceil(this.position.y) : Math.floor(this.position.y)
@@ -85,6 +85,13 @@ export default class GameObject
             if (typeof component.onMoveY === 'function') {
                 component.onMoveY()
             }
+        })
+    }
+
+    obstructs (side)
+    {
+        this.components.forEach(component => {
+            component.obstructs(side)
         })
     }
 }

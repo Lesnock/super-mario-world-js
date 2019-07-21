@@ -8,26 +8,38 @@ export default class Jump extends Component
     constructor (gameObject)
     {
         super(gameObject)
+        this.ready = false
+
+        this.duration = 0.1
+        this.speed = 60
+        this.engageTime = 0
+    }
+
+    start ()
+    {
+        if (this.ready)
+            this.engageTime = this.duration
+    }
+
+    cancel ()
+    {
+        this.engageTime = 0
     }
 
     update (dt)
     {
-        if (Input.up) {
-            this.gameObject.velocity.y -= 1500 * dt
+        if (this.engageTime > 0) {
+            this.gameObject.velocity.y -= this.speed
+            this.engageTime -= dt
         }
 
-        // //Up and Down
-        // if (Input.up) {            
-        //     this.gameObject.velocity.y -= 40
-        // }
-        // else if (Input.down) {
-        //     this.gameObject.velocity.y += 40
-        // }
-        // else {
-        //     this.gameObject.velocity.y = 0
-        // }
+        this.ready = false
+    }
 
-        // if (this.gameObject.position.y > 300)
-        //     this.gameObject.position.y = 300
+    obstructs (side)
+    {
+        if (side === 'bottom') {
+            this.ready = true
+        }
     }
 }

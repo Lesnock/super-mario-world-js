@@ -14,6 +14,7 @@ export default class Solid extends Collider
         if (gameObject.velocity.x > 0) {
 
             if (shape.xPosition + shape.width > match.x1) {
+                gameObject.obstructs('right')
                 gameObject.position.x = match.x1 - shape.width - shape.x
                 gameObject.velocity.x = 0
             }
@@ -22,6 +23,7 @@ export default class Solid extends Collider
         else if (gameObject.velocity.x < 0) {
             
             if (gameObject.position.x < match.x2) {
+                gameObject.obstructs('left')
                 gameObject.position.x = match.x2 - shape.x
                 gameObject.velocity.x = 0
             }
@@ -36,6 +38,7 @@ export default class Solid extends Collider
         if (gameObject.velocity.y > 0) {
 
             if (shape.yPosition + shape.height > match.y1) {
+                gameObject.obstructs('bottom')
                 gameObject.position.y = match.y1 - shape.height - shape.y
                 gameObject.velocity.y = 0
             }
@@ -43,6 +46,7 @@ export default class Solid extends Collider
 
         else if (gameObject.velocity.y < 0) {
             if (gameObject.position.y < match.y2) {
+                gameObject.obstructs('top')
                 gameObject.position.y = match.y2
                 gameObject.velocity.y = 0
             }

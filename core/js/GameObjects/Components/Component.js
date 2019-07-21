@@ -16,4 +16,9 @@ export default class Component
     {
         //
     }
+
+    obstructs (side)
+    {
+        //
+    }
 }
