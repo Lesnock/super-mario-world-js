@@ -10,8 +10,22 @@ export default class TileCollider
 
     checkX (gameObject)
     {
+        let xRange
+        
+        if (gameObject.velocity.x > 0) {
+            xRange = gameObject.position.x + gameObject.width
+        }
+
+        else if (gameObject.velocity.x < 0) {
+            xRange = gameObject.position.x
+        }
+
+        else {
+            return
+        }
+
         const matches = this.resolver.getByRange(
-            gameObject.position.x, gameObject.position.x + gameObject.width,
+            xRange, xRange,
             gameObject.position.y, gameObject.position.y + gameObject.height)
         
         matches.forEach(match => {
@@ -38,13 +52,29 @@ export default class TileCollider
             }
 
         })
+
+        return matches
     }
 
     checkY (gameObject)
     {
+        let yRange
+        
+        if (gameObject.velocity.y > 0) {
+            yRange = gameObject.position.y + gameObject.height
+        }
+
+        else if (gameObject.velocity.y < 0) {
+            yRange = gameObject.position.y
+        }
+
+        else {
+            return
+        }
+
         const matches = this.resolver.getByRange(
             gameObject.position.x, gameObject.position.x + gameObject.width,
-            gameObject.position.y, gameObject.position.y + gameObject.height)
+            yRange, yRange)
 
         matches.forEach(match => {
         
@@ -68,5 +98,7 @@ export default class TileCollider
                 }
             }
         })
+
+        return matches
     }
 }

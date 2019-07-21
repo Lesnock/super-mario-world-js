@@ -2,13 +2,15 @@ import Run from './Components/Run'
 import Jump from './Components/Jump'
 import GameObject from "./GameObject"
 import RigidBody from './Components/RigidBody'
-import loadSpriteSheet from '../Loaders/SpriteSheetLoader';
 import Square from '../Collision/Shapes/Square';
+import loadSpriteSheet from '../Loaders/SpriteSheetLoader';
+import RunningJumping from './Components/RunningJumping';
 
 export default class Mario extends GameObject
 {
     components = [
         new Run(this),
+        //new RunningJumping(this),
         new Jump(this),
         new RigidBody(this),
     ]
@@ -34,10 +36,11 @@ export default class Mario extends GameObject
 
         this.position.y = 115
 
-        this.friction = 1/50
+        this.friction.x = 1/50
+        this.friction.y = 1/100
 
         await this.loadSprites()
-        this.run.setAnimationScript()
+        //this.setAnimationScript()
     }
 
     async loadSprites ()
@@ -70,7 +73,19 @@ export default class Mario extends GameObject
             return
         }
 
-        this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.position.y)
+        const currentFrame = this.sheet.animations.get(this.currentAnimation).currentSprite
+
+        let yPosition = this.position.y
+
+        if (currentFrame == 'run-right-1' || 
+            currentFrame == 'run-fast-right-1' || 
+            currentFrame == 'run-left-1' ||
+            currentFrame == 'run-fast-left-1') 
+        {            
+            yPosition--
+        }
+
+        this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, yPosition)
     }
 
     setCurrentAnimation ()

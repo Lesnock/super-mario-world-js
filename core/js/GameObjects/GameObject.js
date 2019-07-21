@@ -12,7 +12,7 @@ export default class GameObject
         this.acceleration = new Vector(0, 0)
         this.gravity = new Vector(0, 1000)
 
-        this.friction = 1
+        this.friction = new Vector(1, 1)
         this.direction = 0
         this.heading = 1
     }
@@ -25,8 +25,11 @@ export default class GameObject
     async superUpdate (dt)
     {
         //Add friction to velocity
-        if (this.friction < 1)
-            this.velocity.x = this.velocity.x - this.velocity.x * this.friction
+        if (this.friction.x < 1)
+            this.velocity.x = this.velocity.x - this.velocity.x * this.friction.x
+
+        if (this.friction.y < 1) 
+            this.velocity.y = this.velocity.y - this.velocity.y * this.friction.y
 
         //Add acceleration to velocity
         this.velocity.x += this.acceleration.x * dt
@@ -52,9 +55,10 @@ export default class GameObject
     }
 
     move (dt)
-    {
-        this.moveX(dt)
-        this.moveY(dt)
+    {        
+        if (Math.abs(this.velocity.x) > 0) this.moveX(dt)
+        
+        if (Math.abs(this.velocity.y) > 0) this.moveY(dt)
     }
 
     moveX (dt)
