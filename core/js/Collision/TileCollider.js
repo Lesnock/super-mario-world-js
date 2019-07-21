@@ -8,97 +8,67 @@ export default class TileCollider
         TileCollider.instance = this
     }
 
-    checkX (gameObject)
+    checkX (shape)
     {
         let xRange
         
-        if (gameObject.velocity.x > 0) {
-            xRange = gameObject.position.x + gameObject.width
+        if (shape.gameObject.velocity.x > 0) {
+            xRange = shape.xPosition + shape.width
         }
 
-        else if (gameObject.velocity.x < 0) {
-            xRange = gameObject.position.x
+        else if (shape.gameObject.velocity.x < 0) {
+            xRange = shape.xPosition
         }
 
         else {
             return
         }
 
-        const matches = this.resolver.getByRange(
+        this.matchesX = this.resolver.getByRange(
             xRange, xRange,
-            gameObject.position.y, gameObject.position.y + gameObject.height)
-        
-        matches.forEach(match => {
+            shape.yPosition, shape.yPosition + shape.height)
+
+        this.matchesX.forEach(match => {
 
             if (match.tile.collider === null) {
                 return
-            }
+            }            
 
-            if (gameObject.velocity.x > 0) {
-
-                if (gameObject.position.x + gameObject.width > match.x1) {
-                    gameObject.position.x = match.x1 - gameObject.width
-                    gameObject.velocity.x = 0
-                }
-            }
-
-            else if (gameObject.velocity.x < 0) {
-
-                if (gameObject.position.x < match.x2) {
-                    gameObject.position.x = match.x2
-                    gameObject.velocity.x = 0
-                }
-
-            }
+            const collider = match.tile.collider
+            collider.checkX(shape, match)
 
         })
-
-        return matches
     }
 
-    checkY (gameObject)
+    checkY (shape)
     {
         let yRange
         
-        if (gameObject.velocity.y > 0) {
-            yRange = gameObject.position.y + gameObject.height
+        if (shape.gameObject.velocity.y > 0) {
+            yRange = shape.yPosition + shape.height
         }
 
-        else if (gameObject.velocity.y < 0) {
-            yRange = gameObject.position.y
+        else if (shape.gameObject.velocity.y < 0) {
+            yRange = shape.yPosition
         }
 
         else {
             return
         }
 
-        const matches = this.resolver.getByRange(
-            gameObject.position.x, gameObject.position.x + gameObject.width,
+        this.matchesY = this.resolver.getByRange(
+            shape.xPosition, shape.xPosition + shape.width,
             yRange, yRange)
 
-        matches.forEach(match => {
-        
+        this.matchesY.forEach(match => {
+
             if (match.tile.collider === null) {
                 return
-            }
+            }            
 
-            if (gameObject.velocity.y > 0) {
+            const collider = match.tile.collider
+            collider.checkY(shape, match)
 
-                if (gameObject.position.y + gameObject.height > match.y1) {
-                    gameObject.position.y = match.y1 - gameObject.height
-                    gameObject.velocity.y = 0
-                }
-            }
-
-            else if (gameObject.velocity.y < 0) {
-
-                if (gameObject.position.y < match.y2) {
-                    gameObject.position.y = match.y2
-                    gameObject.velocity.y = 0
-                }
-            }
         })
-
-        return matches
     }
 }

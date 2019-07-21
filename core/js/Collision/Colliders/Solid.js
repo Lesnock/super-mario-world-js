@@ -1,20 +1,51 @@
-export default class Solid
+import Collider from './Collider';
+
+export default class Solid extends Collider
 {
-    constructor (tile)
+    constructor ()
     {
-        this.tile = tile
+        super()
     }
 
-    checkY (gameObject)
+    checkX (shape, match)
     {
-        // if (gameObject.velocity.y > 0) {
+        const gameObject = shape.gameObject
 
-        //     if (gameObject.position.y + gameObject.height > match.y1) {
-        //         gameObject.position.y = match.y1 - marioHeight
-        //         gameObject.velocity.y = 0
-        //     }
-        // }
+        if (gameObject.velocity.x > 0) {
 
-        console.log(this.tile)
+            if (shape.xPosition + shape.width > match.x1) {
+                gameObject.position.x = match.x1 - shape.width - shape.x
+                gameObject.velocity.x = 0
+            }
+        }
+
+        else if (gameObject.velocity.x < 0) {
+            
+            if (gameObject.position.x < match.x2) {
+                gameObject.position.x = match.x2 - shape.x
+                gameObject.velocity.x = 0
+            }
+
+        }
+    }
+
+    checkY (shape, match)
+    {
+        const gameObject = shape.gameObject
+
+        if (gameObject.velocity.y > 0) {
+
+            if (shape.yPosition + shape.height > match.y1) {
+                gameObject.position.y = match.y1 - shape.height - shape.y
+                gameObject.velocity.y = 0
+            }
+        }
+
+        else if (gameObject.velocity.y < 0) {
+            if (gameObject.position.y < match.y2) {
+                gameObject.position.y = match.y2
+                gameObject.velocity.y = 0
+            }
+        }
     }
 }

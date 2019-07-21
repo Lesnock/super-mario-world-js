@@ -9,46 +9,50 @@ export default class RigidBody extends Component
     {
         super(gameObject)
 
+        this.debug = false
+
         this.tileCollider = TileCollider.instance
-    }
-
-    update (dt)
-    {
-        //
-    }
-
-    onMoveY ()
-    {
-        this.matches = this.tileCollider.checkY(this.gameObject)
     }
 
     onMoveX ()
     {
-        this.matches = this.tileCollider.checkX(this.gameObject)
+        this.gameObject.shapes.forEach(shape => {
+            this.tileCollider.checkX(shape)  
+        })
+    }
+
+    onMoveY ()
+    {
+        this.gameObject.shapes.forEach(shape => {
+            this.tileCollider.checkY(shape)  
+        })
     }
 
     render (g)
     {
+        if (!this.debug) return
 
-        if (!this.matches) return
+        if (!this.tileCollider.matchesX || !this.tileCollider.matchesY) return
 
-        this.matches.forEach(match => {
+        const matches = this.tileCollider.matchesX.concat(this.tileCollider.matchesY)
 
-            // g.strokeStyle = 'red'
-            // g.beginPath()
-            // g.rect(
-            //     this.gameObject.position.x,
-            //     this.gameObject.position.y,
-            //     marioWidth, marioHeight)
-            // g.stroke()
+        matches.forEach(match => {
 
-            // g.strokeStyle = 'blue'
-            // g.beginPath()
-            // g.rect(
-            //     match.x1,
-            //     match.y1,
-            //     match.tile.width, match.tile.height)
-            // g.stroke()
+            g.strokeStyle = 'red'
+            g.beginPath()
+            g.rect(
+                this.gameObject.position.x,
+                this.gameObject.position.y,
+                this.gameObject.width, this.gameObject.height)
+            g.stroke()
+
+            g.strokeStyle = 'blue'
+            g.beginPath()
+            g.rect(
+                match.x1,
+                match.y1,
+                match.tile.width, match.tile.height)
+            g.stroke()
 
         })
     }

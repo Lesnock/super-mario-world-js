@@ -31,9 +31,7 @@ export default class GameObject
         if (this.friction.y < 1) 
             this.velocity.y = this.velocity.y - this.velocity.y * this.friction.y
 
-        //Add acceleration to velocity
-        this.velocity.x += this.acceleration.x * dt
-        this.velocity.y += this.acceleration.y * dt
+        this.addAcceleration(dt)
 
         this.velocity.y += this.gravity.y * dt
 
@@ -52,6 +50,13 @@ export default class GameObject
         this.components.forEach(component => {
             component.render(g)
         });
+    }
+
+    addAcceleration (dt)
+    {
+        //Add acceleration to velocity
+        this.velocity.x += this.acceleration.x * dt
+        this.velocity.y += this.acceleration.y * dt
     }
 
     move (dt)
