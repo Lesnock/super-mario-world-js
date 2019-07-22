@@ -8,16 +8,45 @@ export default class Input
         new KeyboardController(this)
     ]
 
+    constructor ()
+    {
+        this.keys = {}
+        this.press = new Map()
+        this.release = new Map()
+    }
+
     update (dt)
     {
-        this.controllers.forEach(controller => {
-            controller.update()
-        })
+        Input.up    = this.keys.up
+        Input.down  = this.keys.down
+        Input.right = this.keys.right
+        Input.left  = this.keys.left
+    }
 
-        Input.up    = this.up
-        Input.down  = this.down
-        Input.right = this.right
-        Input.left  = this.left
+    addPressMapping (key, callback)
+    {
+        this.press.set(key, callback)
+    }
+
+    addReleaseMapping (key, callback)
+    {
+        this.release.set(key, callback)
+    }
+
+    pressed (key, event)
+    {
+        if (! this.press.has(key))
+            return
+
+        this.press.get(key)(event)
+    }
+
+    released (key, event)
+    {
+        if (! this.release.has(key))
+            return
+
+        this.release.get(key)(event)
     }
 }
 

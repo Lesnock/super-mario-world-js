@@ -2,30 +2,32 @@ import Controller from "./Controller";
 
 export default class KeyboardController extends Controller
 {
+    keys = {
+        KeyW: 'up',
+        KeyA: 'left',
+        KeyD: 'right',
+        KeyS: 'down',
+    }
+
     constructor (input)
     {
         super(input)
-    }
-
-    setKeys ()
-    {
-        this.input.up       = this.keys['KeyW']
-        this.input.down     = this.keys['KeyS']
-        this.input.right    = this.keys['KeyD']
-        this.input.left     = this.keys['KeyA']
     }
 
     listen ()
     {
         window.addEventListener('keydown', (event) => {
             event.preventDefault()
-            this.keys[event.code] = true
+
+            this.input.keys[this.keys[event.code]] = true
+            this.input.pressed(this.keys[event.code], event)
         })
 
         window.addEventListener('keyup', (event) => {
             event.preventDefault()
 
-            this.keys[event.code] = false
+            this.input.keys[this.keys[event.code]] = false
+            this.input.released(this.keys[event.code], event)
         })
     }
 }
