@@ -14,12 +14,22 @@ export default class Run extends Component
 
         this.maxVelocity = 10000
         this.distance = 0
+
+        this.onGround = false
     }
 
     update (dt)
     {
         this.setDirection()
         this.run(dt)
+
+        this.onGround = false
+    }
+
+    obstructs (side)
+    {
+        if (side == 'bottom')
+            this.onGround = true
     }
 
     setDirection ()
@@ -103,6 +113,9 @@ export default class Run extends Component
 
     isRunningModerate ()
     {
+        if (! this.onGround)
+            return false
+
         const absoluteVelocityX = Math.abs(this.gameObject.velocity.x)
 
         return (
@@ -113,6 +126,9 @@ export default class Run extends Component
 
     isRunningFast ()
     {
+        if (! this.onGround)
+            return false
+            
         const absoluteVelocityX = Math.abs(this.gameObject.velocity.x)
         
         return (

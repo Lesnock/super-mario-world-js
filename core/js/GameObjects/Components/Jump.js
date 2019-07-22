@@ -15,6 +15,11 @@ export default class Jump extends Component
         this.engageTime = 0
     }
 
+    isFalling ()
+    {
+        return (! this.ready && this.gameObject.velocity.y < 0)
+    }
+
     start ()
     {
         if (this.ready)

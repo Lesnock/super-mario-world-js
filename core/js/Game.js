@@ -62,6 +62,10 @@ export default class Game
             now = performance.now()
             timer += (now - lastTime) / 1000
 
+            if (timer > 1) {
+                timer = 1
+            }
+
             while (timer > delta) {
                 this.update(delta)
                 this.render(g)

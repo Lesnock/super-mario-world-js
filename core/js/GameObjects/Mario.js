@@ -39,18 +39,14 @@ export default class Mario extends GameObject
 
         this.friction.x = 1/50
         this.friction.y = 1/100
+        
+        //Jump Mapping
+        Input.instance().addPressMapping('up', () => {this.jump.start()})
+        Input.instance().addReleaseMapping('up', () => {this.jump.cancel()})
     }
 
     update (dt)
     {
-        console.log(this.velocity.y)
-        if (Input.up) {
-            this.jump.start()
-        }
-        else {
-            this.jump.cancel()
-        }
-
         if (this.run.isIdle()) return
 
         this.setCurrentAnimation()
@@ -83,6 +79,15 @@ export default class Mario extends GameObject
 
     setCurrentAnimation ()
     {
+        if (this.jump.isFalling()) {
+            if (this.heading > 0) 
+                this.currentAnimation = 'falling-right'
+            else 
+                this.currentAnimation = 'falling-left'
+
+            return
+        }
+
         //Pressing right
         if (this.run.isPressingRight()) {
 
