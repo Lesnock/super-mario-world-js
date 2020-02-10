@@ -1,4 +1,4 @@
-import KeyboardController from "./Controllers/KeyboardController";
+import KeyboardController from "./Controllers/KeyboardController.js";
 
 var instance = null
 
@@ -26,11 +26,13 @@ export default class Input
     addPressMapping (key, callback)
     {
         this.press.set(key, callback)
+        return this
     }
 
     addReleaseMapping (key, callback)
     {
         this.release.set(key, callback)
+        return this
     }
 
     pressed (key, event)

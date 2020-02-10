@@ -1,4 +1,4 @@
-import Assets from "../Assets";
+import Assets from "../Assets.js";
 
 export default function loadImage (url)
 {

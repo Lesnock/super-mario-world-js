@@ -1,7 +1,7 @@
-import Tile from './Tile'
-import Sprite from './Sprite';
-import Animation from './Animation';
-import {createBuffer} from '../Display/Display'
+import Tile from './Tile.js'
+import Sprite from './Sprite.js';
+import Animation from './Animation.js';
+import {createBuffer} from '../Display/Display.js'
 
 export default class SpriteSheet
 {

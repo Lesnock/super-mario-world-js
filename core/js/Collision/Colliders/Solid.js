@@ -1,4 +1,4 @@
-import Collider from './Collider';
+import Collider from './Collider.js';
 
 export default class Solid extends Collider
 {

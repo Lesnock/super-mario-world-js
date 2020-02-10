@@ -1,10 +1,10 @@
-import Level from "../Level/Level";
-import loadJSON from "./JsonLoader";
-import Matrix from "../Math/Matrix";
-import TileLayer from "../Layers/TileLayer";
-import SpriteLayer from "../Layers/SpriteLayer";
-import loadSpriteSheet from "./SpriteSheetLoader";
-import TileCollider from "../Collision/TileCollider";
+import Level from "../Level/Level.js";
+import loadJSON from "./JsonLoader.js";
+import Matrix from "../Math/Matrix.js";
+import TileLayer from "../Layers/TileLayer.js";
+import SpriteLayer from "../Layers/SpriteLayer.js";
+import loadSpriteSheet from "./SpriteSheetLoader.js";
+import TileCollider from "../Collision/TileCollider.js";
 
 //Load a level
 //Load spritesheet, create the layers (background and sprite)

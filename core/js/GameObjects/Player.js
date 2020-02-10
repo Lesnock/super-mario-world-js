@@ -1,8 +1,8 @@
-import Run from './Components/Run'
-import Jump from './Components/Jump'
-import GameObject from "./GameObject"
-import RigidBody from './Components/RigidBody'
-import loadSpriteSheet from '../Loaders/SpriteSheetLoader';
+import Run from './Components/Run.js'
+import Jump from './Components/Jump.js'
+import GameObject from "./GameObject.js"
+import RigidBody from './Components/RigidBody.js'
+import loadSpriteSheet from '../Loaders/SpriteSheetLoader.js';
 
 export default class Player extends GameObject
 {

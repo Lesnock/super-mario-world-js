@@ -1,5 +1,5 @@
-import LayerManager from '../Layers/LayerManager';
-import TileCollider from '../Collision/TileCollider';
+import LayerManager from '../Layers/LayerManager.js';
+import TileCollider from '../Collision/TileCollider.js';
 
 export default class Level
 {

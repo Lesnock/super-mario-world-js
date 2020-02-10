@@ -1,5 +1,5 @@
-import Component from "./Component"
-import Input from '../../Input/Input'
+import Component from "./Component.js"
+import Input from '../../Input/Input.js'
 
 export default class Jump extends Component
 {

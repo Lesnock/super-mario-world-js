@@ -13,12 +13,12 @@
         },
         {
             "id": 1,
-            "collider": "solid",
+            "collider": "Solid",
             "index": [16, 0, 16, 16]
         },
         {
             "id": 2,
-            "collider": "solid",
+            "collider": "Solid",
             "index": [32, 0, 16, 16]
         }
     ]

@@ -1,5 +1,5 @@
-import Component from "./Component";
-import TileCollider from "../../Collision/TileCollider";
+import Component from "./Component.js";
+import TileCollider from "../../Collision/TileCollider.js";
 
 export default class RigidBody extends Component
 {

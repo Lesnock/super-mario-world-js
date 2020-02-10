@@ -1,142 +1,75 @@
-import Run from './Components/Run'
-import Jump from './Components/Jump'
-import GameObject from "./GameObject"
-import RigidBody from './Components/RigidBody'
-import Square from '../Collision/Shapes/Square';
-import loadSpriteSheet from '../Loaders/SpriteSheetLoader';
-import Input from '../Input/Input';
+import Run from './Components/Run.js'
+import Input from '../Input/Input.js'
+import Jump from './Components/Jump.js'
+import GameObject from "./GameObject.js"
+import RigidBody from './Components/RigidBody.js'
+import Square from '../Collision/Shapes/Square.js'
+import loadSpriteSheet from '../Loaders/SpriteSheetLoader.js'
 
-export default class Mario extends GameObject
-{
+export default class Mario extends GameObject {
     components = [
         new Run(this),
-        new RigidBody(this),
-        new Jump(this),
+        // new RigidBody(this),
+        // new Jump(this),
     ]
 
     shapes = [
         new Square(this, 0, 0, 16, 28),
     ]
 
-    constructor ()
-    {
+    constructor() {
         super()
         this.width = 14
         this.height = 29
     }
 
-    async init ()
-    {
+    async init() {
         this.sheet = await loadSpriteSheet('mario')
 
+        // Mario's current sprite and animation
+        // currentSprite will be used if mario is idle
+        this.currentSprite = 'idle-right'
+
+        // currentAnimation will be used if mario is animated (moving)
+        this.currentAnimation = 'running-right'
+
+        // Defines if mario's looking direction
+        this.lookDirection = 'right'
+
+        // Defines if mario is idle
+        this.isIdle = true
+
+        // Run component inital config
         this.run.speed = 400
-        this.run.break = 300
-
-        this.run.fastSpeed = 200
-        this.run.maxVelocity = 300
-
-        this.position.y = 115
-
-        this.friction.x = 1/50
-        this.friction.y = 1/100
-        
-        //Jump Mapping
-        Input.instance().addPressMapping('up', () => {this.jump.start()})
-        Input.instance().addReleaseMapping('up', () => {this.jump.cancel()})
     }
 
-    update (dt)
-    {
-        if (this.run.isIdle()) return
+    update(dt) {
+        if (this.isIdle) {
+            return this.currentSprite = `idle-${this.lookDirection}`
+        }
 
-        this.setCurrentAnimation()
-        
+        this.defineCurrentAnimation()
+
         this.updateAnimation()
     }
 
-    render (g)
-    {
-        // this.shapes.forEach(shape => {
-        //     shape.render(g)
-        // })
-
-        if (this.run.isIdle()) {
-            const sprite = (this.heading > 0) ? 'idle-right' : 'idle-left'
-
-            this.sheet.drawSprite(g, sprite, this.position.x, this.position.y)
-
-            return
+    render(g) {
+        if (this.isIdle) {
+            return this.sheet.drawSprite(g, this.currentSprite, this.position.x, this.position.y)
         }
 
-        this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.getPositionY())
+        this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.position.y)
     }
 
-    updateAnimation ()
-    {
-        //Animation
+    updateAnimation() {
         this.sheet.animations.get(this.currentAnimation).update()
     }
 
-    setCurrentAnimation ()
-    {
-        if (this.jump.isFalling()) {
-            if (this.heading > 0) 
-                this.currentAnimation = 'falling-right'
-            else 
-                this.currentAnimation = 'falling-left'
-
-            return
+    defineCurrentAnimation() {
+        if (!this.isIdle) {
+            this.currentAnimation = this.lookDirection === 'right'                
+                ? 'run-right'
+                : 'run-left'
         }
-
-        //Pressing right
-        if (this.run.isPressingRight()) {
-
-            //Turning around
-            if (this.velocity.x < 0) this.currentAnimation = 'dash-right'
-
-            //Running Moderate
-            else if (this.run.isRunningModerate()) this.currentAnimation = 'run-right'
-
-            //Running fast
-            else if (this.run.isRunningFast()) this.currentAnimation = 'run-fast-right'
-        }
-
-        //Pressing left
-        else if (this.run.isPressingLeft()) {
-
-            //Turning around
-            if (this.velocity.x > 0) this.currentAnimation = 'dash-left'
-
-            //Running Moderate
-            else if (this.run.isRunningModerate()) this.currentAnimation = 'run-left'
-
-            //Running fast
-            else if (this.run.isRunningFast()) this.currentAnimation = 'run-fast-left'
-        }
-
-        //Pressing none or both
-        else {
-            //Desacelerating
-            if (this.velocity.x > 0) this.currentAnimation = 'run-right'
-            
-            else if (this.velocity.x < 0) this.currentAnimation = 'run-left'
-        }
-    }
-
-    getPositionY ()
-    {
-        const currentFrame = this.sheet.animations.get(this.currentAnimation).currentSprite
-
-        let yPosition = this.position.y
-
-        if (currentFrame == 'run-right-1' || 
-            currentFrame == 'run-fast-right-1' || 
-            currentFrame == 'run-left-1' ||
-            currentFrame == 'run-fast-left-1') 
-        {            
-            yPosition -= 1
-        }
-
-        return yPosition
     }
 }

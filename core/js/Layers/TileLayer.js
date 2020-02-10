@@ -1,5 +1,5 @@
-import Tile from "../SpriteSheet/Tile";
-import TileCollider from "../Collision/TileCollider";
+import Tile from "../SpriteSheet/Tile.js";
+import TileCollider from "../Collision/TileCollider.js";
 
 export default class TileLayer
 {

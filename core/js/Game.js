@@ -1,6 +1,6 @@
-import State from './States/State';
-import Display from './Display/Display'
-import GameState from './States/GameState';
+import State from './States/State.js';
+import Display from './Display/Display.js'
+import GameState from './States/GameState.js';
 
 var display, 
     g

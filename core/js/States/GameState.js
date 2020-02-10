@@ -1,8 +1,8 @@
-import State from "./State"
-import Assets from '../Assets'
-import Level from '../Level/Level'
-import Input from "../Input/Input"
-import loadLevel from "../Loaders/LevelLoader"
+import State from "./State.js"
+import Assets from '../Assets.js'
+import Level from '../Level/Level.js'
+import Input from "../Input/Input.js"
+import loadLevel from "../Loaders/LevelLoader.js"
 
 export default class GameState extends State
 {

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Lesnock/js-2d-game/issues"
   },
-  "homepage": "https://github.com/Lesnock/js-2d-game#readme"
+  "homepage": "https://github.com/Lesnock/js-2d-game#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1",
+    "yarn": "^1.17.3"
+  }
 }

@@ -1,4 +1,4 @@
-import Tile from "../SpriteSheet/Tile";
+import Tile from "../SpriteSheet/Tile.js";
 
 export default class TileResolver
 {

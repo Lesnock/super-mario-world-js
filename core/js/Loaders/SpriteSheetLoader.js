@@ -1,7 +1,7 @@
-import loadJSON from "./JsonLoader";
-import loadImage from "./ImageLoader";
-import SpriteSheet from "../SpriteSheet/SpriteSheet";
-import Assets from "../Assets";
+import loadJSON from "./JsonLoader.js";
+import loadImage from "./ImageLoader.js";
+import SpriteSheet from "../SpriteSheet/SpriteSheet.js";
+import Assets from "../Assets.js";
 
 export default async function loadSpriteSheet (name)
 {
