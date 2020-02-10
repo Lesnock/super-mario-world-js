@@ -28,7 +28,7 @@ export default class Run extends Component {
         // if some direction is beeing pressed
         if (this.pressingDirection !== 0) {
             this.gameObject.isIdle = false
-            this.gameObject.lookDirection = this.pressingDirection > 0 ? 'right' : 'left'
+            this.gameObject.lookDirection = this.pressingDirection
             this.gameObject.velocity.x += this.acceleration * this.pressingDirection * dt
         }
         // if none direction is beeing pressed, but 

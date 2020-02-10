@@ -33,8 +33,9 @@ export default class Mario extends GameObject {
         // currentAnimation will be used if mario is animated (moving)
         this.currentAnimation = 'running-right'
 
-        // Defines if mario's looking direction
-        this.lookDirection = 'right'
+        // Defines mario's looking direction
+        // -1 = left, 1 = right
+        this.lookDirection = 1
 
         // Defines if mario is idle
         this.isIdle = true
@@ -46,11 +47,12 @@ export default class Mario extends GameObject {
 
     update(dt) {
         if (this.isIdle) {
-            return this.currentSprite = `idle-${this.lookDirection}`
+            return this.currentSprite = (this.lookDirection > 0) 
+                ? 'idle-right'
+                : 'idle-left'
         }
 
         this.defineCurrentAnimation()
-
         this.updateAnimation()
     }
 
@@ -62,15 +64,27 @@ export default class Mario extends GameObject {
         this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.position.y)
     }
 
+    // update animation frames
     updateAnimation() {
         this.sheet.animations.get(this.currentAnimation).update()
     }
 
+    // Define what animation is gonna roll
     defineCurrentAnimation() {
         if (!this.isIdle) {
-            this.currentAnimation = this.lookDirection === 'right'
-                ? 'run-right'
-                : 'run-left'
+            // if player is pressing left while mario is going right
+            if (this.lookDirection < 0 && this.velocity.x > 0) {
+                return this.currentAnimation = 'dash-left'
+            }
+            // if player is pressing left while mario is going right
+            else if (this.lookDirection > 0 && this.velocity.x < 0) {
+                return this.currentAnimation = 'dash-right'
+            }
+            else {
+                return this.currentAnimation = this.lookDirection > 0
+                    ? 'run-right'
+                    : 'run-left'
+            }
         }
     }
 }
