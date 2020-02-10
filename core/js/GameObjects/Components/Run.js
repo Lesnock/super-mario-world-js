@@ -20,45 +20,34 @@ export default class Run extends Component {
 
     update(dt) {
         // Detect what direction player is pressing, 
-        // and set to the pressingDirection property
+        // and set it to the pressingDirection prop
         this.setPressingDirection()
+
+        const absVelocityX = Math.abs(this.gameObject.velocity.x)
 
         // if some direction is beeing pressed
         if (this.pressingDirection !== 0) {
-            this.gameObject.lookDirection = 'right'
             this.gameObject.isIdle = false
-            this.gameObject.acceleration.x = this.acceleration
+            this.gameObject.lookDirection = this.pressingDirection > 0 ? 'right' : 'left'
+            this.gameObject.velocity.x += this.acceleration * this.pressingDirection * dt
         }
         // if none direction is beeing pressed, but 
         // the gameObject still moving yet
         else if (this.gameObject.velocity.x !== 0) {
+            // deceleration can't be major than the velocity
+            const decel = Math.min(absVelocityX, this.deceleration * dt)
 
+            this.gameObject.velocity.x += (this.gameObject.velocity.x > 0)
+                ? -decel
+                : decel
         }
 
         else {
-
+            this.distance = 0
+            this.gameObject.isIdle = true
         }
-
-        // if (Input.right && !Input.left) {
-        //     this.gameObject.lookDirection = 'right'
-        //     this.gameObject.isIdle = false
-        //     this.gameObject.acceleration.x = this.acceleration
-        // }
-        // else if (Input.left && !Input.right) {
-        //     this.gameObject.lookDirection = 'left'
-        //     this.gameObject.isIdle = false
-        //     this.gameObject.acceleration.x = -this.acceleration
-        // }
-        // else {
-        //     this.gameObject.acceleration.x = 0
-
-        //     if (Math.abs(this.gameObject.velocity.x) > 0) {
-        //         this.gameObject.isIdle = false
-        //     }
-        //     else {
-        //         this.gameObject.isIdle = true
-        //     }
-        // }
+        
+        this.distance =+ absVelocityX * dt
     }
 
     setPressingDirection() {

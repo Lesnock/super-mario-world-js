@@ -7,10 +7,9 @@ export default class GameObject {
     constructor() {
         this.position = new Point(0, 0)
         this.velocity = new Vector(0, 0)
-        this.acceleration = new Vector(0, 0)
         this.gravity = new Vector(0, 1000)
 
-        this.friction = new Vector(.1, 1)
+        this.friction = new Vector(1/5000, 1)
         this.direction = 0
         this.heading = 1
     }
@@ -21,16 +20,14 @@ export default class GameObject {
 
     async superUpdate(dt) {
         //Add friction to velocity        
-        this.velocity.x = this.velocity.x - this.velocity.x * this.friction.x
-        this.velocity.y = this.velocity.y - this.velocity.y * this.friction.y
+        this.velocity.x -= this.friction.x * this.velocity.x * Math.abs(this.velocity.x)
+        this.velocity.y -= this.friction.y * this.velocity.y * Math.abs(this.velocity.y)
 
         this.components.forEach(component => {
             component.update(dt)
         });
 
-        //Add acceleration to velocity
-        this.addAcceleration(dt)
-        //this.addGravity(dt)
+        // this.addGravity(dt)
 
         if (Math.abs(this.velocity.x) < 1) {
             this.velocity.x = 0
