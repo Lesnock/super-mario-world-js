@@ -40,7 +40,8 @@ export default class Mario extends GameObject {
         this.isIdle = true
 
         // Run component inital config
-        this.run.speed = 400
+        this.run.acceleration = 400
+        this.run.deceleration = 300
     }
 
     update(dt) {
@@ -67,7 +68,7 @@ export default class Mario extends GameObject {
 
     defineCurrentAnimation() {
         if (!this.isIdle) {
-            this.currentAnimation = this.lookDirection === 'right'                
+            this.currentAnimation = this.lookDirection === 'right'
                 ? 'run-right'
                 : 'run-left'
         }

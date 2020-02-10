@@ -37,7 +37,7 @@ export default class GameObject {
         }
 
         this.move(dt)
-        
+
         this.position.y = (this.velocity.y > 0) ? Math.ceil(this.position.y) : Math.floor(this.position.y)
     }
 
@@ -66,8 +66,8 @@ export default class GameObject {
     moveX(dt) {
         this.position.x += this.velocity.x * dt
 
-        this.position.x = (this.velocity.x > 0) 
-            ? Math.ceil(this.position.x) 
+        this.position.x = (this.velocity.x > 0)
+            ? Math.ceil(this.position.x)
             : Math.floor(this.position.x)
 
         this.components.forEach(component => {
