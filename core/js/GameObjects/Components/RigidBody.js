@@ -7,7 +7,7 @@ export default class RigidBody extends Component {
     constructor(gameObject) {
         super(gameObject)
 
-        this.debug = true
+        this.debug = false
 
         this.tileCollider = TileCollider.instance
     }

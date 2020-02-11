@@ -12,7 +12,7 @@ export default class Mario extends GameObject {
         new Run(this),
         new RigidBody(this),
         new Gravity(this),
-        // new Jump(this),
+        new Jump(this),
     ]
 
     shapes = [
@@ -76,6 +76,10 @@ export default class Mario extends GameObject {
 
     // Define what animation is gonna roll
     defineCurrentAnimation() {
+        if (this.jump.isFalling()) {
+            return this.currentAnimation = 'falling-right'
+        }
+
         if (!this.isIdle) {
             // if player is pressing left while mario is going right
             if (this.lookDirection < 0 && this.velocity.x > 0) {
