@@ -9,7 +9,7 @@ export default class GameObject {
         this.velocity = new Vector(0, 0)
         this.gravity = new Vector(0, 1000)
 
-        this.friction = new Vector(1/5000, 1)
+        this.friction = 1/5000
         this.direction = 0
         this.heading = 1
     }
@@ -20,22 +20,13 @@ export default class GameObject {
 
     async superUpdate(dt) {
         //Add friction to velocity        
-        this.velocity.x -= this.friction.x * this.velocity.x * Math.abs(this.velocity.x)
-        this.velocity.y -= this.friction.y * this.velocity.y * Math.abs(this.velocity.y)
+        this.velocity.x -= this.friction * this.velocity.x * Math.abs(this.velocity.x)
 
         this.components.forEach(component => {
             component.update(dt)
         });
 
-        // this.addGravity(dt)
-
-        if (Math.abs(this.velocity.x) < 1) {
-            this.velocity.x = 0
-        }
-
         this.move(dt)
-
-        this.position.y = (this.velocity.y > 0) ? Math.ceil(this.position.y) : Math.floor(this.position.y)
     }
 
     superRender(g) {
@@ -55,14 +46,17 @@ export default class GameObject {
     }
 
     move(dt) {
-        if (Math.abs(this.velocity.x) > 0) this.moveX(dt)
+        if (Math.abs(this.velocity.x) > 0)
+            this.moveX(dt)
 
-        if (Math.abs(this.velocity.y) > 0) this.moveY(dt)
+        if (Math.abs(this.velocity.y) > 0)
+            this.moveY(dt)
     }
 
     moveX(dt) {
         this.position.x += this.velocity.x * dt
 
+        // Just allow position to be integers
         this.position.x = (this.velocity.x > 0)
             ? Math.ceil(this.position.x)
             : Math.floor(this.position.x)
@@ -77,6 +71,11 @@ export default class GameObject {
     moveY(dt) {
         this.position.y += this.velocity.y * dt
 
+        // Just allow position to be integers
+        this.position.y = (this.velocity.y > 0)
+            ? Math.ceil(this.position.y)
+            : Math.floor(this.position.y)
+
         this.components.forEach(component => {
             if (typeof component.onMoveY === 'function') {
                 component.onMoveY()
@@ -85,9 +84,10 @@ export default class GameObject {
     }
 
     obstructs(side) {
+        // Trigger obstructs function on components
         this.components.forEach(component => {
             if (typeof component.obstructs === 'function') {
-                component.obstructsside
+                component.obstructs(side)
             }
         })
     }

@@ -1,50 +1,52 @@
 import Component from "./Component.js";
 import TileCollider from "../../Collision/TileCollider.js";
 
-export default class RigidBody extends Component
-{
+export default class RigidBody extends Component {
     name = 'rigidbody'
 
-    constructor (gameObject)
-    {
+    constructor(gameObject) {
         super(gameObject)
 
-        this.debug = false
+        this.debug = true
 
         this.tileCollider = TileCollider.instance
     }
 
-    onMoveX ()
-    {
+    // When object move horizontally
+    onMoveX() {
         this.gameObject.shapes.forEach(shape => {
-            this.tileCollider.checkX(shape)  
+            this.tileCollider.checkX(shape)
         })
     }
 
-    onMoveY ()
-    {
+    // When object move vertically
+    onMoveY() {
         this.gameObject.shapes.forEach(shape => {
-            this.tileCollider.checkY(shape)  
+            this.tileCollider.checkY(shape)
         })
     }
 
-    render (g)
-    {
+    render(g) {
         if (!this.debug) return
 
-        if (!this.tileCollider.matchesX || !this.tileCollider.matchesY) return
+        // Draw shapes lines
+        g.strokeStyle = 'red'
+        this.gameObject.shapes.forEach(shape => {
+            g.beginPath()
+            g.rect(
+                shape.xPosition,
+                shape.yPosition,
+                shape.width, shape.height)
+            g.stroke()
+        })
+
+        if (this.tileCollider.matchesX.lenght === 0 || this.tileCollider.matchesY.lenght === 0) {
+            return
+        }
 
         const matches = this.tileCollider.matchesX.concat(this.tileCollider.matchesY)
 
         matches.forEach(match => {
-
-            g.strokeStyle = 'red'
-            g.beginPath()
-            g.rect(
-                this.gameObject.position.x,
-                this.gameObject.position.y,
-                this.gameObject.width, this.gameObject.height)
-            g.stroke()
 
             g.strokeStyle = 'blue'
             g.beginPath()

@@ -8,9 +8,9 @@ import TileCollider from "../Collision/TileCollider.js";
 
 //Load a level
 //Load spritesheet, create the layers (background and sprite)
-export default async function loadLevel (name)
-{
-    const levelSpec =   await loadJSON(`core/levels/${name}.json`)
+export default async function loadLevel(name) {
+
+    const levelSpec = await loadJSON(`core/levels/${name}.json`)
 
     const spriteSheet = await loadSpriteSheet(levelSpec.spriteSheet)
 
@@ -31,8 +31,7 @@ export default async function loadLevel (name)
     return level
 }
 
-function createTileLayer (tiles, columns, rows, spriteSheet)
-{
+function createTileLayer(tiles, columns, rows, spriteSheet) {
     const grid = new Matrix()
 
     for (let x = 0; x < columns; x++) {
@@ -42,15 +41,14 @@ function createTileLayer (tiles, columns, rows, spriteSheet)
             const tile = tiles[x + (y * columns)]
 
             grid.set(x, y, spriteSheet.tiles.get(tile))
-            
+
         }
     }
 
     return new TileLayer(grid, columns, rows)
 }
 
-function createSpriteLayer (gameObjects)
-{
+function createSpriteLayer(gameObjects) {
     const objects = []
 
     for (const name in gameObjects) {
@@ -72,16 +70,14 @@ function createSpriteLayer (gameObjects)
     return new SpriteLayer(objects)
 }
 
-function createTileCollider (tileLayers, columns, rows, spriteSheet)
-{
+function createTileCollider(tileLayers, columns, rows, spriteSheet) {
     const mergedTiles = mergeTileLayers(tileLayers)
     const collisionGrid = createCollisionGrid(mergedTiles, columns, rows, spriteSheet)
 
     return new TileCollider(collisionGrid)
 }
 
-function mergeTileLayers (tileLayers)
-{
+function mergeTileLayers(tileLayers) {
     const mergedTiles = []
 
     tileLayers.forEach(layer => {
@@ -95,8 +91,7 @@ function mergeTileLayers (tileLayers)
     return mergedTiles
 }
 
-function createCollisionGrid (tiles, columns, rows, spriteSheet)
-{
+function createCollisionGrid(tiles, columns, rows, spriteSheet) {
     const collisionGrid = new Matrix()
 
     for (let x = 0; x < columns; x++) {

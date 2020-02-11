@@ -2,6 +2,7 @@ import Run from './Components/Run.js'
 import Input from '../Input/Input.js'
 import Jump from './Components/Jump.js'
 import GameObject from "./GameObject.js"
+import Gravity from './Components/Gravity.js'
 import RigidBody from './Components/RigidBody.js'
 import Square from '../Collision/Shapes/Square.js'
 import loadSpriteSheet from '../Loaders/SpriteSheetLoader.js'
@@ -9,7 +10,8 @@ import loadSpriteSheet from '../Loaders/SpriteSheetLoader.js'
 export default class Mario extends GameObject {
     components = [
         new Run(this),
-        // new RigidBody(this),
+        new RigidBody(this),
+        new Gravity(this),
         // new Jump(this),
     ]
 
@@ -43,11 +45,14 @@ export default class Mario extends GameObject {
         // Run component inital config
         this.run.acceleration = 400
         this.run.deceleration = 300
+
+        // Gravity initial config
+        this.gravity.acceleration = 1000
     }
 
     update(dt) {
         if (this.isIdle) {
-            return this.currentSprite = (this.lookDirection > 0) 
+            return this.currentSprite = (this.lookDirection > 0)
                 ? 'idle-right'
                 : 'idle-left'
         }

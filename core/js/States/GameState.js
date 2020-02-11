@@ -4,17 +4,14 @@ import Level from '../Level/Level.js'
 import Input from "../Input/Input.js"
 import loadLevel from "../Loaders/LevelLoader.js"
 
-export default class GameState extends State
-{
-    constructor ()
-    {
+export default class GameState extends State {
+    constructor() {
         super()
     }
 
-    async load ()
-    {
-        //This 'promise.all' method loads all the assets that 
-        //it is necessary for the game, such as level, player, sprites, etc.
+    async load() {
+        // This 'promise.all' method loads all the assets that 
+        // it is necessary for the game, such as level, player, sprites, etc.
         return Promise.all([
 
             this.loadInput(),
@@ -22,58 +19,39 @@ export default class GameState extends State
             //this.loadPlayer()
 
         ])
-        .then(([
-            //Resolved
-            input,
-            level, 
-            //player
+            .then(([
+                //Resolved
+                input,
+                level,
+                //player
 
-        ]) => {
-            
-            this.input = input
-            this.level = level
-            //this.player = player
+            ]) => {
 
-            this.isReady = true
-        })
+                this.input = input
+                this.level = level
+
+                this.isReady = true
+            })
     }
 
-    update (dt)
-    {
+    update(dt) {
         this.input.update(dt)
         this.level.update(dt)
-        // this.player.superUpdate(dt)
-
-        // this.player.components.forEach(component => {
-        //     component.update(dt)
-        // });
-
-        // this.player.update(dt)
     }
 
-    render (g)
-    {
+    render(g) {
         this.level.render(g)
-        // for (let index = 0; index < 100; index++) {
-        //     this.level.spritesheet.drawTile(g, 'ground', index * 16, 480)
-        // }
-
-        // this.player.superRender(g)
-        // this.player.render(g)
     }
 
-    loadInput ()
-    {
+    loadInput() {
         return Input.instance()
     }
 
-    loadLevel (name)
-    {
+    loadLevel(name) {
         return loadLevel(name)
     }
 
-    loadPlayer ()
-    {
+    loadPlayer() {
         //return new Player()
     }
 }
