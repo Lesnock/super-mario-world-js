@@ -28,7 +28,6 @@ export default class Solid extends Collider {
                 gameObject.position.x = match.x2 - shape.x
                 gameObject.velocity.x = 0
             }
-
         }
     }
 
