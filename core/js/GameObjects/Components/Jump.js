@@ -37,14 +37,19 @@ export default class Jump extends Component
             }
         }
 
+        console.log(this.ready, 'update')
+
         // In every update ready is set to false
         // But if it is ready, obstructs function will turn it to true
         this.ready = false
     }
 
     obstructs (side) {
+        console.log(this.ready, 'bottom')
         if (side === 'bottom') {
-            this.ready = true
+            //if (!Input.up) {
+                this.ready = true
+            //}
         }
 
         if (side === 'top') {

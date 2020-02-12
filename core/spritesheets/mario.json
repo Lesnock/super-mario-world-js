@@ -56,6 +56,24 @@
             "loop": true
         },
 
+        "run-slow-right": {
+            "frames": [
+                {
+                    "sprite": "run-right-1",
+                    "speed": 120
+                },
+                {
+                    "sprite": "run-right-2",
+                    "speed": 60
+                },
+                {
+                    "sprite": "idle-right",
+                    "speed": 60
+                }
+            ],
+            "loop": true
+        },
+
         "run-fast-right": {
             "frames": [
                 {
@@ -87,6 +105,24 @@
                 {
                     "sprite": "idle-left",
                     "speed": 50
+                }
+            ],
+            "loop": true
+        },
+
+        "run-slow-left": {
+            "frames": [
+                {
+                    "sprite": "run-left-1",
+                    "speed": 120
+                },
+                {
+                    "sprite": "run-left-2",
+                    "speed": 60
+                },
+                {
+                    "sprite": "idle-left",
+                    "speed": 60
                 }
             ],
             "loop": true

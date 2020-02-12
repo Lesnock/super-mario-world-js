@@ -54,6 +54,10 @@ export default class GameObject {
     }
 
     moveX(dt) {
+        if (typeof this.beforeMoveX === 'function') {
+            this.beforeMoveX(dt)
+        }
+
         this.position.x += this.velocity.x * dt
 
         // Just allow position to be integers
@@ -69,6 +73,10 @@ export default class GameObject {
     }
 
     moveY(dt) {
+        if (typeof this.beforeMoveY === 'function') {
+            this.beforeMoveY(dt)
+        }
+
         this.position.y += this.velocity.y * dt
 
         // Just allow position to be integers
