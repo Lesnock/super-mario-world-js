@@ -14,6 +14,9 @@ export default class Jump extends Component
         // Acceleration of the jump
         this.acceleration = 200
 
+        // Boost depending on x-velocity
+        this.speedBoost = 0.3
+
         // Timer that counts how much time the jump has to stop
         this.timer = 0
 
@@ -23,7 +26,7 @@ export default class Jump extends Component
 
     update (dt) {
         if (this.timer > 0) {
-            this.gameObject.velocity.y = -this.acceleration
+            this.gameObject.velocity.y = -(this.acceleration + Math.abs(this.gameObject.velocity.x) * this.speedBoost)
             return this.timer -= dt
         }
 

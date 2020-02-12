@@ -74,4 +74,14 @@ export default class SpriteSheet
 
         this.drawSprite(g, animation.currentSprite, x, y)
     }
+
+    runAnimation (name, gameObject = undefined) {
+        const animation = this.animations.get(name)
+
+        if (gameObject) {
+            gameObject.currentSprite = animation.currentSprite
+        }
+
+        animation.update()
+    }
 }

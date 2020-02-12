@@ -39,64 +39,65 @@ export default class Mario extends GameObject {
         // -1 = left, 1 = right
         this.lookDirection = 1
 
-        // Defines if mario is idle
-        this.isIdle = true
-
         // Run component inital config
-        this.run.acceleration = 400
+        this.run.acceleration = 50
         this.run.deceleration = 300
 
         // Gravity initial config
         this.gravity.acceleration = 1000
+
+        // Jump initial config
+        this.jump.acceleration = 150
     }
 
     update(dt) {
-        if (this.sheet.animations.get(this.currentAnimation)) {
-            const currentFrame = this.sheet.animations.get(this.currentAnimation).currentSprite
-        }
-
-        if (this.isIdle) {
-            return this.currentSprite = (this.lookDirection > 0)
-                ? 'idle-right'
-                : 'idle-left'
-        }
-
-        this.defineCurrentAnimation()
-        this.updateAnimation()
+        this.defineCurrentSprite()
     }
 
     render(g) {
-        if (this.isIdle) {
-            return this.sheet.drawSprite(g, this.currentSprite, this.position.x, this.position.y)
-        }
-
-        this.sheet.drawAnimation(g, this.currentAnimation, this.position.x, this.position.y)
+        // Will ever render the current sprite property
+        return this.sheet.drawSprite(g, this.currentSprite, this.position.x, this.position.y)
     }
 
-    // update animation frames
-    updateAnimation() {
-        this.sheet.animations.get(this.currentAnimation).update()
+    isIdle() {
+        return this.velocity.x === 0 && this.velocity.y === 0
     }
 
     // Define what animation is gonna roll
-    defineCurrentAnimation() {
-        if (this.jump.isFalling()) {
-            return this.currentAnimation = 'falling-right'
+    defineCurrentSprite() {
+        if (this.jump.isJumping()) {
+            return this.lookDirection > 0
+                ? this.currentSprite = 'jump-right'
+                : this.currentSprite = 'jump-left'
         }
 
-        if (!this.isIdle) {
+        if (this.jump.isFalling()) {
+            return this.lookDirection > 0
+                ? this.currentSprite = 'falling-right'
+                : this.currentSprite = 'falling-left'
+        }
+
+        // Mario is not moving
+        if (this.isIdle()) {
+            return this.lookDirection > 0
+                    ? this.currentSprite = 'idle-right'
+                    : this.currentSprite = 'idle-left'
+        }
+
+        // If it is moving
+        else {
             // if player is pressing left while mario is going right
             if (this.lookDirection < 0 && this.velocity.x > 0) {
-                return this.currentAnimation = 'dash-left'
+                return this.currentSprite = 'dash-left'
             }
             // if player is pressing left while mario is going right
             else if (this.lookDirection > 0 && this.velocity.x < 0) {
-                return this.currentAnimation = 'dash-right'
+                return this.currentSprite = 'dash-right'
             }
             else {
-                return this.currentAnimation = this.lookDirection > 0
-                    ? 'run-right'
-                    : 'run-left'
+                return this.lookDirection > 0
+                    ? this.sheet.runAnimation('run-right', this)
+                    : this.sheet.runAnimation('run-left', this)
             }
         }
     }

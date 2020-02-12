@@ -16,7 +16,7 @@ export default class Animation
 
     update ()
     {
-        if (! this.playing) 
+        if (!this.playing) 
             return
 
         this.scripts.forEach(callback => {
@@ -35,7 +35,7 @@ export default class Animation
 
             if (this.index >= this.size) {
 
-                if (! this.loop) {
+                if (!this.loop) {
                     this.index = this.size - 1
                     this.playing = false
                     return

@@ -7,7 +7,7 @@ export default class Gravity extends Component {
     constructor(gameObject) {
         super(gameObject)
 
-        this.acceleration = 1000
+        this.acceleration = 900
     }
 
     update(dt) {
