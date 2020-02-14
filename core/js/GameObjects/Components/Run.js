@@ -7,15 +7,17 @@ export default class Run extends Component {
     constructor(gameObject) {
         super(gameObject)
 
-        this.acceleration = 0
-        this.deceleration = 0
+        this.acceleration = 200
+        this.deceleration = 200        
+        this.maxVelocity = 100
+        this.distance = 0
+
+        // Detect if gameObject is touching the ground
+        this.onGround = false
 
         // What direction player is pressing
         // -1 = left, 0 = none, 1 = right
         this.pressingDirection = 0
-
-        this.maxVelocity = 10000
-        this.distance = 0
     }
 
     update(dt) {
@@ -24,21 +26,25 @@ export default class Run extends Component {
         this.setPressingDirection()
 
         const absVelocityX = Math.abs(this.gameObject.velocity.x)
+        const velocityXSign = Math.sign(this.gameObject.velocity.x)
 
         // if some direction is beeing pressed
         if (this.pressingDirection !== 0) {
+            // Already started running
+            if (this.distance > 0) {
+                // On dash decelerate
+                if (velocityXSign !== this.pressingDirection) {
+                    this.decelerate(dt)
+                }
+            }
+
             this.gameObject.lookDirection = this.pressingDirection
-            this.gameObject.velocity.x = this.acceleration * this.pressingDirection
+            this.accelerate(dt)
         }
         // if none direction is beeing pressed, but 
         // the gameObject still moving yet
         else if (this.gameObject.velocity.x !== 0) {
-            // deceleration can't be major than the velocity
-            const decel = Math.min(absVelocityX, this.deceleration * dt)
-
-            this.gameObject.velocity.x += (this.gameObject.velocity.x > 0)
-                ? -decel
-                : decel
+            this.decelerate(dt)
         }
 
         else {
@@ -46,6 +52,32 @@ export default class Run extends Component {
         }
         
         this.distance =+ absVelocityX * dt
+
+        // It is set to false, obstructs will turn it to true
+        this.onGround = false
+    }
+
+    // Accelerates object if it has not reach max velocity
+    accelerate (dt) {
+        const absVelocityX = Math.abs(this.gameObject.velocity.x)
+
+        if (absVelocityX <= this.maxVelocity) {
+            this.gameObject.velocity.x +=this.acceleration * this.pressingDirection * dt
+        }
+        else {
+            this.gameObject.velocity.x = this.maxVelocity * this.pressingDirection
+        }
+    }
+
+    decelerate (dt) {
+        const absVelocityX = Math.abs(this.gameObject.velocity.x)
+
+        // deceleration can't be major than the velocity
+        const decel = Math.min(absVelocityX, this.deceleration * dt)
+
+        this.gameObject.velocity.x += (this.gameObject.velocity.x > 0)
+            ? -decel
+            : decel
     }
 
     setPressingDirection() {
@@ -57,6 +89,12 @@ export default class Run extends Component {
         }
         else {
             this.pressingDirection = 0
+        }
+    }
+
+    obstructs (side) {
+        if (side === 'bottom') {
+            this.onGround = true
         }
     }
 }

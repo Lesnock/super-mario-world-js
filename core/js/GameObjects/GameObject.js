@@ -53,10 +53,12 @@ export default class GameObject {
             this.moveY(dt)
     }
 
+    beforeMoveX(dt) {
+
+    }
+
     moveX(dt) {
-        if (typeof this.beforeMoveX === 'function') {
-            this.beforeMoveX(dt)
-        }
+        this.beforeMoveX(dt)
 
         this.position.x += this.velocity.x * dt
 
@@ -66,16 +68,16 @@ export default class GameObject {
             : Math.floor(this.position.x)
 
         this.components.forEach(component => {
-            if (typeof component.onMoveX === 'function') {
-                component.onMoveX()
-            }
+            component.onMoveX()
         })
     }
 
+    beforeMoveY(dt) {
+        
+    }
+
     moveY(dt) {
-        if (typeof this.beforeMoveY === 'function') {
-            this.beforeMoveY(dt)
-        }
+        this.beforeMoveY(dt)
 
         this.position.y += this.velocity.y * dt
 
@@ -85,18 +87,14 @@ export default class GameObject {
             : Math.floor(this.position.y)
 
         this.components.forEach(component => {
-            if (typeof component.onMoveY === 'function') {
-                component.onMoveY()
-            }
+            component.onMoveY()
         })
     }
 
     obstructs(side) {
         // Trigger obstructs function on components
         this.components.forEach(component => {
-            if (typeof component.obstructs === 'function') {
-                component.obstructs(side)
-            }
+            component.obstructs(side)
         })
     }
 }

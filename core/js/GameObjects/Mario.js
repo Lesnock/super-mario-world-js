@@ -40,14 +40,15 @@ export default class Mario extends GameObject {
         this.lookDirection = 1
 
         // Run component inital config
-        this.run.acceleration = 50
-        this.run.deceleration = 300
+        this.run.acceleration = 200
+        this.run.deceleration = 200
+        this.run.maxVelocity = 50
 
         // Gravity initial config
         this.gravity.acceleration = 800
 
         // Jump initial config
-        this.jump.acceleration = 150
+        this.jump.acceleration = 200
     }
 
     update(dt) {
@@ -55,16 +56,7 @@ export default class Mario extends GameObject {
     }
 
     render(g) {
-        const currentFrame = this.currentSprite
-
-        let yPosition = this.position.y
-
-        if (currentFrame == 'run-right-2' ||
-            currentFrame == 'run-fast-right-1' ||
-            currentFrame == 'run-left-1' ||
-            currentFrame == 'run-fast-left-1') {
-            yPosition -= 1
-        }
+        const yPosition = this.defineYPosition()
 
         // Will ever render the current sprite property
         return this.sheet.drawSprite(g, this.currentSprite, this.position.x, yPosition)
@@ -111,5 +103,21 @@ export default class Mario extends GameObject {
                     : this.sheet.runAnimation('run-slow-left', this)
             }
         }
+    }
+
+    defineYPosition() {
+        const currentFrame = this.currentSprite
+
+        let yPosition = this.position.y
+
+        // Mario's mini jumping when running
+        if (currentFrame == 'run-right-2' ||
+            currentFrame == 'run-fast-right-1' ||
+            currentFrame == 'run-left-1' ||
+            currentFrame == 'run-fast-left-1') {
+            yPosition -= 1
+        }
+
+        return yPosition
     }
 }
