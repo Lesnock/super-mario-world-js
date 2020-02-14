@@ -16,14 +16,12 @@ export default class GameState extends State {
 
             this.loadInput(),
             this.loadLevel('1'),
-            //this.loadPlayer()
 
         ])
             .then(([
                 //Resolved
                 input,
                 level,
-                //player
 
             ]) => {
 
@@ -49,9 +47,5 @@ export default class GameState extends State {
 
     loadLevel(name) {
         return loadLevel(name)
-    }
-
-    loadPlayer() {
-        //return new Player()
     }
 }

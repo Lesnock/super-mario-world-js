@@ -4,7 +4,7 @@ export default class Solid extends Collider {
     constructor() {
         super()
 
-        this.friction = 1/5000
+        // this.friction = 1/5000
     }
 
     checkX(shape, match) {
@@ -40,9 +40,6 @@ export default class Solid extends Collider {
                 gameObject.obstructs('bottom')
                 gameObject.position.y = match.y1 - shape.height - shape.y
                 gameObject.velocity.y = 0
-
-                //Add friction to velocity        
-                this.addFriction(gameObject)
             }
         }
 
@@ -55,7 +52,7 @@ export default class Solid extends Collider {
         }
     }
 
-    addFriction(gameObject) {
-        gameObject.velocity.x -= this.friction * gameObject.velocity.x * Math.abs(gameObject.velocity.x)
-    }
+    // addFriction(gameObject) {
+    //     gameObject.velocity.x -= this.friction * gameObject.velocity.x * Math.abs(gameObject.velocity.x)
+    // }
 }

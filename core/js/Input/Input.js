@@ -1,11 +1,13 @@
 import KeyboardController from "./Controllers/KeyboardController.js";
+import KeyboardController2 from "./Controllers/KeyboardController2.js";
 
 var instance = null
 
 export default class Input
 {
     controllers = [
-        new KeyboardController(this)
+        new KeyboardController(this),
+        new KeyboardController2(this)
     ]
 
     constructor ()

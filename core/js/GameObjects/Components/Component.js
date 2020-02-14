@@ -21,4 +21,12 @@ export default class Component
     {
         //
     }
+
+    onMoveX (dt) {
+
+    }
+
+    onMoveY (dt) {
+        
+    }
 }

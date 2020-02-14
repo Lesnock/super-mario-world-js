@@ -22,22 +22,30 @@ export default class Jump extends Component
 
         // Defines if object is ready to jump
         this.ready = false
+
+        // If input up is released during the jump, the 
+        Input.instance().addReleaseMapping('up', () => {
+            if (!this.ready) {
+                this.cancel()
+            }
+        })
     }
 
     update (dt) {
+        // If timer is not 0, the jump can keep going up
         if (this.timer > 0) {
-            this.gameObject.velocity.y = -(this.acceleration + Math.abs(this.gameObject.velocity.x) * this.speedBoost)
-            return this.timer -= dt
-        }
+            // Boost = game object goes up depending on velocity x
+            const boost = Math.abs(this.gameObject.velocity.x) * this.speedBoost
+            this.gameObject.velocity.y = -(this.acceleration + boost)
 
-        // On button press
-        if (Input.up) {
-            if (this.ready) {
+            this.timer -= dt
+        }
+        else {
+            // Just start jump if it is ready
+            if (this.ready && Input.up) {
                 this.start()
             }
         }
-
-        console.log(this.ready, 'update')
 
         // In every update ready is set to false
         // But if it is ready, obstructs function will turn it to true
@@ -45,11 +53,11 @@ export default class Jump extends Component
     }
 
     obstructs (side) {
-        console.log(this.ready, 'bottom')
         if (side === 'bottom') {
-            //if (!Input.up) {
+            // Not allow jump to keep happen when the input is pressed forever
+            if (!Input.up) {
                 this.ready = true
-            //}
+            }
         }
 
         if (side === 'top') {
