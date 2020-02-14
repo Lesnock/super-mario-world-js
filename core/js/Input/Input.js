@@ -23,6 +23,7 @@ export default class Input
         Input.down  = this.keys.down
         Input.right = this.keys.right
         Input.left  = this.keys.left
+        Input.run  = this.keys.run
     }
 
     addPressMapping (key, callback)

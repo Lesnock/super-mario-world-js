@@ -9,8 +9,16 @@ export default class Run extends Component {
 
         this.acceleration = 200
         this.deceleration = 200        
-        this.maxVelocity = 100
+        this.maxVelocity = 50
+        
+        // Distance that gameObject has ran
         this.distance = 0
+
+        // Status of running
+        // 0 = slow, 1 = fast, 2 = super fast
+        this.status = 0
+
+        this.fastRunningCoefficient = 1
 
         // Detect if gameObject is touching the ground
         this.onGround = false
@@ -21,6 +29,9 @@ export default class Run extends Component {
     }
 
     update(dt) {
+        console.log(this.distance)
+        this.setStatus()
+
         // Detect what direction player is pressing, 
         // and set it to the pressingDirection prop
         this.setPressingDirection()
@@ -59,14 +70,15 @@ export default class Run extends Component {
 
     // Accelerates object if it has not reach max velocity
     accelerate (dt) {
-        const absVelocityX = Math.abs(this.gameObject.velocity.x)
+        const accelerations = {
+            0: this.slowAcceleration,
+            1: this.fastAcceleration,
+            2: this.superFastAcceleration,
+        }
 
-        if (absVelocityX <= this.maxVelocity) {
-            this.gameObject.velocity.x +=this.acceleration * this.pressingDirection * dt
-        }
-        else {
-            this.gameObject.velocity.x = this.maxVelocity * this.pressingDirection
-        }
+        const acceleration = accelerations[this.status]
+
+        return this.gameObject.velocity.x += acceleration * this.pressingDirection * dt
     }
 
     decelerate (dt) {
@@ -89,6 +101,20 @@ export default class Run extends Component {
         }
         else {
             this.pressingDirection = 0
+        }
+    }
+
+    setStatus() {
+        if (Input.run) {
+            if (this.distance >= 1) {
+                this.status = 2
+            }
+            else {
+                this.status = 1
+            }
+        }
+        else {
+            this.status = 0
         }
     }
 

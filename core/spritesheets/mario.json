@@ -38,7 +38,25 @@
             "loop": false
         },
 
-        "run-right": {
+        "run-slow-right": {
+            "frames": [
+                {
+                    "sprite": "run-right-1",
+                    "speed": 100
+                },
+                {
+                    "sprite": "run-right-2",
+                    "speed": 100
+                },
+                {
+                    "sprite": "idle-right",
+                    "speed": 100
+                }
+            ],
+            "loop": true
+        },
+
+        "run-fast-right": {
             "frames": [
                 {
                     "sprite": "run-right-1",
@@ -54,27 +72,9 @@
                 }
             ],
             "loop": true
-        },
+        },        
 
-        "run-slow-right": {
-            "frames": [
-                {
-                    "sprite": "run-right-1",
-                    "speed": 120
-                },
-                {
-                    "sprite": "run-right-2",
-                    "speed": 60
-                },
-                {
-                    "sprite": "idle-right",
-                    "speed": 60
-                }
-            ],
-            "loop": true
-        },
-
-        "run-fast-right": {
+        "run-super-fast-right": {
             "frames": [
                 {
                     "sprite": "run-fast-right-1",
@@ -92,7 +92,25 @@
             "loop": true
         },
 
-        "run-left": {
+        "run-slow-left": {
+            "frames": [
+                {
+                    "sprite": "run-left-1",
+                    "speed": 100
+                },
+                {
+                    "sprite": "run-left-2",
+                    "speed": 100
+                },
+                {
+                    "sprite": "idle-left",
+                    "speed": 100
+                }
+            ],
+            "loop": true
+        },
+
+        "run-fast-left": {
             "frames": [
                 {
                     "sprite": "run-left-1",
@@ -110,25 +128,7 @@
             "loop": true
         },
 
-        "run-slow-left": {
-            "frames": [
-                {
-                    "sprite": "run-left-1",
-                    "speed": 120
-                },
-                {
-                    "sprite": "run-left-2",
-                    "speed": 60
-                },
-                {
-                    "sprite": "idle-left",
-                    "speed": 60
-                }
-            ],
-            "loop": true
-        },
-
-        "run-fast-left": {
+        "run-super-fast-left": {
             "frames": [
                 {
                     "sprite": "run-fast-left-1",
@@ -150,16 +150,6 @@
             "frames": [
                 {
                     "sprite": "dash-right",
-                    "speed": 100
-                }
-            ],
-            "loop": false
-        },
-
-        "dash-left": {
-            "frames": [
-                {
-                    "sprite": "dash-left",
                     "speed": 100
                 }
             ],

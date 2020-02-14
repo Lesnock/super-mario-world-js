@@ -7,6 +7,7 @@ export default class KeyboardController extends Controller
         KeyA: 'left',
         KeyD: 'right',
         KeyS: 'down',
+        KeyO: 'run'
     }
 
     constructor (input)

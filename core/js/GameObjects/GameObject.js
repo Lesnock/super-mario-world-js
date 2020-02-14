@@ -9,7 +9,7 @@ export default class GameObject {
         this.velocity = new Vector(0, 0)
         this.gravity = new Vector(0, 1000)
 
-        this.friction = 1/5000
+        this.friction = 1/800
         this.direction = 0
         this.heading = 1
     }

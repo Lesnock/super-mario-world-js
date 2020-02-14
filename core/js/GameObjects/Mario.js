@@ -40,9 +40,13 @@ export default class Mario extends GameObject {
         this.lookDirection = 1
 
         // Run component inital config
-        this.run.acceleration = 200
+        this.run.acceleration = 400
+
+        this.run.slowAcceleration = 400
+        this.run.fastAcceleration = 1000
+        this.run.superFastAcceleration = 800
+
         this.run.deceleration = 200
-        this.run.maxVelocity = 50
 
         // Gravity initial config
         this.gravity.acceleration = 800
