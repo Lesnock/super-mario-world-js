@@ -41,37 +41,16 @@ export default class Mario extends GameObject {
 
         // Run component inital config
         this.run.acceleration = 400
-
         this.run.deceleration = 200
 
         // Gravity initial config
         this.gravity.acceleration = 800
 
         // Jump initial config
-        this.jump.acceleration = 200
+        this.jump.acceleration = 230
     }
 
     mapping(input) {
-        // Run right
-        input.addPressMapping('right', () => {
-            this.run.pressingDirection += 1
-        })
-
-        // Stops running right
-        input.addReleaseMapping('right', () => {
-            this.run.pressingDirection -= 1
-        })
-
-        // Run left
-        input.addPressMapping('left', () => {
-            this.run.pressingDirection -= 1
-        })
-
-        // Stops running left
-        input.addReleaseMapping('left', () => {
-            this.run.pressingDirection += 1
-        })
-
         // Run fast
         input.addPressMapping('run', () => {
             this.run.setTurbo(true)
@@ -89,6 +68,7 @@ export default class Mario extends GameObject {
     }
 
     update(dt) {
+        this.definePressingDirection()
         this.defineCurrentSprite()
     }
 
@@ -165,5 +145,17 @@ export default class Mario extends GameObject {
         }
 
         return yPosition
+    }
+
+    definePressingDirection() {
+        if (Input.right && !Input.left) {
+            this.run.pressingDirection = 1
+        }
+        else if (Input.left && !Input.right) {
+            this.run.pressingDirection = -1
+        }
+        else {
+            this.run.pressingDirection = 0
+        }
     }
 }

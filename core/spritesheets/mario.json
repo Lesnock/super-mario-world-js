@@ -42,15 +42,15 @@
             "frames": [
                 {
                     "sprite": "run-right-1",
-                    "speed": 100
+                    "speed": 120
                 },
                 {
                     "sprite": "run-right-2",
-                    "speed": 50
+                    "speed": 60
                 },
                 {
                     "sprite": "idle-right",
-                    "speed": 50
+                    "speed": 60
                 }
             ],
             "loop": true

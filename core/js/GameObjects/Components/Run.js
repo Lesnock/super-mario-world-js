@@ -12,6 +12,9 @@ export default class Run extends Component {
 
         this.friction = 1/800
 
+        this.fastFriction = 1/3000
+        this.slowFriction = 1/600
+
         // Defines if object is on turbo mode (minor friction)
         this.turbo = false
         
@@ -34,8 +37,8 @@ export default class Run extends Component {
         const absVelocityX = Math.abs(this.gameObject.velocity.x)
 
         //Add friction to velocity
-        const friction = (this.turbo) ? 1/5000 : 1/800
-        this.gameObject.velocity.x -= friction * this.gameObject.velocity.x * absVelocityX
+        this.friction = (this.turbo) ? this.fastFriction : this.slowFriction
+        this.gameObject.velocity.x -= this.friction * this.gameObject.velocity.x * absVelocityX
 
         // if some direction is beeing pressed
         if (this.pressingDirection !== 0) {
