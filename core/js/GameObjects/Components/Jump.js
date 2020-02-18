@@ -17,47 +17,56 @@ export default class Jump extends Component
         // Boost depending on x-velocity
         this.speedBoost = 0.3
 
-        // Timer that counts how much time the jump has to stop
-        this.timer = 0
+        // Timer that counts how much time the jump has to stop going up
+        this.jumpTimer = 0
 
-        // Defines if object is ready to jump
-        this.ready = false
+        // Amount of time that jump button was pressed
+        this.requestTimer = 0;
+
+        // Amount of time that jump can happen before object touch the ground
+        this.gracePeriod = 0.1;
+
+        // Defines if object is on ground
+        this.onGround = false
 
         // If input up is released during the jump, the 
         Input.instance().addReleaseMapping('up', () => {
-            if (!this.ready) {
+            if (!this.onGround) {
                 this.cancel()
             }
         })
     }
 
     update (dt) {
+        // If during the request timer objects touch the ground,
+        // the jump will start automatically (grace period)
+        if (this.requestTimer > 0) {
+            if (this.onGround) {
+                // starts jump timer
+                this.jumpTimer = this.duration
+                this.requestTimer = 0
+            }
+
+            this.requestTimer -= dt
+        }
+
         // If timer is not 0, the jump can keep going up
-        if (this.timer > 0) {
+        if (this.jumpTimer > 0) {
             // Boost = game object goes up depending on velocity x
             const boost = Math.abs(this.gameObject.velocity.x) * this.speedBoost
             this.gameObject.velocity.y = -(this.acceleration + boost)
 
-            this.timer -= dt
-        }
-        else {
-            // Just start jump if it is ready
-            if (this.ready && Input.up) {
-                this.start()
-            }
+            this.jumpTimer -= dt
         }
 
         // In every update ready is set to false
         // But if it is ready, obstructs function will turn it to true
-        this.ready = false
+        this.onGround = false
     }
 
     obstructs (side) {
         if (side === 'bottom') {
-            // Not allow jump to keep happen when the input is pressed forever
-            if (!Input.up) {
-                this.ready = true
-            }
+            this.onGround = true
         }
 
         if (side === 'top') {
@@ -67,21 +76,21 @@ export default class Jump extends Component
 
     // Starts the jump
     start () {
-        this.timer = this.duration
+        this.requestTimer = this.gracePeriod
     }
 
     // Cancel the jump
     cancel () {
-        this.timer = 0
+        this.jumpTimer = 0
     }
 
     // Defines if object is jumping (going up)
     isJumping () {
-        return !this.ready && this.gameObject.velocity.y < 0
+        return !this.onGround && this.gameObject.velocity.y < 0
     }
 
     // Defines if object is falling (going down)
     isFalling () {
-        return !this.ready && this.gameObject.velocity.y > 0
+        return !this.onGround && this.gameObject.velocity.y > 0
     }
 }

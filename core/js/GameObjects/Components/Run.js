@@ -8,8 +8,12 @@ export default class Run extends Component {
         super(gameObject)
 
         this.acceleration = 200
-        this.deceleration = 200        
-        this.maxVelocity = 50
+        this.deceleration = 200
+
+        this.friction = 1/800
+
+        // Defines if object is on turbo mode (minor friction)
+        this.turbo = false
         
         // Distance that gameObject has ran
         this.distance = 0
@@ -17,8 +21,6 @@ export default class Run extends Component {
         // Status of running
         // 0 = slow, 1 = fast, 2 = super fast
         this.status = 0
-
-        this.fastRunningCoefficient = 1
 
         // Detect if gameObject is touching the ground
         this.onGround = false
@@ -29,26 +31,14 @@ export default class Run extends Component {
     }
 
     update(dt) {
-        console.log(this.distance)
-        this.setStatus()
-
-        // Detect what direction player is pressing, 
-        // and set it to the pressingDirection prop
-        this.setPressingDirection()
-
         const absVelocityX = Math.abs(this.gameObject.velocity.x)
-        const velocityXSign = Math.sign(this.gameObject.velocity.x)
+
+        //Add friction to velocity
+        const friction = (this.turbo) ? 1/5000 : 1/800
+        this.gameObject.velocity.x -= friction * this.gameObject.velocity.x * absVelocityX
 
         // if some direction is beeing pressed
         if (this.pressingDirection !== 0) {
-            // Already started running
-            if (this.distance > 0) {
-                // On dash decelerate
-                if (velocityXSign !== this.pressingDirection) {
-                    this.decelerate(dt)
-                }
-            }
-
             this.gameObject.lookDirection = this.pressingDirection
             this.accelerate(dt)
         }
@@ -69,16 +59,8 @@ export default class Run extends Component {
     }
 
     // Accelerates object if it has not reach max velocity
-    accelerate (dt) {
-        const accelerations = {
-            0: this.slowAcceleration,
-            1: this.fastAcceleration,
-            2: this.superFastAcceleration,
-        }
-
-        const acceleration = accelerations[this.status]
-
-        return this.gameObject.velocity.x += acceleration * this.pressingDirection * dt
+    accelerate (dt) {        
+        return this.gameObject.velocity.x += this.acceleration * this.pressingDirection * dt
     }
 
     decelerate (dt) {
@@ -92,30 +74,8 @@ export default class Run extends Component {
             : decel
     }
 
-    setPressingDirection() {
-        if (Input.right && !Input.left) {
-            this.pressingDirection = 1
-        }
-        else if (Input.left && !Input.right) {
-            this.pressingDirection = -1
-        }
-        else {
-            this.pressingDirection = 0
-        }
-    }
-
-    setStatus() {
-        if (Input.run) {
-            if (this.distance >= 1) {
-                this.status = 2
-            }
-            else {
-                this.status = 1
-            }
-        }
-        else {
-            this.status = 0
-        }
+    setTurbo(isTurbo) {
+        this.turbo = isTurbo
     }
 
     obstructs (side) {

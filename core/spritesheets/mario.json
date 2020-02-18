@@ -38,7 +38,7 @@
             "loop": false
         },
 
-        "run-slow-right": {
+        "run-right": {
             "frames": [
                 {
                     "sprite": "run-right-1",
@@ -46,35 +46,17 @@
                 },
                 {
                     "sprite": "run-right-2",
-                    "speed": 100
+                    "speed": 50
                 },
                 {
                     "sprite": "idle-right",
-                    "speed": 100
+                    "speed": 50
                 }
             ],
             "loop": true
         },
 
         "run-fast-right": {
-            "frames": [
-                {
-                    "sprite": "run-right-1",
-                    "speed": 100
-                },
-                {
-                    "sprite": "run-right-2",
-                    "speed": 50
-                },
-                {
-                    "sprite": "idle-right",
-                    "speed": 50
-                }
-            ],
-            "loop": true
-        },        
-
-        "run-super-fast-right": {
             "frames": [
                 {
                     "sprite": "run-fast-right-1",
@@ -92,7 +74,7 @@
             "loop": true
         },
 
-        "run-slow-left": {
+        "run-left": {
             "frames": [
                 {
                     "sprite": "run-left-1",
@@ -100,35 +82,17 @@
                 },
                 {
                     "sprite": "run-left-2",
-                    "speed": 100
+                    "speed": 50
                 },
                 {
                     "sprite": "idle-left",
-                    "speed": 100
+                    "speed": 50
                 }
             ],
             "loop": true
         },
 
         "run-fast-left": {
-            "frames": [
-                {
-                    "sprite": "run-left-1",
-                    "speed": 100
-                },
-                {
-                    "sprite": "run-left-2",
-                    "speed": 50
-                },
-                {
-                    "sprite": "idle-left",
-                    "speed": 50
-                }
-            ],
-            "loop": true
-        },
-
-        "run-super-fast-left": {
             "frames": [
                 {
                     "sprite": "run-fast-left-1",

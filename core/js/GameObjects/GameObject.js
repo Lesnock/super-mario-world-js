@@ -1,5 +1,6 @@
-import Point from "../Math/Point.js";
-import Vector from "../Math/Vector.js";
+import Point from "../Math/Point.js"
+import Input from '../Input/Input.js'
+import Vector from "../Math/Vector.js"
 
 export default class GameObject {
     components = []
@@ -9,19 +10,24 @@ export default class GameObject {
         this.velocity = new Vector(0, 0)
         this.gravity = new Vector(0, 1000)
 
-        this.friction = 1/800
         this.direction = 0
         this.heading = 1
     }
 
+    async superInit() {
+        this.mapping(Input.instance())
+    }
+
     async init() {
+        
+    }
+
+    // Map keys with actions (config controller)
+    mapping(input) {
         //
     }
 
     async superUpdate(dt) {
-        //Add friction to velocity        
-        this.velocity.x -= this.friction * this.velocity.x * Math.abs(this.velocity.x)
-
         this.components.forEach(component => {
             component.update(dt)
         });
@@ -107,6 +113,7 @@ GameObject.create = async function () {
         instance[component.name] = component
     })
 
+    await instance.superInit()
     await instance.init()
 
     return instance

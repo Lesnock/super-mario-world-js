@@ -1,7 +1,7 @@
 import Run from './Components/Run.js'
 import Input from '../Input/Input.js'
 import Jump from './Components/Jump.js'
-import GameObject from "./GameObject.js"
+import GameObject from './GameObject.js'
 import Gravity from './Components/Gravity.js'
 import RigidBody from './Components/RigidBody.js'
 import Square from '../Collision/Shapes/Square.js'
@@ -42,10 +42,6 @@ export default class Mario extends GameObject {
         // Run component inital config
         this.run.acceleration = 400
 
-        this.run.slowAcceleration = 400
-        this.run.fastAcceleration = 1000
-        this.run.superFastAcceleration = 800
-
         this.run.deceleration = 200
 
         // Gravity initial config
@@ -53,6 +49,43 @@ export default class Mario extends GameObject {
 
         // Jump initial config
         this.jump.acceleration = 200
+    }
+
+    mapping(input) {
+        // Run right
+        input.addPressMapping('right', () => {
+            this.run.pressingDirection += 1
+        })
+
+        // Stops running right
+        input.addReleaseMapping('right', () => {
+            this.run.pressingDirection -= 1
+        })
+
+        // Run left
+        input.addPressMapping('left', () => {
+            this.run.pressingDirection -= 1
+        })
+
+        // Stops running left
+        input.addReleaseMapping('left', () => {
+            this.run.pressingDirection += 1
+        })
+
+        // Run fast
+        input.addPressMapping('run', () => {
+            this.run.setTurbo(true)
+        })
+
+        // Run slow
+        input.addReleaseMapping('run', () => {
+            this.run.setTurbo(false)
+        })
+
+        // Starts jump
+        input.addPressMapping('up', () => {
+            this.jump.start()
+        })
     }
 
     update(dt) {
@@ -102,9 +135,18 @@ export default class Mario extends GameObject {
                 return this.currentSprite = 'dash-right'
             }
             else {
-                return this.lookDirection > 0
-                    ? this.sheet.runAnimation('run-slow-right', this)
-                    : this.sheet.runAnimation('run-slow-left', this)
+                // Running fast
+                if (this.run.turbo && Math.abs(this.velocity.x) > 120) {
+                    return this.lookDirection > 0
+                        ? this.sheet.runAnimation('run-fast-right', this)
+                        : this.sheet.runAnimation('run-fast-left', this)
+                }
+                // Running slow
+                else {
+                    return this.lookDirection > 0
+                        ? this.sheet.runAnimation('run-right', this)
+                        : this.sheet.runAnimation('run-left', this)
+                }                
             }
         }
     }
