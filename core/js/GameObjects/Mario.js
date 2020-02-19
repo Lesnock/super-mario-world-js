@@ -72,12 +72,7 @@ export default class Mario extends GameObject {
         this.definePressingDirection()
         this.defineCurrentSprite()
 
-        if (this.position.x < 100) {
-            Camera.setXPosition(0)
-        }
-        else {
-            Camera.setXPosition(this.position.x - 100)
-        }
+        Camera.instance().centerOnObject(this)
     }
 
     render(g) {

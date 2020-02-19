@@ -1,9 +1,10 @@
+import Handler from './Handler.js'
 import State from './States/State.js';
+import Camera from './Camera/Camera.js'
 import Display from './Display/Display.js'
 import GameState from './States/GameState.js';
 
-var display, 
-    g
+var display, g, camera, handler
 
 //States
 var gameState, 
@@ -14,7 +15,14 @@ export default class Game
 {
     constructor (title, width, height)
     {
+        handler = new Handler()
+
         display = new Display(title, width, height)
+        handler.setDisplay(display)
+
+        camera = new Camera(0, 0)
+        handler.setCamera(camera)
+
         g = display.getGraphics()
     }
 

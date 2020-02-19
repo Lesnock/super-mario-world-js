@@ -1,3 +1,4 @@
+import Game from '../Game.js'
 import Vector from '../Math/Vector.js'
 
 var instance = null
@@ -5,22 +6,25 @@ var instance = null
 export default class Camera {
     constructor (xPosition = 0, yPosition = 0) {
         this.position = new Vector(xPosition, yPosition)
+        instance = this
     }
 
-    update (dt) {
-        //
-    }
+    centerOnObject(object) {
+        const display = Game.getDisplay()
 
-    render (g) {
-        //
+        this.position.x = parseInt(object.position.x - display.width/2)
     }
 
     // Singleton
     static instance() {
         if (instance == null)
-            instance = new Camera()
+            instance = new Camera(0, 0)
             
         return instance
+    }
+
+    static getPosition() {
+        return instance.position
     }
 
     static get xPosition() {
