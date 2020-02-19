@@ -1,6 +1,7 @@
 import Run from './Components/Run.js'
 import Input from '../Input/Input.js'
 import Jump from './Components/Jump.js'
+import Camera from '../Camera/Camera.js'
 import GameObject from './GameObject.js'
 import Gravity from './Components/Gravity.js'
 import RigidBody from './Components/RigidBody.js'
@@ -70,13 +71,25 @@ export default class Mario extends GameObject {
     update(dt) {
         this.definePressingDirection()
         this.defineCurrentSprite()
+
+        if (this.position.x < 100) {
+            Camera.setXPosition(0)
+        }
+        else {
+            Camera.setXPosition(this.position.x - 100)
+        }
     }
 
     render(g) {
         const yPosition = this.defineYPosition()
 
         // Will ever render the current sprite property
-        return this.sheet.drawSprite(g, this.currentSprite, this.position.x, yPosition)
+        return this.sheet.drawSprite(
+            g, 
+            this.currentSprite, 
+            this.position.x - Camera.xPosition, 
+            yPosition - Camera.yPosition
+        )
     }
 
     isIdle() {

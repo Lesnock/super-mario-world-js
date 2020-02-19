@@ -1,3 +1,5 @@
+import Camera from '../Camera/Camera.js'
+
 export default class Tile
 {
     constructor (buffer, x, y, width = Tile.defaultWidth, height = Tile.defaultHeight)
@@ -12,7 +14,13 @@ export default class Tile
 
     render (g, indexX, indexY)
     {
-        g.drawImage(this.buffer, indexX * this.width, indexY * this.height)
+        const camera = Camera.instance()
+
+        g.drawImage(
+            this.buffer, 
+            indexX * this.width - camera.position.x, 
+            indexY * this.height - camera.position.y
+        )
     }
 
     async setCollider (name)

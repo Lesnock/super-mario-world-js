@@ -1,6 +1,7 @@
 import Point from "../Math/Point.js"
 import Input from '../Input/Input.js'
 import Vector from "../Math/Vector.js"
+import Camera from '../Camera/Camera.js'
 
 export default class GameObject {
     components = []

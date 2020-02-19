@@ -1,4 +1,5 @@
 import Shape from "./Shape.js";
+import Camera from '../../Camera/Camera.js'
 
 export default class Square extends Shape
 {
@@ -11,11 +12,11 @@ export default class Square extends Shape
 
     render (g)
     {
-        g.strokeStyle = 'black'
+        g.strokeStyle = 'red'
             g.beginPath()
             g.rect(
-                this.gameObject.position.x + this.x,
-                this.gameObject.position.y + this.y,
+                this.gameObject.position.x + this.x - Camera.xPosition,
+                this.gameObject.position.y + this.y - Camera.yPosition,
                 this.width, this.height)
             g.stroke()
     }

@@ -1,6 +1,7 @@
 import Level from "../Level/Level.js";
 import loadJSON from "./JsonLoader.js";
 import Matrix from "../Math/Matrix.js";
+import Camera from "../Camera/Camera.js";
 import TileLayer from "../Layers/TileLayer.js";
 import SpriteLayer from "../Layers/SpriteLayer.js";
 import loadSpriteSheet from "./SpriteSheetLoader.js";
@@ -50,6 +51,7 @@ function createTileLayer(tiles, columns, rows, spriteSheet) {
 
 function createSpriteLayer(gameObjects) {
     const objects = []
+    const camera = Camera.instance()
 
     for (const name in gameObjects) {
 

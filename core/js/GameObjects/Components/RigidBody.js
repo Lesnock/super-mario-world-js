@@ -1,4 +1,5 @@
 import Component from "./Component.js";
+import Camera from '../../Camera/Camera.js'
 import TileCollider from "../../Collision/TileCollider.js";
 
 export default class RigidBody extends Component {
@@ -7,7 +8,7 @@ export default class RigidBody extends Component {
     constructor(gameObject) {
         super(gameObject)
 
-        this.debug = false
+        this.debug = true
 
         this.tileCollider = TileCollider.instance
     }
@@ -30,14 +31,8 @@ export default class RigidBody extends Component {
         if (!this.debug) return
 
         // Draw shapes lines
-        g.strokeStyle = 'red'
         this.gameObject.shapes.forEach(shape => {
-            g.beginPath()
-            g.rect(
-                shape.xPosition,
-                shape.yPosition,
-                shape.width, shape.height)
-            g.stroke()
+            shape.render(g)
         })
 
         if (this.tileCollider.matchesX.lenght === 0 || this.tileCollider.matchesY.lenght === 0) {
@@ -47,15 +42,13 @@ export default class RigidBody extends Component {
         const matches = this.tileCollider.matchesX.concat(this.tileCollider.matchesY)
 
         matches.forEach(match => {
-
             g.strokeStyle = 'blue'
             g.beginPath()
             g.rect(
-                match.x1,
-                match.y1,
+                match.x1 - Camera.xPosition,
+                match.y1 - Camera.yPosition,
                 match.tile.width, match.tile.height)
             g.stroke()
-
         })
     }
 }
