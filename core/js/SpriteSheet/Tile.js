@@ -1,4 +1,4 @@
-import Camera from '../Camera/Camera.js'
+import { getInstance } from '../InstanceManager.js'
 
 export default class Tile
 {
@@ -14,7 +14,7 @@ export default class Tile
 
     render (g, indexX, indexY)
     {
-        const camera = Camera.instance()
+        const camera = getInstance('Camera')
 
         g.drawImage(
             this.buffer, 

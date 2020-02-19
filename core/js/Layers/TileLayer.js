@@ -1,5 +1,7 @@
-import Tile from "../SpriteSheet/Tile.js";
-import TileCollider from "../Collision/TileCollider.js";
+import Camera from '../Camera/Camera.js'
+import Tile from "../SpriteSheet/Tile.js"
+import { getInstance } from '../InstanceManager.js'
+import TileCollider from "../Collision/TileCollider.js"
 
 export default class TileLayer
 {
@@ -16,11 +18,32 @@ export default class TileLayer
         //
     }
 
+    // Render all tiles
     render (g)
     {
-        for (let x = 0; x < this.columns; x++) {
+        const camera = getInstance('Camera')
+        const display = getInstance('Display')
 
-            for (let y = 0; y < this.rows; y++) {
+        // Render just the necessary tiles (inside camera)
+        const xStart = Math.max(0,
+            this.tileCollider.resolver.toIndex(camera.position.x)
+            )
+        
+        const xEnd = Math.min(this.columns,
+            this.tileCollider.resolver.toIndex(camera.position.x + camera.width)
+            )
+
+        const yStart = Math.min(0,
+            this.tileCollider.resolver.toIndex(camera.position.y)
+            )
+
+        const yEnd = Math.min(this.rows,
+            this.tileCollider.resolver.toIndex(camera.position.y + camera.height)
+        )
+
+        for (let x = xStart; x <= xEnd; x++) {
+
+            for (let y = yStart; y < yEnd; y++) {
                 
                 const tile = this.grid.get(x, y)
 

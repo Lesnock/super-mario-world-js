@@ -1,7 +1,7 @@
 import Point from "../Math/Point.js"
 import Input from '../Input/Input.js'
 import Vector from "../Math/Vector.js"
-import Camera from '../Camera/Camera.js'
+import { getInstance } from '../InstanceManager.js'
 
 export default class GameObject {
     components = []
@@ -13,6 +13,8 @@ export default class GameObject {
 
         this.direction = 0
         this.heading = 1
+
+        this.camera = getInstance('Camera')
     }
 
     async superInit() {

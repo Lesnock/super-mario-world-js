@@ -1,5 +1,4 @@
 import Component from "./Component.js";
-import Camera from '../../Camera/Camera.js'
 import TileCollider from "../../Collision/TileCollider.js";
 
 export default class RigidBody extends Component {
@@ -45,8 +44,8 @@ export default class RigidBody extends Component {
             g.strokeStyle = 'blue'
             g.beginPath()
             g.rect(
-                match.x1 - Camera.xPosition,
-                match.y1 - Camera.yPosition,
+                match.x1 - this.gameObject.camera.position.x,
+                match.y1 - this.gameObject.camera.position.y,
                 match.tile.width, match.tile.height)
             g.stroke()
         })

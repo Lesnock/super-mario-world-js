@@ -1,4 +1,3 @@
-import Camera from "../Camera/Camera.js";
 import TileResolver from "./TileResolver.js";
 
 export default class TileCollider {

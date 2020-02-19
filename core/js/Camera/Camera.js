@@ -1,26 +1,31 @@
-import Game from '../Game.js'
 import Vector from '../Math/Vector.js'
-
-var instance = null
+import { getInstance } from '../InstanceManager.js'
 
 export default class Camera {
-    constructor (xPosition = 0, yPosition = 0) {
+    constructor (xPosition = 0, yPosition = 0, width = 480, height = 480) {
         this.position = new Vector(xPosition, yPosition)
-        instance = this
+
+        this.width = width
+        this.height = height
     }
 
     centerOnObject(object) {
-        const display = Game.getDisplay()
+        const display = getInstance('Display')
 
-        this.position.x = parseInt(object.position.x - display.width/2)
+        this.position.x = parseInt(object.position.x - display.width / 2)
+        this.position.y = parseInt(object.position.y - display.height / 2)
+
+        this.checkBlankSpace()
     }
 
-    // Singleton
-    static instance() {
-        if (instance == null)
-            instance = new Camera(0, 0)
-            
-        return instance
+    checkBlankSpace() {
+        if (this.position.x < 0) {
+            this.position.x = 0
+        }
+
+        if (this.position.y < 0) {
+            this.position.y = 0
+        }
     }
 
     static getPosition() {

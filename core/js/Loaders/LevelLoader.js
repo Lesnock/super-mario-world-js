@@ -17,6 +17,9 @@ export default async function loadLevel(name) {
 
     const level = new Level()
 
+    // level.width = levelSpec.columns
+    // level.height = levelSpec.rows
+
     //Tile layers
     levelSpec.layers.forEach(layerSpec => {
         const layer = createTileLayer(layerSpec.tiles, levelSpec.columns, levelSpec.rows, spriteSheet)
@@ -51,7 +54,6 @@ function createTileLayer(tiles, columns, rows, spriteSheet) {
 
 function createSpriteLayer(gameObjects) {
     const objects = []
-    const camera = Camera.instance()
 
     for (const name in gameObjects) {
 

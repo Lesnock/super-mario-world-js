@@ -6,6 +6,7 @@ import GameObject from './GameObject.js'
 import Gravity from './Components/Gravity.js'
 import RigidBody from './Components/RigidBody.js'
 import Square from '../Collision/Shapes/Square.js'
+import { getInstance } from '../InstanceManager.js'
 import loadSpriteSheet from '../Loaders/SpriteSheetLoader.js'
 
 export default class Mario extends GameObject {
@@ -72,7 +73,7 @@ export default class Mario extends GameObject {
         this.definePressingDirection()
         this.defineCurrentSprite()
 
-        Camera.instance().centerOnObject(this)
+        this.camera.centerOnObject(this)
     }
 
     render(g) {
@@ -82,8 +83,8 @@ export default class Mario extends GameObject {
         return this.sheet.drawSprite(
             g, 
             this.currentSprite, 
-            this.position.x - Camera.xPosition, 
-            yPosition - Camera.yPosition
+            this.position.x - this.camera.position.x, 
+            yPosition - this.camera.position.y
         )
     }
 
