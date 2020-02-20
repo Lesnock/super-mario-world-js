@@ -1,8 +1,8 @@
 import State from './States/State.js'
+import Container from './Container.js'
 import Camera from './Camera/Camera.js'
 import Display from './Display/Display.js'
 import GameState from './States/GameState.js'
-import { setInstance } from './InstanceManager.js'
 
 var display, g, camera
 
@@ -18,11 +18,11 @@ export default class Game
         display = new Display(title, width, height)
         
         camera = new Camera(0, 0, width, height)
-        
-        setInstance('Display', display)
-        setInstance('Camera', camera)
 
         g = display.getGraphics()
+
+        // Bind instances to container
+        Container.bind({ display, camera, g })
     }
 
     /**
@@ -44,17 +44,20 @@ export default class Game
     }
 
     update (deltaTime)
-    {        
-        if (State.getCurrentState() !== null) 
+    {
+        if (State.getCurrentState() !== null) {
+            Container.bind({ deltaTime })
             gameState.update(deltaTime)
+        }
     }
 
     render (g)
     {
         g.clearRect(0, 0, display.width, display.height)
         
-        if (State.getCurrentState() !== null)
+        if (State.getCurrentState() !== null) {
             gameState.render(g)
+        }
     }
 
     run ()

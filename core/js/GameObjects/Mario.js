@@ -1,12 +1,10 @@
 import Run from './Components/Run.js'
 import Input from '../Input/Input.js'
 import Jump from './Components/Jump.js'
-import Camera from '../Camera/Camera.js'
 import GameObject from './GameObject.js'
 import Gravity from './Components/Gravity.js'
 import RigidBody from './Components/RigidBody.js'
 import Square from '../Collision/Shapes/Square.js'
-import { getInstance } from '../InstanceManager.js'
 import loadSpriteSheet from '../Loaders/SpriteSheetLoader.js'
 
 export default class Mario extends GameObject {

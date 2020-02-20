@@ -1,5 +1,5 @@
 import Vector from '../Math/Vector.js'
-import { getInstance } from '../InstanceManager.js'
+import Container from '../Container.js'
 
 export default class Camera {
     constructor (xPosition = 0, yPosition = 0, width = 480, height = 480) {
@@ -10,7 +10,7 @@ export default class Camera {
     }
 
     centerOnObject(object) {
-        const display = getInstance('Display')
+        const { display } = Container.modules()
 
         this.position.x = parseInt(object.position.x - display.width / 2)
         this.position.y = parseInt(object.position.y - display.height / 2)

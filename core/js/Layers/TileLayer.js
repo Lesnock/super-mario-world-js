@@ -1,6 +1,6 @@
+import Container from '../Container.js'
 import Camera from '../Camera/Camera.js'
 import Tile from "../SpriteSheet/Tile.js"
-import { getInstance } from '../InstanceManager.js'
 import TileCollider from "../Collision/TileCollider.js"
 
 export default class TileLayer
@@ -21,8 +21,11 @@ export default class TileLayer
     // Render all tiles
     render (g)
     {
-        const camera = getInstance('Camera')
-        const display = getInstance('Display')
+        const { camera, display } = Container.modules()
+
+        const buffer = display
+            .createCanvas(display.width, display.height)
+            .getContext('2d')
 
         // Render just the necessary tiles (inside camera)
         const xStart = Math.max(0,
@@ -48,8 +51,10 @@ export default class TileLayer
                 const tile = this.grid.get(x, y)
 
                 if (tile instanceof Tile)
-                    this.grid.get(x, y).render(g, x, y)
+                    this.grid.get(x, y).render(buffer, x, y)
             }
         }
+
+        g.drawImage(buffer, -camera.position.x, -camera.position.y)
     }
 }

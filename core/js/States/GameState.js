@@ -1,7 +1,7 @@
 import State from "./State.js"
 import Input from "../Input/Input.js"
+import Container from '../Container.js'
 import loadLevel from "../Loaders/LevelLoader.js"
-import { setInstance } from '../InstanceManager.js'
 
 export default class GameState extends State {
     constructor() {
@@ -28,8 +28,7 @@ export default class GameState extends State {
                 this.level = level
 
                 // Set to container
-                setInstance('Input', input)
-                setInstance('Level', level)
+                Container.bind({ input, level })
 
                 this.isReady = true
             })
