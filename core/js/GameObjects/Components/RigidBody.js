@@ -1,4 +1,5 @@
 import Component from "./Component.js";
+import Container from '../../Container.js'
 import TileCollider from "../../Collision/TileCollider.js";
 
 export default class RigidBody extends Component {
@@ -7,7 +8,7 @@ export default class RigidBody extends Component {
     constructor(gameObject) {
         super(gameObject)
 
-        this.debug = true
+        this.debug = Container.getModule('debug')
 
         this.tileCollider = TileCollider.instance
     }

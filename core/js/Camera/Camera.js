@@ -2,18 +2,26 @@ import Vector from '../Math/Vector.js'
 import Container from '../Container.js'
 
 export default class Camera {
-    constructor (xPosition = 0, yPosition = 0, width = 480, height = 480) {
+    constructor (xPosition = 0, yPosition = 0, width = 256, height = 240) {
         this.position = new Vector(xPosition, yPosition)
 
         this.width = width
         this.height = height
+        this.debug = false
+
+        if (this.debug) {
+            this.controlWithMouse()
+        }
     }
 
     centerOnObject(object) {
         const { display } = Container.modules()
 
         this.position.x = parseInt(object.position.x - display.width / 2)
-        this.position.y = parseInt(object.position.y - display.height / 2)
+        
+        if (object.position.y < display.height / 6) {
+            this.position.y = object.position.y - display.height / 6
+        }
 
         this.checkBlankSpace()
     }
@@ -26,6 +34,44 @@ export default class Camera {
         if (this.position.y < 0) {
             this.position.y = 0
         }
+    }
+
+    controlWithMouse() {
+        let lastEvent = null;
+
+        ['mousedown', 'mousemove'].forEach(eventName => {
+            document.getElementById('display').addEventListener(eventName, event => {
+                if (event.buttons === 2 
+                && lastEvent 
+                && lastEvent.buttons === 2 
+                && lastEvent.type === 'mousemove') {
+                    this.position.x -= event.offsetX - lastEvent.offsetX
+                }
+
+                lastEvent = event
+            })
+        })
+
+        document.getElementById('display').addEventListener('contextmenu', event => {
+            event.preventDefault()
+        })
+    }
+
+    update(dt) {
+        //
+    }
+
+    render(g) {
+        if (!this.debug) {
+            return
+        }
+
+        g.strokeStyle = 'purple'
+        g.beginPath()
+        g.rect(
+            this.position.x, this.position.y,
+            this.width, this.height)
+        g.stroke()
     }
 
     static getPosition() {

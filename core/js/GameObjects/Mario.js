@@ -76,12 +76,12 @@ export default class Mario extends GameObject {
 
     render(g) {
         const yPosition = this.defineYPosition()
-
+        
         // Will ever render the current sprite property
         return this.sheet.drawSprite(
             g, 
-            this.currentSprite, 
-            this.position.x - this.camera.position.x, 
+            this.currentSprite,
+            this.position.x - this.camera.position.x,
             yPosition - this.camera.position.y
         )
     }

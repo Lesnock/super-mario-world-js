@@ -17,7 +17,7 @@ export default class Game
     {
         display = new Display(title, width, height)
         
-        camera = new Camera(0, 0, width, height)
+        camera = new Camera(0, 0, width - 80, height)
 
         g = display.getGraphics()
 
@@ -49,6 +49,8 @@ export default class Game
             Container.bind({ deltaTime })
             gameState.update(deltaTime)
         }
+
+        camera.update(deltaTime)
     }
 
     render (g)
@@ -58,6 +60,8 @@ export default class Game
         if (State.getCurrentState() !== null) {
             gameState.render(g)
         }
+
+        camera.render(g)
     }
 
     run ()

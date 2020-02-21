@@ -1,5 +1,3 @@
-import Container from '../Container.js'
-
 export default class Tile
 {
     constructor (buffer, x, y, width = Tile.defaultWidth, height = Tile.defaultHeight)
@@ -14,12 +12,10 @@ export default class Tile
 
     render (g, indexX, indexY)
     {
-        const { camera } = Container.modules()
-
         g.drawImage(
             this.buffer, 
-            indexX * this.width - camera.position.x, 
-            indexY * this.height - camera.position.y
+            indexX * this.width, 
+            indexY * this.height
         )
     }
 

@@ -7,8 +7,7 @@ export default class Display
         this.height = height
 
         this.setTitle(title)
-        const canvas = this.createCanvas(width, height)
-        document.body.appendChild(canvas)
+        this.createCanvas(width, height)
     }
 
     setTitle (title)
@@ -26,7 +25,7 @@ export default class Display
 
         canvas.style["image-rendering"] = "pixelated";
 
-        return canvas
+        document.body.appendChild(canvas)
     }
 
     getGraphics ()
