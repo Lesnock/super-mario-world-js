@@ -7,7 +7,7 @@ export default class Camera {
 
         this.width = width
         this.height = height
-        this.debug = false
+        this.debug = true
 
         if (this.debug) {
             this.controlWithMouse()
@@ -15,6 +15,10 @@ export default class Camera {
     }
 
     centerOnObject(object) {
+        if (this.debug) {
+            // return
+        }
+
         const { display } = Container.modules()
 
         this.position.x = parseInt(object.position.x - display.width / 2)
@@ -69,7 +73,7 @@ export default class Camera {
         g.strokeStyle = 'purple'
         g.beginPath()
         g.rect(
-            this.position.x, this.position.y,
+            0, 0,
             this.width, this.height)
         g.stroke()
     }

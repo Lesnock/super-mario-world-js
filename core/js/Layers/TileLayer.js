@@ -1,5 +1,4 @@
 import Container from '../Container.js'
-import Camera from '../Camera/Camera.js'
 import Tile from "../SpriteSheet/Tile.js"
 import TileCollider from "../Collision/TileCollider.js"
 
@@ -26,7 +25,7 @@ export default class TileLayer
         // Tile layer is draw in his own buffer
         //const buffer = display.createCanvas(display.width, display.height)
         const buffer = document.createElement('canvas')
-        buffer.width = display.width + 256
+        buffer.width = display.width
         buffer.height = display.height
 
         const context = buffer.getContext('2d')
@@ -55,7 +54,7 @@ export default class TileLayer
                 const tile = this.grid.get(x, y)
 
                 if (tile instanceof Tile) {
-                    this.grid.get(x, y).render(context, x - xStart, y)
+                    this.grid.get(x, y).render(context, x - xStart, y - yStart)
                 }
             }
         }
@@ -63,7 +62,7 @@ export default class TileLayer
         g.drawImage(
             buffer, 
             -camera.position.x % Tile.defaultWidth, 
-            -camera.position.y
+            -camera.position.y % Tile.defaultHeight
         )
     }
 }
