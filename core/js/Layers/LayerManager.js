@@ -5,6 +5,7 @@ export default class LayerManager
         this.tiles = []
         this.sprites = []
         this.collisions = []
+        this.backgrounds = []
     }
 
     addTileLayer (layer)
@@ -22,6 +23,10 @@ export default class LayerManager
         this.collisions.push(layer)
     }
 
+    addBackgroundLayer(layer) {
+        this.backgrounds.push(layer)
+    }
+
     update (dt)
     {
         this.tiles.forEach(layer => {
@@ -31,10 +36,18 @@ export default class LayerManager
         this.sprites.forEach(layer => {
             layer.update(dt)
         })
+
+        this.backgrounds.forEach(layer => {
+            layer.update(dt)
+        })
     }
 
     render (g)
     {
+        this.backgrounds.forEach(layer => {
+            layer.render(g)
+        })
+
         this.tiles.forEach(layer => {
             layer.render(g)
         })

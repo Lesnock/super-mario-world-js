@@ -1,23 +1,31 @@
 import Level from "../Level/Level.js";
 import loadJSON from "./JsonLoader.js";
 import Matrix from "../Math/Matrix.js";
+import loadImage from "./ImageLoader.js";
 import Camera from "../Camera/Camera.js";
 import TileLayer from "../Layers/TileLayer.js";
 import SpriteLayer from "../Layers/SpriteLayer.js";
 import loadSpriteSheet from "./SpriteSheetLoader.js";
 import TileCollider from "../Collision/TileCollider.js";
+import BackgroundLayer from "../Layers/BackgroundLayer.js";
 
 //Load a level
 //Load spritesheet, create the layers (background and sprite)
-export default async function loadLevel(name) {
+export default async function loadLevel(name) 
+{
+    const level = new Level()
 
     const levelSpec = await loadJSON(`core/levels/${name}.json`)
 
+    // Background
+    const backgroundImage = await loadImage(`core/gfx/backgrounds/${levelSpec.backgroundImage}`)
+    const backgroundLayer = new BackgroundLayer(levelSpec.backgroundColor, backgroundImage)
+    level.layers.addBackgroundLayer(backgroundLayer)
+
+    // Load Sprite Sheet
     const spriteSheet = await loadSpriteSheet(levelSpec.spriteSheet)
 
-    const level = new Level()
-
-    //Tile layers
+    // Create tile layers
     levelSpec.layers.forEach(layerSpec => {
         const layer = createTileLayer(layerSpec.tiles, levelSpec.columns, levelSpec.rows, spriteSheet)
         level.layers.addTileLayer(layer)

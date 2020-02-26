@@ -1,9 +1,9 @@
 import Vector from '../Math/Vector.js'
-import Container from '../Container.js'
 
 export default class Camera {
-    constructor (xPosition = 0, yPosition = 0, width = 256, height = 240) {
+    constructor (xPosition = 0, yPosition = 0, width = 256, height = 200) {
         this.position = new Vector(xPosition, yPosition)
+        this.velocity = new Vector(0, 0)
 
         this.width = width
         this.height = height
@@ -19,13 +19,8 @@ export default class Camera {
             // return
         }
 
-        const { display } = Container.modules()
-
-        this.position.x = parseInt(object.position.x - display.width / 2)
-        
-        if (object.position.y < display.height / 6) {
-            this.position.y = object.position.y - display.height / 6
-        }
+        this.position.x = parseInt(object.position.x - this.width / 2)
+        this.position.y = parseInt(object.position.y - this.height / 2)
 
         this.checkBlankSpace()
     }
@@ -62,7 +57,8 @@ export default class Camera {
     }
 
     update(dt) {
-        //
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
     }
 
     render(g) {
