@@ -12,6 +12,10 @@ export default class BackgroundLayer {
         this.camera = Container.getModule('camera')
         this.display = Container.getModule('display')
 
+        // Proportion of movement related to foreground
+        // Makes "far illusion"
+        this.movementProportion = 1/10
+
         this.buffer = this.createBackgroundBuffer()
     }
 
@@ -20,7 +24,8 @@ export default class BackgroundLayer {
     }
 
     render(g) {
-        g.drawImage(this.buffer, 0 - this.camera.position.x / 3, 0)
+        const xPosition = Math.ceil(-this.camera.position.x * this.movementProportion)
+        g.drawImage(this.buffer, xPosition, 0)
     }
 
     createBackgroundBuffer() {
