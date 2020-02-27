@@ -19,7 +19,12 @@ export default async function loadLevel(name)
 
     // Background
     const backgroundImage = await loadImage(`core/gfx/backgrounds/${levelSpec.backgroundImage}`)
-    const backgroundLayer = new BackgroundLayer(levelSpec.backgroundColor, backgroundImage)
+    
+    const backgroundLayer = new BackgroundLayer(levelSpec.backgroundColor, backgroundImage, {
+        rows: levelSpec.rows,
+        columns: levelSpec.columns,
+    })
+
     level.layers.addBackgroundLayer(backgroundLayer)
 
     // Load Sprite Sheet
