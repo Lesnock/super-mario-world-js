@@ -1,6 +1,7 @@
 {
     "name": "level 1",
     "spriteSheet": "tiles",
+
     "backgroundColor": "#0061BD",
     "backgroundImage": "background1.png",
     "cameraXPosition": 0,

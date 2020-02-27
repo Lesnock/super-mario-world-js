@@ -1,9 +1,13 @@
 import Container from '../Container.js'
+import Tile from '../SpriteSheet/Tile.js'
 
 export default class BackgroundLayer {
-    constructor(color, image) {
+    constructor(color, image, { rows, columns }) {
         this.image = image
         this.color = color
+
+        this.levelWidth = columns * Tile.defaultWidth
+        this.levelHeight = rows * Tile.defaultHeight
 
         this.camera = Container.getModule('camera')
         this.display = Container.getModule('display')
