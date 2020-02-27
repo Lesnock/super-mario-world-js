@@ -6,9 +6,9 @@
         "run-right-1": [327, 75, 18, 30],
         "run-right-2": [367, 75, 18, 30],
 
-        "run-fast-right-1": [246, 155, 20, 29],
+        "run-fast-right-1": [247, 155, 20, 29],
         "run-fast-right-2": [207, 155, 20, 29],
-        "run-fast-right-3": [286, 155, 20, 30],
+        "run-fast-right-3": [287, 155, 20, 30],
 
         "jump-right": [206, 113, 19, 32],
         "jump-left": [167, 113, 18, 33],
@@ -60,15 +60,15 @@
             "frames": [
                 {
                     "sprite": "run-fast-right-1",
-                    "speed": 100
+                    "speed": 30
                 },
                 {
                     "sprite": "run-fast-right-2",
-                    "speed": 50
+                    "speed": 30
                 },
                 {
                     "sprite": "run-fast-right-3",
-                    "speed": 50
+                    "speed": 30
                 }
             ],
             "loop": true
@@ -96,15 +96,15 @@
             "frames": [
                 {
                     "sprite": "run-fast-left-1",
-                    "speed": 100
+                    "speed": 30
                 },
                 {
                     "sprite": "run-fast-left-2",
-                    "speed": 50
+                    "speed": 30
                 },
                 {
                     "sprite": "run-fast-left-3",
-                    "speed": 50
+                    "speed": 30
                 }
             ],
             "loop": true
