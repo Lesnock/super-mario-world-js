@@ -17,7 +17,7 @@ export default class Game
     {
         display = new Display(title, width, height)
         
-        camera = new Camera(width, height)
+        camera = new Camera(0, 0, width, height)
 
         g = display.getGraphics()
 
