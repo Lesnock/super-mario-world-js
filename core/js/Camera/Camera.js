@@ -1,4 +1,5 @@
 import Vector from '../Math/Vector.js'
+import Container from '../Container.js'
 
 export default class Camera {
     constructor (xPosition = 0, yPosition = 0, width = 256, height = 200) {
@@ -15,6 +16,23 @@ export default class Camera {
         }
     }
 
+    update(dt) {
+        // 
+    }
+
+    render(g) {
+        if (!this.debug) {
+            return
+        }
+
+        g.strokeStyle = 'purple'
+        g.beginPath()
+        g.rect(
+            0, 0,
+            this.width, this.height)
+        g.stroke()
+    }
+
     centerOnObject(object) {
         if (this.debug) {
             return
@@ -27,16 +45,27 @@ export default class Camera {
     }
 
     checkBlankSpace() {
+        const levelWidth = Container.getModule('levelWidth')
+        const levelHeight = Container.getModule('levelHeight')
+
+        // Left edge
         if (this.position.x < 0) {
             this.position.x = 0
         }
 
-        if (this.position.x > this.position.x + this.width) {
-            // this.position.x = this.
+        // Right edge
+        if (this.position.x + this.width > levelWidth) {
+            this.position.x = levelWidth - this.width
         }
 
+        // Top edge
         if (this.position.y < 0) {
             this.position.y = 0
+        }
+
+        // Bottom edge
+        if (this.position.y + this.height > levelHeight) {
+            this.position.y = levelHeight - this.height
         }
     }
 
@@ -60,24 +89,6 @@ export default class Camera {
         document.getElementById('display').addEventListener('contextmenu', event => {
             event.preventDefault()
         })
-    }
-
-    update(dt) {
-        this.position.x += this.velocity.x
-        this.position.y += this.velocity.y
-    }
-
-    render(g) {
-        if (!this.debug) {
-            return
-        }
-
-        g.strokeStyle = 'purple'
-        g.beginPath()
-        g.rect(
-            0, 0,
-            this.width, this.height)
-        g.stroke()
     }
 
     static getPosition() {

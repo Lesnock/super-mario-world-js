@@ -8,6 +8,7 @@ import SpriteLayer from "../Layers/SpriteLayer.js";
 import loadSpriteSheet from "./SpriteSheetLoader.js";
 import TileCollider from "../Collision/TileCollider.js";
 import BackgroundLayer from "../Layers/BackgroundLayer.js";
+import Tile from "../SpriteSheet/Tile.js";
 
 //Load a level
 //Load spritesheet, create the layers (background and sprite)
@@ -15,31 +16,37 @@ export default async function loadLevel(name)
 {
     const level = new Level()
 
-    const levelSpec = await loadJSON(`core/levels/${name}.json`)
+    level.spec = await loadJSON(`core/levels/${name}.json`)
+
+    // Set level size to the Container
+    Container.bind({ 
+        levelWidth: level.spec.columns * Tile.defaultWidth,
+        levelHeight: level.spec.rows * Tile.defaultHeight,
+    })
 
     // Background
-    const backgroundImage = await loadImage(`core/gfx/backgrounds/${levelSpec.backgroundImage}`)
+    const backgroundImage = await loadImage(`core/gfx/backgrounds/${level.spec.backgroundImage}`)
     
-    const backgroundLayer = new BackgroundLayer(levelSpec.backgroundColor, backgroundImage, {
-        rows: levelSpec.rows,
-        columns: levelSpec.columns,
+    const backgroundLayer = new BackgroundLayer(level.spec.backgroundColor, backgroundImage, {
+        rows: level.spec.rows,
+        columns: level.spec.columns,
     })
 
     level.layers.addBackgroundLayer(backgroundLayer)
 
     // Load Sprite Sheet
-    const spriteSheet = await loadSpriteSheet(levelSpec.spriteSheet)
+    const spriteSheet = await loadSpriteSheet(level.spec.spriteSheet)
 
     // Create tile layers
-    levelSpec.layers.forEach(layerSpec => {
-        const layer = createTileLayer(layerSpec.tiles, levelSpec.columns, levelSpec.rows, spriteSheet)
+    level.spec.layers.forEach(layerSpec => {
+        const layer = createTileLayer(layerSpec.tiles, level.spec.columns, level.spec.rows, spriteSheet)
         level.layers.addTileLayer(layer)
     })
 
-    createTileCollider(levelSpec.layers, levelSpec.columns, levelSpec.rows, spriteSheet)
+    createTileCollider(level.spec.layers, level.spec.columns, level.spec.rows, spriteSheet)
 
     //Sprite Layers
-    const spriteLayer = await createSpriteLayer(levelSpec.gameObjects)
+    const spriteLayer = await createSpriteLayer(level.spec.gameObjects)
     level.layers.addSpriteLayer(spriteLayer)
 
     Container.bind({ level })
