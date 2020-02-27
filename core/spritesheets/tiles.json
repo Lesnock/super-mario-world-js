@@ -20,6 +20,41 @@
             "id": 2,
             "collider": "Solid",
             "index": [32, 0, 16, 16]
+        },
+        {
+            "id": 3,
+            "collider": "Solid",
+            "index": [48, 0, 16, 16]
+        },
+        {
+            "id": 4,
+            "collider": "Solid",
+            "index": [16, 16, 16, 16]
+        },
+        {
+            "id": 5,
+            "collider": "none",
+            "index": [32, 16, 16, 16]
+        },
+        {
+            "id": 6,
+            "collider": "Solid",
+            "index": [48, 16, 16, 16]
+        },
+        {
+            "id": 7,
+            "collider": "Solid",
+            "index": [16, 32, 16, 16]
+        },
+        {
+            "id": 8,
+            "collider": "none",
+            "index": [32, 32, 16, 16]
+        },
+        {
+            "id": 9,
+            "collider": "Solid",
+            "index": [48, 32, 16, 16]
         }
     ]
 }

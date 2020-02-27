@@ -17,7 +17,9 @@ export default class TileLayer
 
     update (dt)
     {
-        //
+        if (this.camera.position.y + this.camera.height > this.columns * Tile.defaultHeight) {
+            this.camera.position.y = this.columns * Tile.defaultHeight - this.camera.height
+        }
     }
 
     // Render all tiles

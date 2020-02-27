@@ -7,7 +7,8 @@ export default class Camera {
 
         this.width = width
         this.height = height
-        this.debug = true
+
+        this.debug = false
 
         if (this.debug) {
             this.controlWithMouse()
@@ -16,7 +17,7 @@ export default class Camera {
 
     centerOnObject(object) {
         if (this.debug) {
-            // return
+            return
         }
 
         this.position.x = parseInt(object.position.x - this.width / 2)
@@ -28,6 +29,10 @@ export default class Camera {
     checkBlankSpace() {
         if (this.position.x < 0) {
             this.position.x = 0
+        }
+
+        if (this.position.x > this.position.x + this.width) {
+            // this.position.x = this.
         }
 
         if (this.position.y < 0) {
@@ -45,6 +50,7 @@ export default class Camera {
                 && lastEvent.buttons === 2 
                 && lastEvent.type === 'mousemove') {
                     this.position.x -= event.offsetX - lastEvent.offsetX
+                    this.position.y -= event.offsetY - lastEvent.offsetY
                 }
 
                 lastEvent = event

@@ -1,8 +1,8 @@
 import Level from "../Level/Level.js";
 import loadJSON from "./JsonLoader.js";
 import Matrix from "../Math/Matrix.js";
+import Container from '../Container.js';
 import loadImage from "./ImageLoader.js";
-import Camera from "../Camera/Camera.js";
 import TileLayer from "../Layers/TileLayer.js";
 import SpriteLayer from "../Layers/SpriteLayer.js";
 import loadSpriteSheet from "./SpriteSheetLoader.js";
@@ -36,6 +36,8 @@ export default async function loadLevel(name)
     //Sprite Layers
     const spriteLayer = await createSpriteLayer(levelSpec.gameObjects)
     level.layers.addSpriteLayer(spriteLayer)
+
+    Container.bind({ level })
 
     return level
 }
