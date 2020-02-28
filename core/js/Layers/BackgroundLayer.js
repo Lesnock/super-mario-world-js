@@ -24,8 +24,10 @@ export default class BackgroundLayer {
     }
 
     render(g) {
-        const xPosition = Math.ceil(-this.camera.position.x * this.movementProportion)
-        g.drawImage(this.buffer, xPosition, 0)
+        const xPosition = Math.floor(-this.camera.position.x * this.movementProportion)
+        const yPosition = Math.floor(-this.camera.position.y * this.movementProportion)        
+
+        g.drawImage(this.buffer, xPosition, yPosition)
     }
 
     createBackgroundBuffer() {
