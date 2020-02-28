@@ -9,9 +9,7 @@ import Square from '../../Collision/Shapes/Square.js'
 import loadSpriteSheet from '../../Loaders/SpriteSheetLoader.js'
 
 export default class Mario extends Entity {
-    childs = [
-        async () => Mario2.create(),
-    ]
+    childs = []
 
     components = [
         new Run(this),

@@ -38,6 +38,7 @@ export default class GameObject {
 
         this.childs.forEach(child => {
             child.superUpdate(dt)
+            child.update(dt)
         });
 
         this.move(dt)
@@ -50,6 +51,7 @@ export default class GameObject {
 
         this.childs.forEach(child => {
             child.superRender(g)
+            child.render(g)
         });
     }
 
@@ -124,6 +126,12 @@ GameObject.create = async function () {
     instance.components.forEach(component => {
         instance[component.name] = component
     })
+
+    // Create instances
+    for (let i = 0; i < instance.childs.length; i++) {
+        const ChildClass = instance.childs[i]
+        instance.childs[i] = await ChildClass.create()
+    }
 
     await instance.superInit()
     await instance.init()
