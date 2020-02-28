@@ -14,7 +14,7 @@ export default class BackgroundLayer {
 
         // Proportion of movement related to foreground
         // Makes "far illusion"
-        this.movementProportion = 1/10
+        this.movementProportion = 1/3
 
         this.buffer = this.createBackgroundBuffer()
     }

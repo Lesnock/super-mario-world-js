@@ -16,37 +16,37 @@ export default async function loadLevel(name)
 {
     const level = new Level()
 
-    level.spec = await loadJSON(`core/levels/${name}.json`)
+    const levelSpec = await loadJSON(`core/levels/${name}.json`)
 
     // Set level size to the Container
     Container.bind({ 
-        levelWidth: level.spec.columns * Tile.defaultWidth,
-        levelHeight: level.spec.rows * Tile.defaultHeight,
+        levelWidth: levelSpec.columns * Tile.defaultWidth,
+        levelHeight: levelSpec.rows * Tile.defaultHeight,
     })
 
     // Background
-    const backgroundImage = await loadImage(`core/gfx/backgrounds/${level.spec.backgroundImage}`)
+    const backgroundImage = await loadImage(`core/gfx/backgrounds/${levelSpec.backgroundImage}`)
     
-    const backgroundLayer = new BackgroundLayer(level.spec.backgroundColor, backgroundImage, {
-        rows: level.spec.rows,
-        columns: level.spec.columns,
+    const backgroundLayer = new BackgroundLayer(levelSpec.backgroundColor, backgroundImage, {
+        rows: levelSpec.rows,
+        columns: levelSpec.columns,
     })
 
     level.layers.addBackgroundLayer(backgroundLayer)
 
     // Load Sprite Sheet
-    const spriteSheet = await loadSpriteSheet(level.spec.spriteSheet)
+    const spriteSheet = await loadSpriteSheet(levelSpec.spriteSheet)
 
     // Create tile layers
-    level.spec.layers.forEach(layerSpec => {
-        const layer = createTileLayer(layerSpec.tiles, level.spec.columns, level.spec.rows, spriteSheet)
+    levelSpec.layers.forEach(layerSpec => {
+        const layer = createTileLayer(layerSpec.tiles, levelSpec.columns, levelSpec.rows, spriteSheet)
         level.layers.addTileLayer(layer)
     })
 
-    createTileCollider(level.spec.layers, level.spec.columns, level.spec.rows, spriteSheet)
+    createTileCollider(levelSpec.layers, levelSpec.columns, levelSpec.rows, spriteSheet)
 
     //Sprite Layers
-    const spriteLayer = await createSpriteLayer(level.spec.gameObjects)
+    const spriteLayer = await createSpriteLayer(levelSpec.gameObjects)
     level.layers.addSpriteLayer(spriteLayer)
 
     Container.bind({ level })

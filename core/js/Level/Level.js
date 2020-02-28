@@ -5,7 +5,6 @@ export default class Level
 {
     constructor ()
     {
-        this.spec = {}
         this.layers = new LayerManager()
     }
 

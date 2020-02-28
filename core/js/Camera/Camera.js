@@ -17,7 +17,7 @@ export default class Camera {
     }
 
     update(dt) {
-        // 
+        //
     }
 
     render(g) {
@@ -47,6 +47,14 @@ export default class Camera {
     checkBlankSpace() {
         const levelWidth = Container.getModule('levelWidth')
         const levelHeight = Container.getModule('levelHeight')
+
+        if (this.width > levelWidth) {
+            this.width = levelWidth
+        }
+
+        if (this.height > levelHeight) {
+            this.height = levelHeight
+        }
 
         // Left edge
         if (this.position.x < 0) {
