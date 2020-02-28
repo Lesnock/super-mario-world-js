@@ -1,5 +1,4 @@
 import Entity from './Entity.js'
-import Mario2 from './Mario2.js'
 import Run from '../Components/Run.js'
 import Input from '../../Input/Input.js'
 import Jump from '../Components/Jump.js'
