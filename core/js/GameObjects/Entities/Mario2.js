@@ -1,13 +1,13 @@
-import Run from './Components/Run.js'
-import Input from '../Input/Input.js'
-import Jump from './Components/Jump.js'
-import GameObject from './GameObject.js'
-import Gravity from './Components/Gravity.js'
-import RigidBody from './Components/RigidBody.js'
-import Square from '../Collision/Shapes/Square.js'
-import loadSpriteSheet from '../Loaders/SpriteSheetLoader.js'
+import Entity from './Entity.js'
+import Run from '../Components/Run.js'
+import Input from '../../Input/Input.js'
+import Jump from '../Components/Jump.js'
+import Gravity from '../Components/Gravity.js'
+import RigidBody from '../Components/RigidBody.js'
+import Square from '../../Collision/Shapes/Square.js'
+import loadSpriteSheet from '../../Loaders/SpriteSheetLoader.js'
 
-export default class Mario extends GameObject {
+export default class Mario extends Entity {
     components = [
         new Run(this),
         new RigidBody(this),
@@ -82,7 +82,7 @@ export default class Mario extends GameObject {
             g, 
             this.currentSprite,
             this.position.x - this.camera.position.x,
-            yPosition - this.camera.position.y
+            yPosition - this.camera.position.y - 50
         )
     }
 

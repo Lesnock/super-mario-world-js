@@ -4,6 +4,7 @@ import Vector from "../Math/Vector.js"
 import Container from '../Container.js'
 
 export default class GameObject {
+    childs = []
     components = []
 
     constructor() {
@@ -22,7 +23,7 @@ export default class GameObject {
     }
 
     async init() {
-        
+        //
     }
 
     // Map keys with actions (config controller)
@@ -35,12 +36,20 @@ export default class GameObject {
             component.update(dt)
         });
 
+        this.childs.forEach(child => {
+            child.superUpdate(dt)
+        });
+
         this.move(dt)
     }
 
     superRender(g) {
         this.components.forEach(component => {
             component.render(g)
+        });
+
+        this.childs.forEach(child => {
+            child.superRender(g)
         });
     }
 

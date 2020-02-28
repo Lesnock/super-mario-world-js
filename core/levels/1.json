@@ -38,7 +38,7 @@
     ],
 
     "gameObjects": {
-        "Mario": [
+        "Entities/Mario": [
             [48, 32]
         ]
     }
