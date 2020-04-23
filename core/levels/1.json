@@ -40,6 +40,9 @@
     "gameObjects": {
         "Entities/Mario": [
             [48, 32]
+        ],
+        "Light": [
+            [48, 32]
         ]
     }
 }

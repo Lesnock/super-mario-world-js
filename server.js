@@ -10,4 +10,6 @@ app.get('/', (request, response) => {
     response.sendFile(path.resolve('./index.html'))
 })
 
-app.listen(port)
+app.listen(port, () => {
+    console.log(`-> listening to port ${port}`)
+})

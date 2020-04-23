@@ -82,9 +82,9 @@ function createSpriteLayer(gameObjects) {
             const module = await import(`../GameObjects/${name}.js`)
             const [x, y] = position
 
-            const instance = await module.default.create()
-            instance.position.x = x
-            instance.position.y = y
+            const instance = await module.default.create(x, y)
+            // instance.position.x = x
+            // instance.position.y = y
 
             objects.push(instance)
         })

@@ -109,8 +109,8 @@ export default class Mario extends Entity {
         // Mario is not moving
         if (this.isIdle()) {
             return this.lookDirection > 0
-                    ? this.currentSprite = 'idle-right'
-                    : this.currentSprite = 'idle-left'
+                ? this.currentSprite = 'idle-right'
+                : this.currentSprite = 'idle-left'
         }
 
         // If it is moving

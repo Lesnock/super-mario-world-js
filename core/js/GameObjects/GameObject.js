@@ -55,6 +55,14 @@ export default class GameObject {
         });
     }
 
+    update(dt) {
+        //
+    }
+
+    render(g) {
+        //
+    }
+
     addAcceleration(dt) {
         //Add acceleration to velocity
         this.velocity.x += this.acceleration.x * dt
@@ -119,7 +127,7 @@ export default class GameObject {
     }
 }
 
-GameObject.create = async function () {
+GameObject.create = async function (xPosition, yPosition) {
     const _class = this
     const instance = new _class()
 
@@ -132,6 +140,10 @@ GameObject.create = async function () {
         const ChildClass = instance.childs[i]
         instance.childs[i] = await ChildClass.create()
     }
+
+    // Set position
+    instance.position.x = xPosition
+    instance.position.y = yPosition
 
     await instance.superInit()
     await instance.init()
