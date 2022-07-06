@@ -3,7 +3,7 @@ import Controller from "./Controller.js";
 export default class KeyboardController extends Controller
 {
     keys = {
-        KeyZ: 'up',
+        ArrowUp: 'up',
         ArrowLeft: 'left',
         ArrowRight: 'right',
         ArrowDown: 'down',
